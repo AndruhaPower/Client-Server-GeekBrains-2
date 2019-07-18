@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CustomGroupCell" customModule="L1_GBVk" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="564" height="90"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cFU-0C-MH2" customClass="GradientView" customModule="L1_GBVk" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="564" height="90"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o7i-Ju-WwW" customClass="AvatarShadowView" customModule="L1_GBVk" customModuleProvider="target">
+                            <rect key="frame" x="25" y="15" width="60" height="60"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="QY9-NG-jAk"/>
+                                <constraint firstAttribute="height" constant="60" id="tLX-Ht-k45"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLH-th-nbr" customClass="AvatarImageView" customModule="L1_GBVk" customModuleProvider="target">
+                            <rect key="frame" x="25" y="15" width="60" height="60"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="KQu-4Y-I0z"/>
+                                <constraint firstAttribute="height" constant="60" id="rnc-fc-7uT"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ms2-E5-loh">
+                            <rect key="frame" x="95" y="34.5" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ms2-E5-loh" firstAttribute="leading" secondItem="o7i-Ju-WwW" secondAttribute="trailing" constant="10" id="9rI-lJ-Gcr"/>
+                        <constraint firstItem="o7i-Ju-WwW" firstAttribute="centerY" secondItem="cFU-0C-MH2" secondAttribute="centerY" id="C4I-yM-GDh"/>
+                        <constraint firstItem="oLH-th-nbr" firstAttribute="leading" secondItem="cFU-0C-MH2" secondAttribute="leading" constant="25" id="C64-Bj-cwq"/>
+                        <constraint firstItem="oLH-th-nbr" firstAttribute="centerY" secondItem="cFU-0C-MH2" secondAttribute="centerY" id="i5c-9C-1v4"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ms2-E5-loh" secondAttribute="trailing" constant="100" id="oPf-yz-QA1"/>
+                        <constraint firstItem="ms2-E5-loh" firstAttribute="centerY" secondItem="cFU-0C-MH2" secondAttribute="centerY" id="uws-GW-QfS"/>
+                        <constraint firstItem="o7i-Ju-WwW" firstAttribute="leading" secondItem="cFU-0C-MH2" secondAttribute="leading" constant="25" id="yx5-Hk-jV9"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                            <color key="value" red="0.32500812168067067" green="0.47538767601420517" blue="0.60196729274611394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="point" keyPath="startPoint">
+                            <point key="value" x="0.0" y="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="point" keyPath="endPoint">
+                            <point key="value" x="1" y="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                            <real key="value" value="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="cFU-0C-MH2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GXT-6s-2kW"/>
+                <constraint firstItem="cFU-0C-MH2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="JAi-ZI-Tha"/>
+                <constraint firstItem="cFU-0C-MH2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Vcc-tH-aJh"/>
+                <constraint firstItem="cFU-0C-MH2" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="sOb-fv-Iiz"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="groupAvatarImage" destination="oLH-th-nbr" id="fBR-ea-h0m"/>
+                <outlet property="groupNameLabel" destination="ms2-E5-loh" id="HeB-be-uod"/>
+            </connections>
+            <point key="canvasLocation" x="218.84057971014494" y="-162.05357142857142"/>
+        </view>
+    </objects>
+</document>
