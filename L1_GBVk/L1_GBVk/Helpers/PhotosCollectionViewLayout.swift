@@ -23,8 +23,8 @@ class PhotosCollectionViewLayout: UICollectionViewLayout {
         guard itemCount > 0 else { return }
         
         let bigCellWidth = collectionView.bounds.width
+        if columnsCount == 0 { return }
         let smallCellWidth = collectionView.bounds.width / columnsCount
-        
         var lastY: CGFloat = 0
         var lastX: CGFloat = 0
         

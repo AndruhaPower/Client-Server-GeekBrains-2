@@ -10,7 +10,6 @@ import UIKit
 import Foundation
 
 class PhotosViewController: UICollectionViewController {
-    
 
     var friendName: String = ""
     var friendId: Int = 0
@@ -35,7 +34,6 @@ class PhotosViewController: UICollectionViewController {
                 self.collectionView.reloadData()
             }
         }
-        
     }
 
     // MARK: UICollectionViewDataSource

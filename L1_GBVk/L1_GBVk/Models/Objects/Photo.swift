@@ -40,15 +40,3 @@ class Photo: Mappable {
         self.photoURL <- map["sizes.3.url"]
     }
 }
-
-//class PhotoSizes: Mappable {
-//
-//    var size: [Photo] = []
-//
-//    required init?(map: Map) { }
-//
-//    func mapping(map: Map) {
-//        self.size <- map["sizes"]
-//    }
-//
-//}

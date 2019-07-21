@@ -13,7 +13,6 @@ class MyCommunitiesViewController: UITableViewController {
     var groups: [Group] = []
     var vkServices = VKServices()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         vkServices.getGroups { (gotGroups) in
@@ -32,8 +31,8 @@ class MyCommunitiesViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomGroupCell.reuseId, for: indexPath) as? CustomGroupCell else { return UITableViewCell() }
+        
         let avatarName = URL(string: groups[indexPath.row].photo)
         cell.groupNameLabel.text = groups[indexPath.row].name
         cell.groupAvatarImage.load(url: avatarName!)

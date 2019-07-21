@@ -60,7 +60,9 @@
 		49B02C9C228DF2A600EA8ECD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49B02C9A228DF2A600EA8ECD /* LaunchScreen.storyboard */; };
 		49B02CA7228DF2A700EA8ECD /* L1_GBVkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B02CA6228DF2A700EA8ECD /* L1_GBVkTests.swift */; };
 		49B02CB2228DF2A700EA8ECD /* L1_GBVkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B02CB1228DF2A700EA8ECD /* L1_GBVkUITests.swift */; };
+		49BDB28222E495190028897B /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDB28122E495180028897B /* RealmManager.swift */; };
 		49BDE72422A14F3200E5256F /* likeButtonControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE72322A14F3200E5256F /* likeButtonControl.swift */; };
+		49C561FB22E08291002353EF /* RealmObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C561FA22E08291002353EF /* RealmObjects.swift */; };
 		49D4829F2297E2C90053922E /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4829E2297E2C90053922E /* FriendModel.swift */; };
 		49D482A12297E2DD0053922E /* GroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D482A02297E2DD0053922E /* GroupModel.swift */; };
 		8E2B2E7E0EEF8355A6196BF1 /* Pods_L1_GBVkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B8F765F14E88DD2404ACE6 /* Pods_L1_GBVkTests.framework */; };
@@ -150,7 +152,9 @@
 		49B02CAD228DF2A700EA8ECD /* L1_GBVkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = L1_GBVkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B02CB1228DF2A700EA8ECD /* L1_GBVkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L1_GBVkUITests.swift; sourceTree = "<group>"; };
 		49B02CB3228DF2A700EA8ECD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49BDB28122E495180028897B /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		49BDE72322A14F3200E5256F /* likeButtonControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = likeButtonControl.swift; sourceTree = "<group>"; };
+		49C561FA22E08291002353EF /* RealmObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObjects.swift; sourceTree = "<group>"; };
 		49D4829E2297E2C90053922E /* FriendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
 		49D482A02297E2DD0053922E /* GroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
 		624D0F3930F50CAB1CFFF1F8 /* Pods-L1_GBVk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-L1_GBVk.debug.xcconfig"; path = "Target Support Files/Pods-L1_GBVk/Pods-L1_GBVk.debug.xcconfig"; sourceTree = "<group>"; };
@@ -232,6 +236,7 @@
 				4965FD2D22AED3CD00333E41 /* GradientLayer.swift */,
 				4994579022B51BFE00ED7B2A /* CustomHeartButtonView.swift */,
 				495A808822B146B700A77C46 /* CustomViewExtensions.swift */,
+				49BDB28122E495180028897B /* RealmManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -289,6 +294,7 @@
 				4997A27B22D60FEA00537D64 /* Group.swift */,
 				4997A27D22D6100000537D64 /* Friend.swift */,
 				4997A27F22D6244000537D64 /* Photo.swift */,
+				49C561FA22E08291002353EF /* RealmObjects.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -630,6 +636,7 @@
 				49163F6522C0DB9700C23B72 /* FullScreenImagePresenterViewController.swift in Sources */,
 				49163F5922BEA96D00C23B72 /* ImageTapAnimations.swift in Sources */,
 				4997A27C22D60FEA00537D64 /* Group.swift in Sources */,
+				49BDB28222E495190028897B /* RealmManager.swift in Sources */,
 				4994579122B51BFE00ED7B2A /* CustomHeartButtonView.swift in Sources */,
 				49A2FA3322D1FC6600A33630 /* Constants.swift in Sources */,
 				49A75474229582A600E07D11 /* AvatarCell.swift in Sources */,
@@ -642,6 +649,7 @@
 				49163F5B22BEAEC500C23B72 /* LoadingCirclesImage.swift in Sources */,
 				495A808722B1448F00A77C46 /* SectionIndexAlgorythm.swift in Sources */,
 				4997A28222D629C100537D64 /* VKAuthorize.swift in Sources */,
+				49C561FB22E08291002353EF /* RealmObjects.swift in Sources */,
 				495A808F22B158A000A77C46 /* CustomSearchGroupCell.swift in Sources */,
 				4994579722B538F500ED7B2A /* ShareControl.swift in Sources */,
 				4973736022C9FA9600C6A3E0 /* VKSession.swift in Sources */,

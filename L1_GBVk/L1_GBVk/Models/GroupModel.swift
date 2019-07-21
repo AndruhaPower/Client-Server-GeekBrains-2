@@ -8,13 +8,15 @@
 
 import UIKit
 
-struct GroupModel: Equatable {
-    
+struct GroupModel {
     var name: String
     var rating: Int
     var avatarPath: String = ""
+}
 
+extension GroupModel: Equatable {
     static func == (lhs: GroupModel, rhs: GroupModel) -> Bool {
         return lhs.name == rhs.name || lhs.avatarPath == rhs.avatarPath
     }
 }
+

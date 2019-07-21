@@ -10,7 +10,7 @@ import Foundation
 
 class SectionIndexManager {
     
-    static func getOrderedIndexArray(array: [Friend]) -> [Character] {
+    static func getOrderedIndexArray(array: [RFriend]) -> [Character] {
         var indexArray: [Character] = []
         var indexSet = Set<Character>()
         for item in array {
@@ -24,8 +24,8 @@ class SectionIndexManager {
         return indexArray
     }
     
-    static func getFriendIndexDictionary(array: [Friend]) -> [Character: [Friend]] {
-        var friendIndexDictionary: [Character: [Friend]] = [:]
+    static func getFriendIndexDictionary(array: [RFriend]) -> [Character: [RFriend]] {
+        var friendIndexDictionary: [Character: [RFriend]] = [:]
         
         for item in array {
             let firstLetter = item.name[0]

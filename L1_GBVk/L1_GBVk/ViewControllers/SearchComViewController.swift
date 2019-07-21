@@ -48,6 +48,7 @@ class SearchComViewController: UITableViewController {
     }
 
     // MARK: - Navigation
+    
     @IBAction func addGroup(segue: UIStoryboardSegue) {
         if let controller = segue.source as? SearchComViewController,
             let indexPath = controller.tableView.indexPathForSelectedRow {

@@ -14,6 +14,4 @@ struct FriendModel {
     var age: Int
     var avatarPath: String = ""
     var photosAndLikes: [UIImage : Int]
-    
-
 }
