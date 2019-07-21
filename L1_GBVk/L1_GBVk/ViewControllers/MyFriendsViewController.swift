@@ -7,45 +7,32 @@
 //
 
 import UIKit
+import RealmSwift
 
+
+/// Контроллер отвечающий за друзей
 class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
-    
-    @IBOutlet weak var searchBar: UISearchBar!
-    var friendsSectionIndex: [Character] = []
-    var friendsIndexDictionary: [Character: [Friend]] = [:]
-    var searchActive = false
-    var friends: [Friend] = []
-    let vkServices = VKServices()
+    @IBOutlet private weak var searchBar: UISearchBar!
+    private var friendsSectionIndex: [Character] = []
+    private var friendsIndexDictionary: [Character: [RFriend]] = [:]
+    private var searchActive = false
+    private var friends: [RFriend] = []
+    private let vkServices = VKServices()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        vkServices.getFriends { (resultFriends) in
-            guard let subFriends = resultFriends else { return }
-            self.friends = subFriends
-            self.updateFriendsIndex(friends: self.friends)
-            self.updateFriendsNamesDictionary(friends: self.friends)
-            DispatchQueue.main.async {
-                self.tableView?.reloadData()
-            }
-        }
-
-        tableView.register(UINib(nibName: "CustomFriendCell", bundle: nil), forCellReuseIdentifier: CustomFriendsCell.reuseId)
-        print(self.friends)
-        tableView.keyboardDismissMode = .onDrag
-        tableView.dataSource = self
-        
-        
+        self.saveFriendsData()
+        self.tableViewConfig()
     }
-
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return friendsSectionIndex.count
+        return self.friendsSectionIndex.count
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let char = friendsSectionIndex[section]
-        let rowsCount: Int  = friendsIndexDictionary[char]?.count ?? 0
+        let char = self.friendsSectionIndex[section]
+        let rowsCount: Int  = self.friendsIndexDictionary[char]?.count ?? 0
         return rowsCount
     }
     
@@ -57,24 +44,19 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomFriendsCell.reuseId, for: indexPath) as? CustomFriendsCell
             else { return UITableViewCell() }
         
-        let char = friendsSectionIndex[indexPath.section]
-        let avatarURL = URL(string: friendsIndexDictionary[char]?[indexPath.row].photo ?? "https://1001freedownloads.s3.amazonaws.com/vector/thumb/75167/1366695174.png")
-        let friendsName = friendsIndexDictionary[char]?[indexPath.row].name ?? "Unknown"
+        let char = self.friendsSectionIndex[indexPath.section]
+        let avatarURL = URL(string: self.friendsIndexDictionary[char]?[indexPath.row].photo ?? "https://1001freedownloads.s3.amazonaws.com/vector/thumb/75167/1366695174.png")
+        let friendsName = self.friendsIndexDictionary[char]?[indexPath.row].name ?? "Unknown"
         cell.nameLabel.text = friendsName
-        cell.avatarImage.load(url : avatarURL!)    // ЗДЕСЬ ССАНЫЙ ФОРСАНВРАП, ИМЕЙ В ВИДУ
-        tableView.separatorStyle = .none
+        cell.avatarImage.load(url : avatarURL!)
+        self.tableView.separatorStyle = .none
         return cell
-    }
-
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "PhotosSegue", sender: nil)
     }
-
+    
     //MARK: Setup searchBar
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchActive = true
@@ -97,21 +79,46 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
         tableView.reloadData()
     }
     
-    @objc func hideKeyboard() {
+    @objc private func hideKeyboard() {
         searchActive = false
         searchBar.endEditing(true)
     }
     
     //MARK: Prepare datasource
     
-    func updateFriendsNamesDictionary(friends: [Friend]) {
+    func updateFriendsNamesDictionary(friends: [RFriend]) {
         self.friendsIndexDictionary = SectionIndexManager.getFriendIndexDictionary(array: friends)
     }
     
-    func updateFriendsIndex(friends: [Friend]) {
+    func updateFriendsIndex(friends: [RFriend]) {
         self.friendsSectionIndex = SectionIndexManager.getOrderedIndexArray(array: friends)
     }
-
+    
+    private func saveFriendsData() {
+        do {
+            self.vkServices.getFriends()
+            let realm = try Realm()
+            let subFriends = realm.objects(RFriend.self)
+            for friend in subFriends {
+                self.friends.append(friend)
+            }
+            self.updateFriendsIndex(friends: self.friends)
+            self.updateFriendsNamesDictionary(friends: self.friends)
+            DispatchQueue.main.async {
+                self.tableView?.reloadData()
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func tableViewConfig() {
+        self.tableView.register(UINib(nibName: "CustomFriendCell", bundle: nil), forCellReuseIdentifier: CustomFriendsCell.reuseId)
+        self.tableView.keyboardDismissMode = .onDrag
+        self.tableView.dataSource = self
+    }
+    
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
