@@ -127,6 +127,7 @@ class ViewController: UIViewController {
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "v", value: "5.68")
         ]
+        
         let request = URLRequest(url: urlComponents.url!)
         self.VKwebView.load(request)
     }
