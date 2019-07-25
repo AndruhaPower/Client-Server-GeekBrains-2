@@ -18,16 +18,11 @@ class VKServices {
         let config = URLSessionConfiguration.default
         config.headers = .default
         config.timeoutIntervalForRequest = 20
-        
         let manager = Alamofire.Session(configuration: config)
         return manager
     }()
-    
-    // АВТОРИЗАЦИЯ
-    
-    
-    
-    // ПОЛУЧАЕМ ГРУППЫ
+
+    // ПОЛУЧАЕМ ДРУЗЕЙ
     
     public func getFriends() {
         
@@ -55,7 +50,7 @@ class VKServices {
     
     // ПОЛУЧАЕМ СВОИ ГРУППЫ
     
-    public func getGroups(_ completionHandler:@escaping (_ groups:[Group]?)->() ) {
+    public func getGroups() {
         
         let url = VKConstants.groups
         
@@ -71,7 +66,8 @@ class VKServices {
             let result = vkgroupResponse.result
             switch result {
             case .success(let val):
-                completionHandler(val.response?.items)
+                let items = val.response?.items
+                RealmManager.groupsManager(groups: items!)
             case .failure(let error):
                 print(error)
             }
@@ -80,7 +76,7 @@ class VKServices {
     
     // ПОЛУЧАЕМ ГРУППЫ ДЛЯ ПОИСКА
     
-    public func getSearchGroups(_ completionHandler:@escaping (_ groups:[Group]?)->()) {
+    public func getSearchGroups() {
         
         let url = VKConstants.groupsSearch
         
@@ -96,7 +92,8 @@ class VKServices {
             let result = vkgroupResponse.result
             switch result {
             case .success(let val):
-                completionHandler(val.response?.items)
+                let items = val.response?.items
+                RealmManager.groupsManager(groups: items!)
             case .failure(let error):
                 print(error)
             }

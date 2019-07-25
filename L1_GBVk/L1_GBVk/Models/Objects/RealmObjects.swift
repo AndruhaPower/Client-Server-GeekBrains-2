@@ -27,6 +27,7 @@ class RGroup: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var id: Int = 0
     @objc dynamic var photo: String? = nil
+    @objc dynamic var isMember: Int = 0
     
     override static func primaryKey() -> String? {
         return "id"
