@@ -18,6 +18,7 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
     private var searchActive = false
     private var friends: [RFriend] = []
     private let vkServices = VKServices()
+    private var token: NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,14 +42,22 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomFriendsCell.reuseId, for: indexPath) as? CustomFriendsCell
-            else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomFriendsCell.reuseId, for: indexPath) as? CustomFriendsCell else { return UITableViewCell() }
         
         let char = self.friendsSectionIndex[indexPath.section]
-        let avatarURL = URL(string: self.friendsIndexDictionary[char]?[indexPath.row].photo ?? "https://1001freedownloads.s3.amazonaws.com/vector/thumb/75167/1366695174.png")
+        guard let photo = self.friendsIndexDictionary[char]?[indexPath.row].photo else { return UITableViewCell() }
+        cell.indexPath = indexPath
+        let operationQueue = OperationQueue()
+        let operation = LoadImageOperation()
+        operation.url = URL(string: photo)
+        operationQueue.addOperation(operation)
+        operation.completion = { image in
+            if cell.indexPath == indexPath {
+                cell.avatarImage.image = image
+            }
+        }
         let friendsName = self.friendsIndexDictionary[char]?[indexPath.row].name ?? "Unknown"
         cell.nameLabel.text = friendsName
-        cell.avatarImage.load(url : avatarURL!)
         self.tableView.separatorStyle = .none
         return cell
     }
@@ -98,10 +107,19 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
         do {
             self.vkServices.getFriends()
             let realm = try Realm()
-            let subFriends = realm.objects(RFriend.self)
-            for friend in subFriends {
-                self.friends.append(friend)
+            let resultFriends = realm.objects(RFriend.self)
+            self.token = resultFriends.observe { [weak self] (changes: RealmCollectionChange) in
+                switch changes {
+                case .initial:
+                    self?.tableView.reloadData()
+                case .update(_, let deletions, let insertions, let modifications):
+                    self?.tableView.reloadData()
+                // СДЕЛАЙ С СЕКЦИЯМИ
+                case .error(let error):
+                    print(error)
+                }
             }
+            self.friends = Array(resultFriends)
             self.updateFriendsIndex(friends: self.friends)
             self.updateFriendsNamesDictionary(friends: self.friends)
             DispatchQueue.main.async {
