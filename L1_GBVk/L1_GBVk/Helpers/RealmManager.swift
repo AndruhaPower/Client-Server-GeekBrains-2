@@ -19,13 +19,30 @@ public class RealmManager {
             friend.id = each.id
             do {
                 let realm = try Realm()
-                print(realm.configuration.fileURL)
                 try realm.write {
                     realm.add(friend, update: .modified)
                 }
             } catch {
                 print(error)
             }
+        }
+    }
+    
+    static func groupsManager(groups: [Group]) {
+        for each in groups {
+            let group = RGroup()
+            group.name = each.name
+            group.id = each.id
+            group.photo = each.photo
+            group.isMember = each.isMember
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    realm.add(group, update: .modified)
+                }
+            }catch {
+                    print(error)
+                }
         }
     }
 }
