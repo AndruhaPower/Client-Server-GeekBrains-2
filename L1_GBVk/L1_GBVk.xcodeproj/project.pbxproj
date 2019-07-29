@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4904B32122E9C31D00943876 /* LoadingImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4904B32022E9C31D00943876 /* LoadingImageOperation.swift */; };
 		490F5AF722B517AE0099FFC2 /* CustomFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 490F5AF622B517AE0099FFC2 /* CustomFeedCell.xib */; };
 		49163F5922BEA96D00C23B72 /* ImageTapAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49163F5822BEA96D00C23B72 /* ImageTapAnimations.swift */; };
 		49163F5B22BEAEC500C23B72 /* LoadingCirclesImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49163F5A22BEAEC500C23B72 /* LoadingCirclesImage.swift */; };
@@ -49,8 +50,8 @@
 		4997A27E22D6100000537D64 /* MapFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997A27D22D6100000537D64 /* MapFriend.swift */; };
 		4997A28022D6244000537D64 /* MapPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997A27F22D6244000537D64 /* MapPhoto.swift */; };
 		4997A28222D629C100537D64 /* VKAuthorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997A28122D629C100537D64 /* VKAuthorize.swift */; };
+		499A9FA922EEF5B000BC2269 /* MapUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A9FA822EEF5B000BC2269 /* MapUser.swift */; };
 		49A2FA3122D1F54C00A33630 /* VKServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2FA3022D1F54C00A33630 /* VKServices.swift */; };
-		49A2FA3322D1FC6600A33630 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2FA3222D1FC6600A33630 /* Constants.swift */; };
 		49A2FA3A22D205C400A33630 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A2FA3922D205C300A33630 /* WebKit.framework */; };
 		49A75474229582A600E07D11 /* AvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A75473229582A600E07D11 /* AvatarCell.swift */; };
 		49A75477229588A300E07D11 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A75476229588A300E07D11 /* GroupCell.swift */; };
@@ -92,6 +93,7 @@
 		306EC95C4EB30F759C8D3C4B /* Pods_L1_GBVk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_L1_GBVk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A80EB3CACDA44D42112B9A5 /* Pods-L1_GBVkUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-L1_GBVkUITests.release.xcconfig"; path = "Target Support Files/Pods-L1_GBVkUITests/Pods-L1_GBVkUITests.release.xcconfig"; sourceTree = "<group>"; };
 		41AAFE69D9183F8E33E6C02E /* Pods-L1_GBVk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-L1_GBVk.release.xcconfig"; path = "Target Support Files/Pods-L1_GBVk/Pods-L1_GBVk.release.xcconfig"; sourceTree = "<group>"; };
+		4904B32022E9C31D00943876 /* LoadingImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingImageOperation.swift; sourceTree = "<group>"; };
 		490F5AF622B517AE0099FFC2 /* CustomFeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomFeedCell.xib; sourceTree = "<group>"; };
 		49163F5822BEA96D00C23B72 /* ImageTapAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTapAnimations.swift; sourceTree = "<group>"; };
 		49163F5A22BEAEC500C23B72 /* LoadingCirclesImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCirclesImage.swift; sourceTree = "<group>"; };
@@ -134,8 +136,8 @@
 		4997A27D22D6100000537D64 /* MapFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFriend.swift; sourceTree = "<group>"; };
 		4997A27F22D6244000537D64 /* MapPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPhoto.swift; sourceTree = "<group>"; };
 		4997A28122D629C100537D64 /* VKAuthorize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAuthorize.swift; sourceTree = "<group>"; };
+		499A9FA822EEF5B000BC2269 /* MapUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUser.swift; sourceTree = "<group>"; };
 		49A2FA3022D1F54C00A33630 /* VKServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKServices.swift; sourceTree = "<group>"; };
-		49A2FA3222D1FC6600A33630 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		49A2FA3922D205C300A33630 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		49A75473229582A600E07D11 /* AvatarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCell.swift; sourceTree = "<group>"; };
 		49A75476229588A300E07D11 /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
@@ -227,7 +229,6 @@
 		49163F5E22BEB62C00C23B72 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				49A2FA3222D1FC6600A33630 /* Constants.swift */,
 				495A808622B1448F00A77C46 /* SectionIndexAlgorythm.swift */,
 				495A808A22B14A3E00A77C46 /* FirstLetterSearch.swift */,
 				4965FD3322AEDAFC00333E41 /* PhotosCollectionViewLayout.swift */,
@@ -268,6 +269,7 @@
 				49A2FA3022D1F54C00A33630 /* VKServices.swift */,
 				4983126A22D47441006B4676 /* VKConstants.swift */,
 				4997A28122D629C100537D64 /* VKAuthorize.swift */,
+				4904B32022E9C31D00943876 /* LoadingImageOperation.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -292,6 +294,7 @@
 				4997A27B22D60FEA00537D64 /* MapGroups.swift */,
 				4997A27D22D6100000537D64 /* MapFriend.swift */,
 				4997A27F22D6244000537D64 /* MapPhoto.swift */,
+				499A9FA822EEF5B000BC2269 /* MapUser.swift */,
 				49C561FA22E08291002353EF /* RealmObjects.swift */,
 			);
 			name = Objects;
@@ -631,12 +634,13 @@
 				4994579522B538C800ED7B2A /* CommentControl.swift in Sources */,
 				49B02C94228DF2A400EA8ECD /* ViewController.swift in Sources */,
 				49B02C92228DF2A400EA8ECD /* AppDelegate.swift in Sources */,
+				4904B32122E9C31D00943876 /* LoadingImageOperation.swift in Sources */,
+				499A9FA922EEF5B000BC2269 /* MapUser.swift in Sources */,
 				49163F6522C0DB9700C23B72 /* FullScreenImagePresenterViewController.swift in Sources */,
 				49163F5922BEA96D00C23B72 /* ImageTapAnimations.swift in Sources */,
 				4997A27C22D60FEA00537D64 /* MapGroups.swift in Sources */,
 				49BDB28222E495190028897B /* RealmManager.swift in Sources */,
 				4994579122B51BFE00ED7B2A /* CustomHeartButtonView.swift in Sources */,
-				49A2FA3322D1FC6600A33630 /* Constants.swift in Sources */,
 				49A75474229582A600E07D11 /* AvatarCell.swift in Sources */,
 				49163F6A22C0F46000C23B72 /* CustomNavigationController.swift in Sources */,
 				4997A28022D6244000537D64 /* MapPhoto.swift in Sources */,

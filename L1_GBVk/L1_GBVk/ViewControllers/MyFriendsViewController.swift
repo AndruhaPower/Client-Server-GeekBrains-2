@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import FirebaseFirestore
 
 
 /// Контроллер отвечающий за друзей
