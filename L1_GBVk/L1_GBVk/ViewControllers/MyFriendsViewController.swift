@@ -146,7 +146,7 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
             if let selection = self.tableView.indexPathForSelectedRow {
                 let char = friendsSectionIndex[selection.section]
                 let friendName = friendsIndexDictionary[char]?[selection.row].name
-                photosViewController.friendName = friendName!
+                photosViewController.title = friendName ?? "Unknown"
                 let id = friendsIndexDictionary[char]?[selection.row].id
                 photosViewController.friendId = id!
             }

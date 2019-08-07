@@ -33,3 +33,11 @@ class RGroup: Object {
         return "id"
     }
 }
+
+class RPhoto: Object {
+    @objc dynamic var photoUrl: String = ""
+    
+    override static func primaryKey() -> String? {
+        return "photoUrl"
+    }
+}

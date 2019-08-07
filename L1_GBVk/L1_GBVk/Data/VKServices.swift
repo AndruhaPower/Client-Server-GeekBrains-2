@@ -23,47 +23,6 @@ class VKServices {
         let manager = Alamofire.Session(configuration: config)
         return manager
     }()
-    
-    // ПОЛУЧАЕМ ПОЛЬЗОВАТЕЛЕЙ
-    
-    
-    
-    public func getUsers() {
-        
-        let url = VKConstants.users
-        
-        let params: Parameters = [
-            "user_ids" : String(VKSession.shared.userid),
-            "fields" : "id,photo_50,first_name,last_name",
-            "access_token" : KeychainWrapper.standard.string(forKey: "VKToken")!,
-            "v" : VKConstants.vAPI
-        ]
-        
-        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkuserResponse: DataResponse<VKUserResponse>) in
-        
-            let result  = vkuserResponse.result
-            switch result {
-            case .success(let val):
-                let db = Firestore.firestore()
-                var ref: DocumentReference? = nil
-                ref = db.collection("user").document("\(val.response?.id)")
-                ref?.setData([
-                    "name" : val.response?.name,
-                    "id" : val.response?.id,
-                    "photo" : val.response?.photo
-                ]) { error in
-                    if let err = error {
-                        print("Error adding document: \(err)")
-                    } else {
-                        print("Document added with ID: \(ref!.documentID)")
-                    }
-                }
-            case .failure(let error):
-                print(error)
-            }
-
-        })
-    }
 
     // ПОЛУЧАЕМ ДРУЗЕЙ
     
@@ -135,8 +94,8 @@ class VKServices {
             let result = vkgroupResponse.result
             switch result {
             case .success(let val):
-                let items = val.response?.items
-                RealmManager.groupsManager(groups: items!)
+                guard let items = val.response?.items else { return }
+                RealmManager.groupsManager(groups: items)
             case .failure(let error):
                 print(error)
             }
@@ -145,7 +104,7 @@ class VKServices {
     
     // ПОЛУЧАЕМ ССЫЛКИ НА ФОТКИ
     
-    public func getPhotos(id: Int, _ completionHandler:@escaping (_ photos:[Photo]?)->()) {
+    public func getPhotos(id: Int) {
         
         let url = VKConstants.photosURL
         
@@ -163,14 +122,8 @@ class VKServices {
             let result = vkphotoresponse.result
             switch result {
             case .success(let val):
-                var photos: [Photo] = []
                 guard let items = val.response?.items else { return }
-                for photo in items {
-                    if photo.photoURL != "" {
-                        photos.append(photo)
-                    }
-                }
-                completionHandler(photos)
+                RealmManager.photosManager(photos: items)
             case .failure(let error):
                 print(error)
             }

@@ -49,7 +49,6 @@
 		4997A27C22D60FEA00537D64 /* MapGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997A27B22D60FEA00537D64 /* MapGroups.swift */; };
 		4997A27E22D6100000537D64 /* MapFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997A27D22D6100000537D64 /* MapFriend.swift */; };
 		4997A28022D6244000537D64 /* MapPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997A27F22D6244000537D64 /* MapPhoto.swift */; };
-		4997A28222D629C100537D64 /* VKAuthorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997A28122D629C100537D64 /* VKAuthorize.swift */; };
 		499A9FA922EEF5B000BC2269 /* MapUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A9FA822EEF5B000BC2269 /* MapUser.swift */; };
 		49A2FA3122D1F54C00A33630 /* VKServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2FA3022D1F54C00A33630 /* VKServices.swift */; };
 		49A2FA3A22D205C400A33630 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A2FA3922D205C300A33630 /* WebKit.framework */; };
@@ -135,7 +134,6 @@
 		4997A27B22D60FEA00537D64 /* MapGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGroups.swift; sourceTree = "<group>"; };
 		4997A27D22D6100000537D64 /* MapFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFriend.swift; sourceTree = "<group>"; };
 		4997A27F22D6244000537D64 /* MapPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPhoto.swift; sourceTree = "<group>"; };
-		4997A28122D629C100537D64 /* VKAuthorize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAuthorize.swift; sourceTree = "<group>"; };
 		499A9FA822EEF5B000BC2269 /* MapUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUser.swift; sourceTree = "<group>"; };
 		49A2FA3022D1F54C00A33630 /* VKServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKServices.swift; sourceTree = "<group>"; };
 		49A2FA3922D205C300A33630 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -268,7 +266,6 @@
 				4973735F22C9FA9600C6A3E0 /* VKSession.swift */,
 				49A2FA3022D1F54C00A33630 /* VKServices.swift */,
 				4983126A22D47441006B4676 /* VKConstants.swift */,
-				4997A28122D629C100537D64 /* VKAuthorize.swift */,
 				4904B32022E9C31D00943876 /* LoadingImageOperation.swift */,
 			);
 			path = Data;
@@ -650,7 +647,6 @@
 				4994579322B52B8000ED7B2A /* LogoImageView.swift in Sources */,
 				49163F5B22BEAEC500C23B72 /* LoadingCirclesImage.swift in Sources */,
 				495A808722B1448F00A77C46 /* SectionIndexAlgorythm.swift in Sources */,
-				4997A28222D629C100537D64 /* VKAuthorize.swift in Sources */,
 				49C561FB22E08291002353EF /* RealmObjects.swift in Sources */,
 				495A808F22B158A000A77C46 /* CustomSearchGroupCell.swift in Sources */,
 				4994579722B538F500ED7B2A /* ShareControl.swift in Sources */,

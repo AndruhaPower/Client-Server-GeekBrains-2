@@ -45,4 +45,21 @@ public class RealmManager {
                 }
         }
     }
+    
+    static func photosManager(photos: [Photo]) {
+        var photosArray: [RPhoto] = []
+        for each in photos {
+            let photo = RPhoto()
+            photo.photoUrl = each.photoURL
+            photosArray.append(photo)
+        }
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    realm.add(photosArray, update: .all)
+                }
+            } catch {
+                print(error)
+            }
+    }
 }
