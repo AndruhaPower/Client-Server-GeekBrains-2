@@ -20,6 +20,7 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
     private var friends: [RFriend] = []
     private let vkServices = VKServices()
     private var token: NotificationToken?
+    private let operationQueue = OperationQueue()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,13 +49,14 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
         let char = self.friendsSectionIndex[indexPath.section]
         guard let photo = self.friendsIndexDictionary[char]?[indexPath.row].photo else { return UITableViewCell() }
         cell.indexPath = indexPath
-        let operationQueue = OperationQueue()
         let operation = LoadImageOperation()
         operation.url = URL(string: photo)
-        operationQueue.addOperation(operation)
+        self.operationQueue.addOperation(operation)
         operation.completion = { image in
             if cell.indexPath == indexPath {
                 cell.avatarImage.image = image
+            } else {
+                print("asdd")
             }
         }
         let friendsName = self.friendsIndexDictionary[char]?[indexPath.row].name ?? "Unknown"
@@ -105,30 +107,23 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
     }
     
     private func saveFriendsData() {
-        do {
-            self.vkServices.getFriends()
-            let realm = try Realm()
-            let resultFriends = realm.objects(RFriend.self)
-            self.token = resultFriends.observe { [weak self] (changes: RealmCollectionChange) in
-                switch changes {
-                case .initial:
-                    self?.tableView.reloadData()
-                case .update(_, let deletions, let insertions, let modifications):
-                    self?.tableView.reloadData()
-                // СДЕЛАЙ С СЕКЦИЯМИ
-                case .error(let error):
+            self.vkServices.getFriends { [weak self] (isFinished) in
+                do {
+                    guard let self = self else { return }
+                    let realm = try Realm()
+                    let resultFriends = realm.objects(RFriend.self)
+                    self.friends = Array(resultFriends)
+                    self.updateFriendsIndex(friends: self.friends)
+                    self.updateFriendsNamesDictionary(friends: self.friends)
+                    DispatchQueue.main.async {
+                        self.tableView?.reloadData()
+                    }
+                } catch {
                     print(error)
                 }
+       
             }
-            self.friends = Array(resultFriends)
-            self.updateFriendsIndex(friends: self.friends)
-            self.updateFriendsNamesDictionary(friends: self.friends)
-            DispatchQueue.main.async {
-                self.tableView?.reloadData()
-            }
-        } catch {
-            print(error)
-        }
+        
     }
     
     private func tableViewConfig() {
@@ -153,3 +148,17 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
         }
     }
 }
+
+
+
+//            self.token = resultFriends.observe { [weak self] (changes: RealmCollectionChange) in
+//                switch changes {
+//                case .initial:
+//                    self?.tableView.reloadData()
+//                case .update(_, let deletions, let insertions, let modifications):
+//                    self?.tableView.reloadData()
+//                // СДЕЛАЙ С СЕКЦИЯМИ
+//                case .error(let error):
+//                    print(error)
+//                }
+//            }

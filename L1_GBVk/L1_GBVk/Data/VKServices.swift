@@ -26,7 +26,7 @@ class VKServices {
 
     // ПОЛУЧАЕМ ДРУЗЕЙ
     
-    public func getFriends() {
+    public func getFriends( completion: @escaping (Bool)->()) {
         
         let url = VKConstants.friends
         
@@ -44,8 +44,10 @@ class VKServices {
             case .success(let val):
                 let items = val.response?.items
                 RealmManager.friendsManager(friends: items!)
+                completion(true)
             case .failure(let error):
                 print(error)
+                completion(false)
             }
         })
     }
@@ -104,7 +106,7 @@ class VKServices {
     
     // ПОЛУЧАЕМ ССЫЛКИ НА ФОТКИ
     
-    public func getPhotos(id: Int) {
+    public func getPhotos(id: Int, completion: @escaping (Bool)->()) {
         
         let url = VKConstants.photosURL
         
@@ -123,9 +125,11 @@ class VKServices {
             switch result {
             case .success(let val):
                 guard let items = val.response?.items else { return }
-                RealmManager.photosManager(photos: items)
+                RealmManager.photosManager(photos: items, id: id)
+                completion(true)
             case .failure(let error):
                 print(error)
+                completion(false)
             }
         })
     }

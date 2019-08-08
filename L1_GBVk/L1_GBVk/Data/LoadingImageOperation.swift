@@ -16,7 +16,10 @@ class LoadImageOperation: Operation {
     override func main() {
         if let data = try? Data(contentsOf: self.url!),
             let image = UIImage(data: data) {
-            DispatchQueue.main.async { [weak self] in self?.completion?(image) }
+            DispatchQueue.main.async { self.completion?(image) }
+        }
+        else {
+            print("error")
         }
     }
 }

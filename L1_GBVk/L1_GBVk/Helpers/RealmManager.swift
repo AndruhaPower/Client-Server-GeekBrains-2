@@ -46,11 +46,12 @@ public class RealmManager {
         }
     }
     
-    static func photosManager(photos: [Photo]) {
+    static func photosManager(photos: [Photo], id: Int) {
         var photosArray: [RPhoto] = []
         for each in photos {
             let photo = RPhoto()
             photo.photoUrl = each.photoURL
+            photo.id = id
             photosArray.append(photo)
         }
             do {

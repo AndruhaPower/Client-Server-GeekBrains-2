@@ -23,8 +23,9 @@ class PhotosViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.getPhotosData()
         self.configCollectionVIew()
+        self.getPhotosData()
+
     }
 
     // MARK: UICollectionViewDataSource
@@ -80,17 +81,14 @@ class PhotosViewController: UICollectionViewController {
     }
     
     private func getPhotosData() {
-        do {
-            self.vkServices.getPhotos(id: self.friendId)
-            let realm = try Realm()
-            let resultPhotos = realm.objects(RPhoto.self)
-            print(resultPhotos)
-            self.photosToDisplay = Array(resultPhotos)
+        self.vkServices.getPhotos(id: self.friendId) { (isCompleted) in
+            let realm = try? Realm()
+            let resultPhotos = realm?.objects(RPhoto.self).filter("id=\(self.friendId)")
+            guard let finalPhotos = resultPhotos else { return }
+            self.photosToDisplay = Array(finalPhotos)
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
-        } catch {
-            print(error)
         }
     }
     
