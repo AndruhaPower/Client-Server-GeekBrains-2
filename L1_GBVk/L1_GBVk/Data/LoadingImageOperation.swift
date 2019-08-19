@@ -14,12 +14,12 @@ class LoadImageOperation: Operation {
     
     var completion: ((UIImage) -> ())?
     override func main() {
-        if let data = try? Data(contentsOf: self.url!),
+        if let data = try? Data(contentsOf: self.url ?? URL(string: "https://vk.com/images/dquestion_v.png")!),
             let image = UIImage(data: data) {
             DispatchQueue.main.async { self.completion?(image) }
         }
         else {
-            print("error")
+            print("no url")
         }
     }
 }

@@ -9,48 +9,64 @@
 import UIKit
 
 class NewsViewController: UIViewController {
-
-    var news: [NewsModel] = [
-        NewsModel(newsText: "Apple News+ Guide: Everything You Need to Know", newsImagePath: "news1", newsLikes: 6532, newsComments: 423, newsShares: 123, newsViews: 54681),
-        NewsModel(newsText: "Huawei Delays Launch of Foldable Smartphone, Being More 'Cautious' After Samsung's Galaxy Fold Issues", newsImagePath: "news2", newsLikes: 432, newsComments: 241, newsShares: 120, newsViews: 5023),
-        NewsModel(newsText: "Google Confirms Pixel 4 Will Feature Square-Shaped Camera Bump", newsImagePath: "news3", newsLikes: 152, newsComments: 78, newsShares: 23, newsViews: 352),
-        NewsModel(newsText: "Apple in Talks to Purchase Intel's German Modem Unit", newsImagePath: "news4", newsLikes: 4214, newsComments: 1231, newsShares: 349, newsViews: 106832)
-        ]
+    
+    var news: [Feed] = []
+    var vkServices = VKServices()
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: "CustomFeedCell", bundle: nil), forCellReuseIdentifier: CustomNewsCell.reuseId)
-        tableView.register(UINib(nibName: "FriendCell", bundle: nil), forCellReuseIdentifier: CustomFriendsCell.reuseId)
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.configureViewDidLoad()
+        self.getFeedData()
+        
     }
 }
 
 extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return news.count
+        return self.news.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomNewsCell.reuseId, for: indexPath) as? CustomNewsCell else { return UITableViewCell() }
         
-        cell.newsText.text = news[indexPath.row].newsText
-        let newsImageName = news[indexPath.row].newsImagePath
-        let newsImage = UIImage(named: newsImageName)
-        cell.newsImage?.image = newsImage
-//        cell.imageView?.image = UIImage(named: news[indexPath.row].newsImagePath)
-        cell.likes.likesCount = news[indexPath.row].newsLikes
-        cell.comments.commentsCount = news[indexPath.row].newsComments
-        cell.shares.sharesCount = news[indexPath.row].newsShares
-        cell.views.viewsCount = news[indexPath.row].newsViews
+        let photo = news[indexPath.row].photoUrl
         
+        cell.newsText.text = self.news[indexPath.row].text
+        cell.comments.commentsCount = self.news[indexPath.row].commentCount
+        cell.likes.likesCount = self.news[indexPath.row].likesCount
+        cell.shares.sharesCount = self.news[indexPath.row].repostCount
+        cell.indexPath = indexPath
+        let operationQueue = OperationQueue()
+        let operation = LoadImageOperation()
+        operation.url = URL(string: photo)
+        operationQueue.addOperation(operation)
+        operation.completion = { image in
+            if cell.indexPath == indexPath {
+                cell.newsImage.image = image
+            }
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomNewsCell.reuseId, for: indexPath) as? CustomNewsCell else { return UITableViewCell }
         return 450
+    }
+    
+    func getFeedData() {
+        self.vkServices.getNews(count: 50) { resultFeed in
+            guard let feed = resultFeed else { return }
+            self.news = feed
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func configureViewDidLoad() {
+        self.tableView.register(UINib(nibName: "CustomFeedCell", bundle: nil), forCellReuseIdentifier: CustomNewsCell.reuseId)
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
     }
 }

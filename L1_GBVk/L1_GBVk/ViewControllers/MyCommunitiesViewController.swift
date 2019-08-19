@@ -63,18 +63,18 @@ class MyCommunitiesViewController: UITableViewController {
             self.vkServices.getGroups()
             let realm = try Realm()
             let resultGroups = realm.objects(RGroup.self).filter("isMember != 0")
-//            self.token = resultGroups.observe { [weak self] (changes: RealmCollectionChange) in
-//                switch changes {
-//                case .initial:
-//                    self?.tableView.reloadData()
-//                case .update(_, let deletions, let insertions, let modifications):
-//                    self?.tableView.insertRows(at: insertions.map({ IndexPath(row:  $0, section: 0)}), with: .automatic)
-//                    self?.tableView.deleteRows(at: deletions.map({IndexPath(row:  $0, section: 0)}), with: .automatic)
-//                    self?.tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0)}), with: .automatic)
-//                case .error(let error):
-//                    print(error)
-//                }
-//            }
+            self.token = resultGroups.observe { [weak self] (changes: RealmCollectionChange) in
+                switch changes {
+                case .initial:
+                    self?.tableView.reloadData()
+                case .update(_, let deletions, let insertions, let modifications):
+                    self?.tableView.insertRows(at: insertions.map({ IndexPath(row:  $0, section: 0)}), with: .automatic)
+                    self?.tableView.deleteRows(at: deletions.map({IndexPath(row:  $0, section: 0)}), with: .automatic)
+                    self?.tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0)}), with: .automatic)
+                case .error(let error):
+                    print(error)
+                }
+            }
             self.groups = Array(resultGroups)
         } catch {
             print(error)

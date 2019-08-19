@@ -36,6 +36,7 @@ class VKServices {
             "fields": "photo_50,city",
             "v": VKConstants.vAPI
         ]
+        print(params["access_token"]) // удалить перед сдачей
         
         VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfriendsResponse: DataResponse<VKFriendResponse>) in
             
@@ -104,6 +105,35 @@ class VKServices {
         })
     }
     
+    // ПОЛУЧАЕМ НОВОСТИ
+    
+    public func getNews(count: Int, completion: @escaping ([Feed]?)->()) {
+        let url = VKConstants.newsFeed
+        
+        let params: Parameters = [
+        
+            "filters" : "post",
+            "count" : String(count),
+            "access_token" : KeychainWrapper.standard.string(forKey: "VKToken")!,
+            "v" : VKConstants.vAPI,
+            "source_ids" : "groups"
+        ]
+        
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfeedResponse: DataResponse<VKFeedResponse>) in
+            
+            let result = vkfeedResponse.result
+            switch result {
+            case.success(let val):
+                guard let items = val.response?.items else { return }
+                completion(items)
+            case.failure(let error):
+                print(error)
+                completion(nil)
+            }
+        })
+    }
+    
+    
     // ПОЛУЧАЕМ ССЫЛКИ НА ФОТКИ
     
     public func getPhotos(id: Int, completion: @escaping (Bool)->()) {
@@ -134,6 +164,3 @@ class VKServices {
         })
     }
 }
-
-
-

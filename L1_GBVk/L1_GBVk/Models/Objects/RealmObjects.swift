@@ -42,3 +42,20 @@ class RPhoto: Object {
         return "photoUrl"
     }
 }
+
+//class RFeed: Object {
+//    
+//    @objc dynamic var name: String = ""
+//    @objc dynamic var isMember: Int = 0
+//    @objc dynamic var id: Int = 0
+//    @objc dynamic var photoUrl: String = ""
+//    @objc dynamic var commentsCount: Int = 0
+//    @objc dynamic var repostsCount: Int = 0
+//    @objc dynamic var likesCount: Int = 0
+//    
+//    
+//    
+//    override static func primaryKey() -> String? {
+//        return "id"
+//    }
+//}

@@ -13,7 +13,7 @@ import UIKit
 class CustomNewsCell: UITableViewCell {
     
     static var reuseId: String = "CustomNewsCell"
-    
+    var indexPath: IndexPath?
     @IBOutlet weak var newsText: UILabel!
     @IBOutlet weak var newsImage: UIImageView!
     @IBOutlet weak var likes: LikeButtonControl!
