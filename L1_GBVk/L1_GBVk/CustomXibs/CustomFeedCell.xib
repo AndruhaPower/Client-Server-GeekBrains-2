@@ -33,15 +33,15 @@
                         <constraint firstAttribute="width" constant="100" id="S65-yi-zfD"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5QS-vo-2xN" customClass="ShareControl" customModule="L1_GBVk" customModuleProvider="target">
-                    <rect key="frame" x="226" y="379" width="100" height="35"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5QS-vo-2xN" customClass="ShareControl" customModule="L1_GBVk" customModuleProvider="target">
+                    <rect key="frame" x="246" y="379" width="100" height="35"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="ERf-3a-tE3"/>
                         <constraint firstAttribute="height" constant="35" id="Fzz-Na-NU1"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gFp-mf-G5n" customClass="CommentControl" customModule="L1_GBVk" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gFp-mf-G5n" customClass="CommentControl" customModule="L1_GBVk" customModuleProvider="target">
                     <rect key="frame" x="176" y="379" width="50" height="35"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -49,8 +49,8 @@
                         <constraint firstAttribute="width" constant="50" id="RqR-7W-ZsV"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G9g-8r-1kY" customClass="ViewsControl" customModule="L1_GBVk" customModuleProvider="target">
-                    <rect key="frame" x="501" y="379" width="100" height="35"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G9g-8r-1kY" customClass="ViewsControl" customModule="L1_GBVk" customModuleProvider="target">
+                    <rect key="frame" x="506" y="379" width="100" height="35"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="MME-x4-P7Y"/>
@@ -60,7 +60,7 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="G9g-8r-1kY" firstAttribute="leading" relation="lessThanOrEqual" secondItem="5QS-vo-2xN" secondAttribute="trailing" constant="175" id="0uS-ar-tJh"/>
+                <constraint firstItem="G9g-8r-1kY" firstAttribute="leading" secondItem="5QS-vo-2xN" secondAttribute="trailing" constant="160" id="0uS-ar-tJh"/>
                 <constraint firstItem="Hpr-hv-u1O" firstAttribute="top" secondItem="306-j1-bEQ" secondAttribute="bottom" constant="8" id="AR8-kc-vkh"/>
                 <constraint firstItem="306-j1-bEQ" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="15" id="Bt6-he-jSU"/>
                 <constraint firstItem="YxO-ct-uOS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="FlJ-aO-97X"/>
@@ -71,11 +71,11 @@
                 <constraint firstItem="gFp-mf-G5n" firstAttribute="top" secondItem="306-j1-bEQ" secondAttribute="bottom" constant="8" id="Zcu-Y8-71f"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Hpr-hv-u1O" secondAttribute="bottom" constant="2" id="aj9-hL-6tb"/>
                 <constraint firstItem="306-j1-bEQ" firstAttribute="top" secondItem="YxO-ct-uOS" secondAttribute="bottom" constant="15" id="bCR-tK-amI"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="G9g-8r-1kY" secondAttribute="trailing" constant="10" id="d1D-h2-Qif"/>
+                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="G9g-8r-1kY" secondAttribute="trailing" constant="10" id="d1D-h2-Qif"/>
                 <constraint firstItem="YxO-ct-uOS" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="10" id="gZ4-gV-hfa"/>
                 <constraint firstItem="306-j1-bEQ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="pVC-wT-AZl"/>
                 <constraint firstItem="Hpr-hv-u1O" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="qbj-E0-aS1"/>
-                <constraint firstItem="gFp-mf-G5n" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Hpr-hv-u1O" secondAttribute="trailing" constant="56" id="sh9-0p-u8n"/>
+                <constraint firstItem="gFp-mf-G5n" firstAttribute="leading" secondItem="Hpr-hv-u1O" secondAttribute="trailing" constant="56" id="sh9-0p-u8n"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="5QS-vo-2xN" secondAttribute="bottom" constant="2" id="usX-jc-C4r"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gFp-mf-G5n" secondAttribute="bottom" constant="2" id="zjt-Ki-xaV"/>
             </constraints>

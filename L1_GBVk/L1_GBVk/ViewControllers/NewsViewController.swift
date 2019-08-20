@@ -45,6 +45,8 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
         operation.completion = { image in
             if cell.indexPath == indexPath {
                 cell.newsImage.image = image
+            } else {
+                print("nor the right picture")
             }
         }
         return cell
@@ -66,6 +68,8 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func configureViewDidLoad() {
         self.tableView.register(UINib(nibName: "CustomFeedCell", bundle: nil), forCellReuseIdentifier: CustomNewsCell.reuseId)
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 600
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
