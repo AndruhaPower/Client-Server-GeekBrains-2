@@ -5,12 +5,14 @@
 //  Created by Andrew on 07/07/2019.
 //  Copyright © 2019 Andrew. All rights reserved.
 //
-
 import Foundation
 import Alamofire
 import AlamofireObjectMapper
 import SwiftKeychainWrapper
-import Realm
+import RealmSwift
+import FirebaseFirestore
+import Firebase
+
 
 class VKServices {
     
@@ -18,43 +20,41 @@ class VKServices {
         let config = URLSessionConfiguration.default
         config.headers = .default
         config.timeoutIntervalForRequest = 20
-        
         let manager = Alamofire.Session(configuration: config)
         return manager
     }()
-    
-// АВТОРИЗАЦИЯ
-    
-    
-    
-// ПОЛУЧАЕМ ГРУППЫ
-    
-    public func getFriends(_ completionHandler:@escaping (_ friends:[Friend]?)->() ) {
-    
-        let url = VKConstants.friends
 
+    // ПОЛУЧАЕМ ДРУЗЕЙ
+    
+    public func getFriends( completion: @escaping (Bool)->()) {
+        
+        let url = VKConstants.friends
+        
         let params: Parameters = [
             "access_token": KeychainWrapper.standard.string(forKey: "VKToken")!,
             "order": "name",
             "fields": "photo_50,city",
             "v": VKConstants.vAPI
         ]
-
+        
         VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfriendsResponse: DataResponse<VKFriendResponse>) in
             
             let result = vkfriendsResponse.result
             switch result {
             case .success(let val):
-                completionHandler(val.response?.items)
+                let items = val.response?.items
+                RealmManager.friendsManager(friends: items!)
+                completion(true)
             case .failure(let error):
                 print(error)
+                completion(false)
             }
         })
     }
     
-// ПОЛУЧАЕМ СВОИ ГРУППЫ
+    // ПОЛУЧАЕМ СВОИ ГРУППЫ
     
-    public func getGroups(_ completionHandler:@escaping (_ groups:[Group]?)->() ) {
+    public func getGroups() {
         
         let url = VKConstants.groups
         
@@ -70,16 +70,17 @@ class VKServices {
             let result = vkgroupResponse.result
             switch result {
             case .success(let val):
-                completionHandler(val.response?.items)
+                let items = val.response?.items
+                RealmManager.groupsManager(groups: items!)
             case .failure(let error):
                 print(error)
             }
         })
     }
     
-// ПОЛУЧАЕМ ГРУППЫ ДЛЯ ПОИСКА
+    // ПОЛУЧАЕМ ГРУППЫ ДЛЯ ПОИСКА
     
-    public func getSearchGroups(_ completionHandler:@escaping (_ groups:[Group]?)->()) {
+    public func getSearchGroups() {
         
         let url = VKConstants.groupsSearch
         
@@ -95,21 +96,22 @@ class VKServices {
             let result = vkgroupResponse.result
             switch result {
             case .success(let val):
-                completionHandler(val.response?.items)
+                guard let items = val.response?.items else { return }
+                RealmManager.groupsManager(groups: items)
             case .failure(let error):
                 print(error)
             }
         })
     }
     
-// ПОЛУЧАЕМ ССЫЛКИ НА ФОТКИ
-
-    public func getPhotos(id: Int, _ completionHandler:@escaping (_ photos:[Photo]?)->()) {
+    // ПОЛУЧАЕМ ССЫЛКИ НА ФОТКИ
+    
+    public func getPhotos(id: Int, completion: @escaping (Bool)->()) {
         
         let url = VKConstants.photosURL
         
         let params: Parameters = [
-        
+            
             "owner_id" : String(id),
             "extended" : "0",
             "skip_hidden" : "1",
@@ -122,16 +124,12 @@ class VKServices {
             let result = vkphotoresponse.result
             switch result {
             case .success(let val):
-                var photos: [Photo] = []
                 guard let items = val.response?.items else { return }
-                for photo in items {
-                    if photo.photoURL != "" {
-                        photos.append(photo)
-                    }
-                }
-                completionHandler(photos)
+                RealmManager.photosManager(photos: items, id: id)
+                completion(true)
             case .failure(let error):
                 print(error)
+                completion(false)
             }
         })
     }

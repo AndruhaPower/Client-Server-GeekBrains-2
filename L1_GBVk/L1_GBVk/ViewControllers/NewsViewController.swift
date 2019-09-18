@@ -21,7 +21,7 @@ class NewsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "CustomFeedCell", bundle: nil), forCellReuseIdentifier: CustomNewsCell.reuseId)
-        
+        tableView.register(UINib(nibName: "FriendCell", bundle: nil), forCellReuseIdentifier: CustomFriendsCell.reuseId)
         tableView.delegate = self
         tableView.dataSource = self
     }

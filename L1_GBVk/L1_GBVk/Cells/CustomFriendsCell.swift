@@ -11,11 +11,15 @@ import UIKit
 class CustomFriendsCell: UITableViewCell {
     
     static var reuseId: String = "CustomFriendCell"
-    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var avatarImage: AvatarImageView!
+    var indexPath: IndexPath?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+    }
+    
+    override func prepareForReuse() {
+        self.avatarImage.image = nil
     }
 }

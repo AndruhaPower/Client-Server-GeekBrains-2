@@ -9,7 +9,8 @@
 import UIKit
 
 class AvatarCell: UICollectionViewCell {
-
+    
+    var indexPath: IndexPath?
     static let reuseIdentifier = "AvatarCell"
     @IBOutlet weak var likeButton: LikeButtonControl!
     @IBOutlet weak var avatarImageView: UIImageView!
