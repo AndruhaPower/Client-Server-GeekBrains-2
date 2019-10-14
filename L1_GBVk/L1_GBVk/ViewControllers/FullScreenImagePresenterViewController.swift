@@ -13,7 +13,11 @@ class FullScreenImagePresenterViewController: UIViewController, UICollectionView
     @IBOutlet weak var fullScreenCollectionView: UICollectionView!
 private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
     var imagesToDisplay: [RPhoto] = []
-    var indexPathToScrollTo = IndexPath(row:0, section:0)
+    var indexPathToScrollTo = IndexPath(row: 0, section: 0) {
+        didSet {
+            fullScreenCollectionView.scrollToItem(at: indexPathToScrollTo, at:UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
+        }
+    }
     var newCellIndexPath = IndexPath(row: 0, section: 0)
     var oldCellIndexPath = IndexPath(row: 0, section: 0)
     var scrollChangedDirection: Bool = false
@@ -22,7 +26,6 @@ private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureCollectionView()
-        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -35,7 +38,8 @@ private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? FullScreenCollectionViewCell else { return UICollectionViewCell() }
-        let photo = self.imagesToDisplay[indexPath.row]
+        cell.indexPath = indexPath
+        let photo = self.imagesToDisplay[indexPath.row] // индексы в говне
         let operationQueue = OperationQueue()
         let operation = LoadImageOperation()
         operation.url = URL(string: photo.photoUrl)
@@ -43,11 +47,13 @@ private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
         operation.completion = { image in
             if cell.indexPath == indexPath {
                 cell.friendsImageView.image = image
+            } else {
+                print("IndexPath неверный")
             }
         }
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         //update new cell index for scroll direction detection
         newCellIndexPath = indexPath
@@ -132,13 +138,15 @@ private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
         self.fullScreenCollectionView.delegate = self
         self.setupCollectionViewAppearance()
         
-        fullScreenCollectionView.scrollToItem(at: indexPathToScrollTo, at:UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
+       //fullScreenCollectionView.scrollToItem(at: indexPathToScrollTo, at:UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipedToDismiss))
+        swipeDown.direction = .down
         
         swipeDown.delegate = self
         view.addGestureRecognizer(swipeDown)
     }
+    
     private func setupCollectionViewAppearance() {
         let width = UIScreen.main.bounds.width
         let height = UIScreen.main.bounds.height
@@ -160,6 +168,7 @@ private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
         self.fullScreenCollectionView.backgroundColor = .black
         self.fullScreenCollectionView.isPagingEnabled = true
     }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if traitCollection.horizontalSizeClass == .compact {
             self.setupCollectionViewAppearance()

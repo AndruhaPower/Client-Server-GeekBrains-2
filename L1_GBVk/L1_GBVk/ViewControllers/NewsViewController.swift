@@ -11,6 +11,7 @@ import UIKit
 class NewsViewController: UIViewController {
     
     var news: [Feed] = []
+    var sourceGroups: [Groups] = []
     var vkServices = VKServices()
     @IBOutlet weak var tableView: UITableView!
     
@@ -34,8 +35,8 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
         let photo = news[indexPath.row].photoUrl
         
         cell.newsText.text = self.news[indexPath.row].text
-        cell.comments.commentsCount = self.news[indexPath.row].commentCount
         cell.likes.likesCount = self.news[indexPath.row].likesCount
+        cell.comments.commentsCount = self.news[indexPath.row].commentCount
         cell.shares.sharesCount = self.news[indexPath.row].repostCount
         cell.indexPath = indexPath
         let operationQueue = OperationQueue()
@@ -46,22 +47,63 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
             if cell.indexPath == indexPath {
                 cell.newsImage.image = image
             } else {
-                print("nor the right picture")
+                print("not the right picture")
             }
         }
+        getGroupInfo(source_id: news[indexPath.row].source_id) { inprocessGroup in
+            guard let group = inprocessGroup else { return }
+            cell.name.text = group.name
+            let photoUrl = URL(string: group.photoUrl)
+            let GroupOperation = LoadImageOperation()
+            GroupOperation.url = photoUrl
+            operationQueue.addOperation(GroupOperation)
+            GroupOperation.completion = { image in
+                cell.userphoto.image = image
+                }
+            }
         return cell
     }
+    
+    
+    /*
+     if let model = self.models[indexPath.row]
+     if model.uiimage != nil {
+     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? UIImageCollectionViewCell else { return UICollectionViewCell() }
+     
+     cell.image = model.uiimage
+     return cell
+     } else {
+     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? UIImageCollectionViewCell else { return UICollectionViewCell() }
+     cell.title = model.title
+     return cell
+     }
+     }
+     */
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 450
     }
     
     func getFeedData() {
-        self.vkServices.getNews(count: 50) { resultFeed in
-            guard let feed = resultFeed else { return }
+        self.vkServices.getNews(count: 50) { resultFeed, resultGroups in
+            guard let feed = resultFeed,
+            let groups = resultGroups
+            else { return }
             self.news = feed
+            self.sourceGroups = groups
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func getGroupInfo(source_id: Int, completion: @escaping ((Groups?)->())) {
+        for group in self.sourceGroups {
+            if group.id == -(source_id) {
+                completion(group)
+            } else {
+                print("Skipping through group #\(group.name)")
             }
         }
     }

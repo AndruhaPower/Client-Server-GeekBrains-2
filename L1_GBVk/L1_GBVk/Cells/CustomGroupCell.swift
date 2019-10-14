@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class CustomGroupCell: UITableViewCell {
     
     static var reuseId: String = "CustomGroupCell"
@@ -26,6 +25,6 @@ class CustomGroupCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        self.groupAvatarImage.image = nil
+        self.groupAvatarImage.image = UIImage(named: "community_template")
     }
 }

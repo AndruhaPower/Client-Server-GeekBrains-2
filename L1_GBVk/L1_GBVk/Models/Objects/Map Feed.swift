@@ -22,11 +22,12 @@ class VKFeedResponse: Mappable {
 class VKFeedResponseInternal: Mappable {
     
     var items: [Feed] = []
-    
+    var groups: [Groups] = []
     required init?(map: Map) { }
     
     func mapping(map: Map) {
         self.items <- map["items"]
+        self.groups <- map["groups"]
     }
 }
 
@@ -35,14 +36,12 @@ class Feed: Mappable, CustomStringConvertible {
     var commentCount: Int = 0
     var likesCount: Int = 0
     var repostCount: Int = 0
-    // var name: String = ""
-    // var isMember: Int = 0
-    // var id: Int = 0
+    var source_id: Int = 0
     var photoUrl: String = ""
     var text: String = ""
     
     var description: String {
-        return (String("ФОТО: "+self.photoUrl+" ТЕКСТ НОВОСТИ: \n\(self.text)"))
+        return (String("ФОТО: "+self.photoUrl+" ТЕКСТ НОВОСТИ: \n\(self.text)"+" LIKES: \n"+String(self.likesCount)+"  COMMENTS: \n"+String(self.commentCount)+" REPOSTS: \n"+String(self.repostCount)))
     }
     
     required init?(map: Map) { }
@@ -51,7 +50,27 @@ class Feed: Mappable, CustomStringConvertible {
         self.commentCount <- map["comments.count"]
         self.repostCount <- map["reposts.count"]
         self.likesCount <- map["likes.count"]
+        self.source_id <- map["source_id"]
         self.photoUrl <- map["attachments.0.photo.sizes.3.url"]
         self.text <- map["text"]
+    }
+}
+
+class Groups: Mappable, CustomStringConvertible {
+    
+    var id: Int = 0
+    var name: String = ""
+    var photoUrl: String = ""
+    
+    var description: String {
+        return(String("Имя группы: "+self.name+", id группы: "+String(self.id)+" \n фотография группы: "+self.photoUrl))
+    }
+    
+    required init?(map: Map) { }
+    
+    func mapping(map: Map) {
+        self.id <- map["id"]
+        self.name <- map["name"]
+        self.photoUrl <- map["photo_100"]
     }
 }

@@ -148,17 +148,3 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
         }
     }
 }
-
-
-
-//            self.token = resultFriends.observe { [weak self] (changes: RealmCollectionChange) in
-//                switch changes {
-//                case .initial:
-//                    self?.tableView.reloadData()
-//                case .update(_, let deletions, let insertions, let modifications):
-//                    self?.tableView.reloadData()
-//                // СДЕЛАЙ С СЕКЦИЯМИ
-//                case .error(let error):
-//                    print(error)
-//                }
-//            }

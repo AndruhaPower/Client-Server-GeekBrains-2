@@ -20,6 +20,8 @@ class CustomNewsCell: UITableViewCell {
     @IBOutlet weak var comments: CommentControl!
     @IBOutlet weak var shares: ShareControl!
     @IBOutlet weak var views: ViewsControl!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var userphoto: AvatarImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,5 +29,14 @@ class CustomNewsCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    override func prepareForReuse() {
+        self.likes.likesCount = 0
+        self.comments.commentsCount = 0
+        self.shares.sharesCount = 0
+        self.views.viewsCount = 0
+        self.userphoto.image = UIImage(named: "noimage")
+        self.newsImage.image = nil
     }
 }

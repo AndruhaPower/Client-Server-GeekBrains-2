@@ -20,6 +20,6 @@ class CustomFriendsCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        self.avatarImage.image = nil
+        self.avatarImage.image = UIImage(named: "noimage")
     }
 }

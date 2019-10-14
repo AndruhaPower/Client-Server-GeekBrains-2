@@ -36,7 +36,7 @@ class VKServices {
             "fields": "photo_50,city",
             "v": VKConstants.vAPI
         ]
-        print(params["access_token"]) // удалить перед сдачей
+
         
         VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfriendsResponse: DataResponse<VKFriendResponse>) in
             
@@ -107,7 +107,7 @@ class VKServices {
     
     // ПОЛУЧАЕМ НОВОСТИ
     
-    public func getNews(count: Int, completion: @escaping ([Feed]?)->()) {
+    public func getNews(count: Int, completion: @escaping ([Feed]?, [Groups]?)->()) {
         let url = VKConstants.newsFeed
         
         let params: Parameters = [
@@ -124,11 +124,13 @@ class VKServices {
             let result = vkfeedResponse.result
             switch result {
             case.success(let val):
-                guard let items = val.response?.items else { return }
-                completion(items)
+                guard let items = val.response?.items,
+                      let groups = val.response?.groups else
+                { return }
+                completion(items,groups)
             case.failure(let error):
                 print(error)
-                completion(nil)
+                completion(nil,nil)
             }
         })
     }

@@ -15,11 +15,12 @@ class PhotosViewController: UICollectionViewController {
 
     var friendId: Int = 0
 
-    var selectedIndexPath = IndexPath(row: 0, section: 0)
     var photosToDisplay: [RPhoto] = []
     let presentTransition = CustomPresentModalAnimator()
     let dismissTransition = CustomDismissModalAnimator()
     let vkServices = VKServices()
+    
+    private var fullScreenViewController: FullScreenImagePresenterViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,14 +71,16 @@ class PhotosViewController: UICollectionViewController {
 //    }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndexPath = indexPath
-        let fullScreenGallery = storyboard!.instantiateViewController(withIdentifier: "FullScreenImagePresenter") as! FullScreenImagePresenterViewController
-        
-        fullScreenGallery.transitioningDelegate = self
-        fullScreenGallery.imagesToDisplay = photosToDisplay
-        fullScreenGallery.indexPathToScrollTo = selectedIndexPath
-        
-        present(fullScreenGallery, animated: true, completion: nil )
+//        let fullScreenGallery = storyboard!.instantiateViewController(withIdentifier: "FullScreenImagePresenter") as! FullScreenImagePresenterViewController
+//
+//        fullScreenGallery.transitioningDelegate = self
+//        fullScreenGallery.imagesToDisplay = photosToDisplay
+//        fullScreenGallery.indexPathToScrollTo = selectedIndexPath
+//        fullScreenGallery.indexPathToScrollTo = selectedIndexPath
+//
+//        present(fullScreenGallery, animated: true, completion: nil )
+        self.fullScreenViewController?.imagesToDisplay = self.photosToDisplay
+        self.fullScreenViewController?.indexPathToScrollTo = indexPath
     }
     
     private func getPhotosData() {
@@ -98,8 +101,7 @@ class PhotosViewController: UICollectionViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? FullScreenImagePresenterViewController {
-            destination.imagesToDisplay = photosToDisplay
-            destination.indexPathToScrollTo = selectedIndexPath
+            self.fullScreenViewController = destination
         }
     }
 }
