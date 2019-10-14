@@ -16,12 +16,9 @@ class CustomNewsCell: UITableViewCell {
     var indexPath: IndexPath?
     @IBOutlet weak var newsText: UILabel!
     @IBOutlet weak var newsImage: UIImageView!
-    @IBOutlet weak var likes: LikeButtonControl!
-    @IBOutlet weak var comments: CommentControl!
-    @IBOutlet weak var shares: ShareControl!
-    @IBOutlet weak var views: ViewsControl!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var userphoto: AvatarImageView!
+    @IBOutlet weak var stackView: ControlsStackView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,11 +29,17 @@ class CustomNewsCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        self.likes.likesCount = 0
-        self.comments.commentsCount = 0
-        self.shares.sharesCount = 0
-        self.views.viewsCount = 0
+        self.stackView.likes.likesCount = 0
+        self.stackView.comments.commentsCount = 0
+        self.stackView.shares.sharesCount = 0
         self.userphoto.image = UIImage(named: "noimage")
         self.newsImage.image = nil
     }
+}
+
+class ControlsStackView: UIStackView {
+    
+    @IBOutlet weak var likes: LikeButtonControl!
+    @IBOutlet weak var comments: CommentControl!
+    @IBOutlet weak var shares: ShareControl!    
 }

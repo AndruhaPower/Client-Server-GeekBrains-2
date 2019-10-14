@@ -17,9 +17,9 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YxO-ct-uOS">
-                    <rect key="frame" x="10" y="70" width="672" height="61"/>
+                    <rect key="frame" x="10" y="70" width="657" height="47"/>
                     <string key="text">Текст новости. Что будет если написать очень длинную новость , например такую, чтобы она не уместилась в строку. И дальше. например еще длиннее , уедет ли при этом мой лейбл с именем или нет</string>
-                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -38,79 +38,69 @@
                     </constraints>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="306-j1-bEQ">
-                    <rect key="frame" x="5" y="136" width="662" height="450"/>
+                    <rect key="frame" x="5" y="122" width="662" height="494"/>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vk8-Cy-ApP" customClass="LikeButtonControl" customModule="L1_GBVk" customModuleProvider="target">
-                    <rect key="frame" x="10" y="596" width="100" height="50"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="IWQ-qg-WNk"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QpV-RA-UDD" customClass="CommentControl" customModule="L1_GBVk" customModuleProvider="target">
-                    <rect key="frame" x="125" y="596" width="100" height="50"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="KK3-6F-foq"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="naU-ug-8UT" customClass="ShareControl" customModule="L1_GBVk" customModuleProvider="target">
-                    <rect key="frame" x="240" y="596" width="100" height="50"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="KXz-Ho-VHj"/>
-                        <constraint firstAttribute="height" constant="50" id="UuQ-Cq-wIK"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zk4-dM-bbE" customClass="ViewsControl" customModule="L1_GBVk" customModuleProvider="target">
-                    <rect key="frame" x="562" y="596" width="100" height="50"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="vAJ-Z2-ULP"/>
-                    </constraints>
-                </view>
+                <stackView opaque="NO" contentMode="scaleAspectFit" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="c2p-TR-Jzg" customClass="ControlsStackView" customModule="L1_GBVk" customModuleProvider="target">
+                    <rect key="frame" x="10" y="621" width="255" height="25"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vk8-Cy-ApP" customClass="LikeButtonControl" customModule="L1_GBVk" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="75" height="25"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="75" id="Xwe-n5-uSH"/>
+                                <constraint firstAttribute="height" constant="25" id="xI1-xd-uzj"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QpV-RA-UDD" customClass="CommentControl" customModule="L1_GBVk" customModuleProvider="target">
+                            <rect key="frame" x="90" y="0.0" width="75" height="25"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="75" id="lyE-HK-oza"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="naU-ug-8UT" customClass="ShareControl" customModule="L1_GBVk" customModuleProvider="target">
+                            <rect key="frame" x="180" y="0.0" width="75" height="25"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="75" id="HF9-eL-mZS"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <connections>
+                        <outlet property="comments" destination="QpV-RA-UDD" id="miv-J5-INu"/>
+                        <outlet property="likes" destination="Vk8-Cy-ApP" id="wvP-Df-ab3"/>
+                        <outlet property="shares" destination="naU-ug-8UT" id="cne-xb-DSh"/>
+                    </connections>
+                </stackView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="QpV-RA-UDD" firstAttribute="leading" secondItem="Vk8-Cy-ApP" secondAttribute="trailing" constant="15" id="21o-sa-KxV"/>
                 <constraint firstItem="TCb-uo-klQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="2U6-gG-R1D"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="B5P-JG-VTc" secondAttribute="trailing" constant="150" id="AVA-zS-THp"/>
+                <constraint firstItem="c2p-TR-Jzg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="6q4-ud-jl9"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="YxO-ct-uOS" secondAttribute="trailing" constant="5" id="A5N-LO-Faw"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="B5P-JG-VTc" secondAttribute="trailing" constant="20" id="AVA-zS-THp"/>
                 <constraint firstItem="YxO-ct-uOS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="FlJ-aO-97X"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="zk4-dM-bbE" secondAttribute="trailing" constant="10" id="M2m-sH-fbl"/>
                 <constraint firstItem="TCb-uo-klQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="MTf-Pw-vPs"/>
                 <constraint firstItem="306-j1-bEQ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="B5P-JG-VTc" secondAttribute="bottom" constant="49" id="O5I-67-lPk"/>
-                <constraint firstItem="QpV-RA-UDD" firstAttribute="top" secondItem="306-j1-bEQ" secondAttribute="bottom" constant="10" id="Pwz-O6-dKJ"/>
                 <constraint firstItem="B5P-JG-VTc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="SqS-bg-EdN"/>
-                <constraint firstAttribute="bottom" secondItem="Vk8-Cy-ApP" secondAttribute="bottom" constant="5" id="TeH-jz-Kgz"/>
                 <constraint firstItem="YxO-ct-uOS" firstAttribute="top" secondItem="TCb-uo-klQ" secondAttribute="bottom" constant="5" id="TrH-bT-Kpz"/>
-                <constraint firstItem="naU-ug-8UT" firstAttribute="leading" secondItem="QpV-RA-UDD" secondAttribute="trailing" constant="15" id="VXV-mk-jCI"/>
-                <constraint firstItem="zk4-dM-bbE" firstAttribute="top" secondItem="306-j1-bEQ" secondAttribute="bottom" constant="10" id="bGQ-sR-lD5"/>
+                <constraint firstItem="c2p-TR-Jzg" firstAttribute="top" secondItem="306-j1-bEQ" secondAttribute="bottom" constant="5" id="bAe-rP-Fhi"/>
                 <constraint firstItem="B5P-JG-VTc" firstAttribute="leading" secondItem="TCb-uo-klQ" secondAttribute="trailing" constant="10" id="dmt-zH-L9P"/>
-                <constraint firstItem="naU-ug-8UT" firstAttribute="top" secondItem="306-j1-bEQ" secondAttribute="bottom" constant="10" id="gWK-jo-iaB"/>
-                <constraint firstItem="YxO-ct-uOS" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="10" id="gZ4-gV-hfa"/>
                 <constraint firstAttribute="trailing" secondItem="306-j1-bEQ" secondAttribute="trailing" constant="5" id="iiO-GV-XEc"/>
-                <constraint firstAttribute="bottom" secondItem="zk4-dM-bbE" secondAttribute="bottom" constant="5" id="kdS-vG-aRF"/>
-                <constraint firstItem="zk4-dM-bbE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="naU-ug-8UT" secondAttribute="trailing" constant="15" id="kjJ-yc-gqd"/>
-                <constraint firstAttribute="bottom" secondItem="QpV-RA-UDD" secondAttribute="bottom" constant="5" id="nDI-Ys-RSC"/>
-                <constraint firstItem="Vk8-Cy-ApP" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="nuk-pz-hfM"/>
+                <constraint firstAttribute="bottom" secondItem="c2p-TR-Jzg" secondAttribute="bottom" constant="5" id="rjw-di-GC6"/>
                 <constraint firstItem="306-j1-bEQ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="tvZ-Q4-UNW"/>
-                <constraint firstAttribute="bottom" secondItem="naU-ug-8UT" secondAttribute="bottom" constant="5" id="tyx-lf-QvC"/>
-                <constraint firstItem="Vk8-Cy-ApP" firstAttribute="top" secondItem="306-j1-bEQ" secondAttribute="bottom" constant="10" id="tz4-fS-xoV"/>
                 <constraint firstItem="306-j1-bEQ" firstAttribute="top" secondItem="YxO-ct-uOS" secondAttribute="bottom" constant="5" id="uuC-Xb-zVe"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
-                <outlet property="comments" destination="QpV-RA-UDD" id="1yk-z6-tYe"/>
-                <outlet property="likes" destination="Vk8-Cy-ApP" id="yP1-kH-k5Y"/>
-                <outlet property="name" destination="B5P-JG-VTc" id="sjB-Fa-mtz"/>
-                <outlet property="newsImage" destination="306-j1-bEQ" id="wzR-ed-AtW"/>
-                <outlet property="newsText" destination="YxO-ct-uOS" id="dYR-Qh-ogb"/>
-                <outlet property="shares" destination="naU-ug-8UT" id="pDn-dr-hyS"/>
+                <outlet property="name" destination="B5P-JG-VTc" id="Mo7-bV-pgJ"/>
+                <outlet property="newsImage" destination="306-j1-bEQ" id="nlr-MI-SNJ"/>
+                <outlet property="newsText" destination="YxO-ct-uOS" id="eHl-BN-gb8"/>
+                <outlet property="stackView" destination="c2p-TR-Jzg" id="RHF-XQ-8ok"/>
                 <outlet property="userphoto" destination="TCb-uo-klQ" id="mpn-vC-Mg2"/>
-                <outlet property="views" destination="zk4-dM-bbE" id="rti-me-28D"/>
             </connections>
-            <point key="canvasLocation" x="330.43478260869568" y="72.65625"/>
+            <point key="canvasLocation" x="327.536231884058" y="109.48660714285714"/>
         </view>
     </objects>
 </document>

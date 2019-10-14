@@ -39,6 +39,8 @@ class Feed: Mappable, CustomStringConvertible {
     var source_id: Int = 0
     var photoUrl: String = ""
     var text: String = ""
+    var photoWidth: Int = 0
+    var photoHeight: Int = 0
     
     var description: String {
         return (String("ФОТО: "+self.photoUrl+" ТЕКСТ НОВОСТИ: \n\(self.text)"+" LIKES: \n"+String(self.likesCount)+"  COMMENTS: \n"+String(self.commentCount)+" REPOSTS: \n"+String(self.repostCount)))
@@ -52,6 +54,8 @@ class Feed: Mappable, CustomStringConvertible {
         self.likesCount <- map["likes.count"]
         self.source_id <- map["source_id"]
         self.photoUrl <- map["attachments.0.photo.sizes.3.url"]
+        self.photoWidth <- map["attachments.0.photo.sizes.3.width"]
+        self.photoHeight <- map["attachments.0.photo.sizes.3.height"]
         self.text <- map["text"]
     }
 }

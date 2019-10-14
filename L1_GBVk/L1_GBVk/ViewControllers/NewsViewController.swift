@@ -33,11 +33,11 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomNewsCell.reuseId, for: indexPath) as? CustomNewsCell else { return UITableViewCell() }
         
         let photo = news[indexPath.row].photoUrl
-        
-        cell.newsText.text = self.news[indexPath.row].text
-        cell.likes.likesCount = self.news[indexPath.row].likesCount
-        cell.comments.commentsCount = self.news[indexPath.row].commentCount
-        cell.shares.sharesCount = self.news[indexPath.row].repostCount
+        let item = self.news[indexPath.row]
+        cell.newsText.text = item.text
+        cell.stackView.likes.updateLikesCount(likes: item.likesCount)
+        cell.stackView.comments.updateCommentsCount(comments: item.commentCount)
+        cell.stackView.shares.updateSharesCount(comments: item.repostCount)
         cell.indexPath = indexPath
         let operationQueue = OperationQueue()
         let operation = LoadImageOperation()
@@ -103,7 +103,7 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
             if group.id == -(source_id) {
                 completion(group)
             } else {
-                print("Skipping through group #\(group.name)")
+                print("Skipping through a group #\(group.name)")
             }
         }
     }
