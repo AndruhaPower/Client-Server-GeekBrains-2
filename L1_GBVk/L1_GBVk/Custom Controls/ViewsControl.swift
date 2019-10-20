@@ -10,7 +10,7 @@ import Foundation
 
 @IBDesignable class ViewsControl: UIControl {
     private var stackView: UIStackView!
-    private var viewsIcon = UIImage(named: "viewsicon.png")
+    private var viewsIcon = UIImage(named: "eye")
     private var viewsIconView = UIImageView()
     private let viewsLabel = UILabel()
     var viewsCount: Int = 0

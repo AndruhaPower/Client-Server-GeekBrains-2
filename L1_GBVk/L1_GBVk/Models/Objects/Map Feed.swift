@@ -36,14 +36,21 @@ class Feed: Mappable, CustomStringConvertible {
     var commentCount: Int = 0
     var likesCount: Int = 0
     var repostCount: Int = 0
+    var viewsCount: Int = 0
     var source_id: Int = 0
     var photoUrl: String = ""
     var text: String = ""
     var photoWidth: Int = 0
     var photoHeight: Int = 0
+    var ratio: CGFloat {
+        get {
+            guard self.photoHeight != 0 && self.photoWidth != 0 else { return 0 }
+            return CGFloat(self.photoWidth / self.photoHeight)
+        }
+    }
     
     var description: String {
-        return (String("ФОТО: "+self.photoUrl+" ТЕКСТ НОВОСТИ: \n\(self.text)"+" LIKES: \n"+String(self.likesCount)+"  COMMENTS: \n"+String(self.commentCount)+" REPOSTS: \n"+String(self.repostCount)))
+        return (String("ФОТО: "+self.photoUrl+" ТЕКСТ НОВОСТИ: \n\(self.text)"+" LIKES: \n"+String(self.likesCount)+"  COMMENTS: \n"+String(self.commentCount)+" REPOSTS: \n"+String(self.repostCount)+" VIEWS: "+String(self.viewsCount)))
     }
     
     required init?(map: Map) { }
@@ -52,6 +59,7 @@ class Feed: Mappable, CustomStringConvertible {
         self.commentCount <- map["comments.count"]
         self.repostCount <- map["reposts.count"]
         self.likesCount <- map["likes.count"]
+        self.viewsCount <- map["views.count"]
         self.source_id <- map["source_id"]
         self.photoUrl <- map["attachments.0.photo.sizes.3.url"]
         self.photoWidth <- map["attachments.0.photo.sizes.3.width"]

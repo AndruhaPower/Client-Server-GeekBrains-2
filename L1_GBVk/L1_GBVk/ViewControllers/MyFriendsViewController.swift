@@ -8,7 +8,6 @@
 
 import UIKit
 import RealmSwift
-import FirebaseFirestore
 
 
 /// Контроллер отвечающий за друзей
@@ -56,7 +55,7 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
             if cell.indexPath == indexPath {
                 cell.avatarImage.image = image
             } else {
-                print("asdd")
+                print("very very wrong")
             }
         }
         let friendsName = self.friendsIndexDictionary[char]?[indexPath.row].name ?? "Unknown"

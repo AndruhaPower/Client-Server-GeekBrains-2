@@ -9,6 +9,7 @@
 import UIKit
 
 class FullScreenCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var friendsImageView: UIImageView!
     var indexPath: IndexPath?
     

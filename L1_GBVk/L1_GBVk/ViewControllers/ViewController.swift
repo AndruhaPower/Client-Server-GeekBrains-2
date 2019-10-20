@@ -161,12 +161,9 @@ extension ViewController: WKNavigationDelegate {
         
         let token = params["access_token"]
         guard let unwrappedToken = token else { return }
-        
         KeychainWrapper.standard.set(unwrappedToken, forKey: "VKToken")
         print(KeychainWrapper.standard.string(forKey: "VKToken")!)
-        
         self.performSegue(withIdentifier: "goToMainTabbar", sender: self)
-        
         decisionHandler(.cancel)
     }
 }

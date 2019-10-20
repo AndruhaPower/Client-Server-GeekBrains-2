@@ -19,7 +19,13 @@ class CustomFriendsCell: UITableViewCell {
         super.awakeFromNib()
     }
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
     override func prepareForReuse() {
+        super.prepareForReuse()
         self.avatarImage.image = UIImage(named: "noimage")
+        self.nameLabel.text = "UNKNOWN"
     }
 }

@@ -10,8 +10,6 @@ import Alamofire
 import AlamofireObjectMapper
 import SwiftKeychainWrapper
 import RealmSwift
-import FirebaseFirestore
-import Firebase
 
 
 class VKServices {
