@@ -11,7 +11,7 @@ import UIKit
 
 @IBDesignable class CommentControl: UIControl {
     private var stackView: UIStackView!
-    private var commentIcon = UIImage(named: "commenticon.png")
+    private var commentIcon = UIImage(named: "comment")
     private var commentIconView = UIImageView()
     private let commentsLabel = UILabel()
     var commentsCount: Int = 0
