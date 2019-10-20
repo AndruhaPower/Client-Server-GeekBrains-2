@@ -10,109 +10,133 @@ import UIKit
 
 class NewsViewController: UIViewController {
     
-    var news: [Feed] = []
-    var sourceGroups: [Groups] = []
+    var news: [NewsViewModel] = []
     var vkServices = VKServices()
+    var numberOfRowsInSection = 4
+    let operationQueue = OperationQueue()
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureViewDidLoad()
-        self.getFeedData()
         
     }
 }
 
 extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return self.news.count
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.numberOfRowsInSection
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomNewsCell.reuseId, for: indexPath) as? CustomNewsCell else { return UITableViewCell() }
         
-        let photo = news[indexPath.row].photoUrl
-        let item = self.news[indexPath.row]
-        cell.newsText.text = item.text
-        cell.stackView.likes.updateLikesCount(likes: item.likesCount)
-        cell.stackView.comments.updateCommentsCount(comments: item.commentCount)
-        cell.stackView.shares.updateSharesCount(comments: item.repostCount)
-        cell.indexPath = indexPath
-        let operationQueue = OperationQueue()
-        let operation = LoadImageOperation()
-        operation.url = URL(string: photo)
-        operationQueue.addOperation(operation)
-        operation.completion = { image in
-            if cell.indexPath == indexPath {
-                cell.newsImage.image = image
-            } else {
-                print("not the right picture")
-            }
-        }
-        getGroupInfo(source_id: news[indexPath.row].source_id) { inprocessGroup in
-            guard let group = inprocessGroup else { return }
-            cell.name.text = group.name
-            let photoUrl = URL(string: group.photoUrl)
-            let GroupOperation = LoadImageOperation()
-            GroupOperation.url = photoUrl
-            operationQueue.addOperation(GroupOperation)
-            GroupOperation.completion = { image in
-                cell.userphoto.image = image
+        switch indexPath.row {
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomFriendsCell.reuseId, for: indexPath) as? CustomFriendsCell,
+                  indexPath.section <= self.news.count - 1 else { return UITableViewCell() }
+            
+            cell.indexPath = indexPath
+            let photo = self.news[indexPath.section].avatarPhotoUrl
+            let operation = LoadImageOperation()
+            operation.url = URL(string: photo)
+            self.operationQueue.addOperation(operation)
+            operation.completion = { image in
+                if cell.indexPath == indexPath {
+                    cell.avatarImage.image = image
+                } else {
+                    print("indexPath for Avatar Image is wrong")
                 }
             }
-        return cell
+            cell.nameLabel.text = news[indexPath.section].name
+            return cell
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TextCell.reuseIdentifier, for: indexPath) as? TextCell else { return UITableViewCell() }
+            cell.newsText.text = self.news[indexPath.section].text
+            return cell
+        case 2:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "custom", for: indexPath) as? MediaCell,
+                  !self.news[indexPath.section].photoUrl.isEmpty else { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: 0, height: 0 )) }
+            
+            cell.indexPath = indexPath
+            let photo = news[indexPath.section].photoUrl
+            if photo.count != 0 {
+                let operation = LoadImageOperation()
+                operation.url = URL(string: photo)
+                self.operationQueue.addOperation(operation)
+                operation.completion = { image in
+                    if cell.indexPath == indexPath {
+                        cell.ratio = self.news[indexPath.section].ratio
+                        cell.newsImage.image = image
+                    } else {
+                        print("indexPath for News Image is wrong")
+                    }
+                }
+            } else {
+                cell.frame = .zero
+            }
+            return cell
+        case 3:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ControlsCell.reuseIdentifier, for: indexPath) as? ControlsCell else { return UITableViewCell() }
+            
+            let item = self.news[indexPath.section]
+            cell.stackView.likes.updateLikesCount(likes: item.likesCount)
+            cell.stackView.comments.updateCommentsCount(comments: item.commentCount)
+            cell.stackView.shares.updateSharesCount(comments: item.repostCount)
+            cell.viewsControl.updateViewsCount(comments: item.viewsCount)
+            
+            return cell
+        default:
+            
+            return UITableViewCell()
+        }
     }
-    
-    
-    /*
-     if let model = self.models[indexPath.row]
-     if model.uiimage != nil {
-     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? UIImageCollectionViewCell else { return UICollectionViewCell() }
-     
-     cell.image = model.uiimage
-     return cell
-     } else {
-     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? UIImageCollectionViewCell else { return UICollectionViewCell() }
-     cell.title = model.title
-     return cell
-     }
-     }
-     */
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 450
+        return getRowHeight(indexPath: indexPath)
     }
     
-    func getFeedData() {
-        self.vkServices.getNews(count: 50) { resultFeed, resultGroups in
-            guard let feed = resultFeed,
-            let groups = resultGroups
-            else { return }
-            self.news = feed
-            self.sourceGroups = groups
+    func configureViewDidLoad() {
+        
+        self.tableView.register(UINib(nibName: "CustomFriendCell", bundle: nil), forCellReuseIdentifier: CustomFriendsCell.reuseId)
+        self.tableView.register(UINib(nibName: "TextCell", bundle: nil), forCellReuseIdentifier: TextCell.reuseIdentifier)
+        self.tableView.register(MediaCell.self, forCellReuseIdentifier: "custom")
+        self.tableView.register(UINib(nibName: "ControlsCell", bundle: nil), forCellReuseIdentifier: ControlsCell.reuseIdentifier)
+
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.separatorColor = .clear
+        
+        let newsModelViewFabric = NewsViewModelFabric()
+        newsModelViewFabric.fetch { (NewsViewModels) in
+            self.news = NewsViewModels
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
     }
     
-    func getGroupInfo(source_id: Int, completion: @escaping ((Groups?)->())) {
-        for group in self.sourceGroups {
-            if group.id == -(source_id) {
-                completion(group)
-            } else {
-                print("Skipping through a group #\(group.name)")
-            }
-        }
-    }
     
-    func configureViewDidLoad() {
-        self.tableView.register(UINib(nibName: "CustomFeedCell", bundle: nil), forCellReuseIdentifier: CustomNewsCell.reuseId)
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 600
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+    func getRowHeight(indexPath: IndexPath)-> CGFloat {
+
+        switch indexPath.row {
+        case 0:
+            let ownerCellHeight: CGFloat = 70
+            return ownerCellHeight
+        case 1:
+            return UITableView.automaticDimension
+        case 2:
+            return UITableView.automaticDimension
+        case 3:
+            let controlCellHeight: CGFloat = 30
+            return controlCellHeight
+
+        default:
+            return UITableView.automaticDimension
+        }
     }
 }

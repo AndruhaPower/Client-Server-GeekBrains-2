@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ControlsCell" customModule="L1_GBVk" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="607" height="45"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhA-MI-ogV" customClass="ControlsStackView" customModule="L1_GBVk" customModuleProvider="target">
+                    <rect key="frame" x="5" y="0.0" width="220" height="30"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgu-Zt-HL7" customClass="LikeButtonControl" customModule="L1_GBVk" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="80" height="30"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="6pr-3G-FNZ"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UR2-NC-REp" customClass="CommentControl" customModule="L1_GBVk" customModuleProvider="target">
+                            <rect key="frame" x="80" y="0.0" width="70" height="30"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="70" id="Irn-aY-UuQ"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jh2-2C-A7r" customClass="ShareControl" customModule="L1_GBVk" customModuleProvider="target">
+                            <rect key="frame" x="150" y="0.0" width="70" height="30"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="70" id="mbF-ky-Zds"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="o2x-lp-Mih"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="comments" destination="UR2-NC-REp" id="5U9-Nn-cSh"/>
+                        <outlet property="likes" destination="Hgu-Zt-HL7" id="Peu-tq-Yn8"/>
+                        <outlet property="shares" destination="Jh2-2C-A7r" id="o1F-Mj-f1m"/>
+                    </connections>
+                </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YO4-fl-kCh" customClass="ViewsControl" customModule="L1_GBVk" customModuleProvider="target">
+                    <rect key="frame" x="527" y="0.0" width="70" height="40"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="ztI-fF-tpE"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="bhA-MI-ogV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6Hc-Kr-cK9"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bhA-MI-ogV" secondAttribute="trailing" constant="5" id="Ev1-Gk-tCz"/>
+                <constraint firstItem="YO4-fl-kCh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="hSf-p4-gWV"/>
+                <constraint firstAttribute="bottom" secondItem="YO4-fl-kCh" secondAttribute="bottom" constant="5" id="ppf-AF-eZA"/>
+                <constraint firstItem="bhA-MI-ogV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="vYU-DT-M4a"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="YO4-fl-kCh" secondAttribute="trailing" constant="10" id="yv8-l3-GbV"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="stackView" destination="bhA-MI-ogV" id="CnW-g3-whg"/>
+                <outlet property="viewsControl" destination="YO4-fl-kCh" id="12F-MN-cn9"/>
+            </connections>
+            <point key="canvasLocation" x="190.57971014492756" y="-241.40625"/>
+        </view>
+    </objects>
+</document>
