@@ -28,7 +28,6 @@ class ControlsCell: UITableViewCell {
         self.stackView.likes.likesCount = 0
         self.stackView.comments.commentsCount = 0
         self.stackView.shares.sharesCount = 0
-        self.stackView.likes.like()
     }
 }
 

@@ -40,7 +40,6 @@ import Foundation
         
         self.addSubview(stackView)
         stackView.distribution = .fillEqually
-        addGestureRecognizer(tapGestureRecognizer)
     }
     
     override func layoutSubviews() {
@@ -65,18 +64,6 @@ import Foundation
     func updateViewsCount(comments: Int) {
         viewsCount = comments
         viewsLabel.text = "\(viewsCount)"
-    }
-    
-    lazy var tapGestureRecognizer: UITapGestureRecognizer = {
-        let recognizer = UITapGestureRecognizer(target: self,
-                                                action: #selector(onTap(_:)))
-        recognizer.numberOfTapsRequired = 1
-        recognizer.numberOfTouchesRequired = 1
-        return recognizer
-    }()
-    
-    @objc func onTap(_ sender: UIStackView) {
-        incrementViewsCount()
     }
 }
 

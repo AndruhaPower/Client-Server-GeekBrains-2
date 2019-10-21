@@ -36,7 +36,7 @@ class VKServices {
         ]
 
         
-        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfriendsResponse: DataResponse<VKFriendResponse>) in
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfriendsResponse: DataResponse<VKFriendResponse, AFError>) in
             
             let result = vkfriendsResponse.result
             switch result {
@@ -64,7 +64,7 @@ class VKServices {
         ]
         
         VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: {
-            (vkgroupResponse: DataResponse<VKGroupResponse>) in
+            (vkgroupResponse: DataResponse<VKGroupResponse, AFError>) in
             
             let result = vkgroupResponse.result
             switch result {
@@ -90,7 +90,7 @@ class VKServices {
             "v" : VKConstants.vAPI
         ]
         
-        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkgroupResponse: DataResponse<VKGroupResponse>) in
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkgroupResponse: DataResponse<VKGroupResponse, AFError>) in
             
             let result = vkgroupResponse.result
             switch result {
@@ -117,7 +117,7 @@ class VKServices {
             "source_ids" : "groups"
         ]
         
-        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfeedResponse: DataResponse<VKFeedResponse>) in
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfeedResponse: DataResponse<VKFeedResponse, AFError>) in
             
             let result = vkfeedResponse.result
             switch result {
@@ -149,7 +149,7 @@ class VKServices {
             "v" : VKConstants.vAPI
         ]
         
-        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkphotoresponse: DataResponse<VKPhotoResponse>) in
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkphotoresponse: DataResponse<VKPhotoResponse, AFError>) in
             
             let result = vkphotoresponse.result
             switch result {

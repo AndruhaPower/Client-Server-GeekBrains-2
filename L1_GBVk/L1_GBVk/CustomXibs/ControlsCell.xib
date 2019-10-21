@@ -13,11 +13,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ControlsCell" customModule="L1_GBVk" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="607" height="45"/>
+            <rect key="frame" x="0.0" y="0.0" width="640" height="200"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhA-MI-ogV" customClass="ControlsStackView" customModule="L1_GBVk" customModuleProvider="target">
-                    <rect key="frame" x="5" y="0.0" width="220" height="30"/>
+                    <rect key="frame" x="5" y="5" width="220" height="30"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgu-Zt-HL7" customClass="LikeButtonControl" customModule="L1_GBVk" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="80" height="30"/>
@@ -42,7 +42,7 @@
                         </view>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="o2x-lp-Mih"/>
+                        <constraint firstAttribute="height" constant="30" id="mhk-s9-gmJ"/>
                     </constraints>
                     <connections>
                         <outlet property="comments" destination="UR2-NC-REp" id="5U9-Nn-cSh"/>
@@ -51,29 +51,29 @@
                     </connections>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YO4-fl-kCh" customClass="ViewsControl" customModule="L1_GBVk" customModuleProvider="target">
-                    <rect key="frame" x="527" y="0.0" width="70" height="40"/>
+                    <rect key="frame" x="560" y="10" width="70" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="height" constant="30" id="ZIz-Pz-sg5"/>
                         <constraint firstAttribute="width" constant="70" id="ztI-fF-tpE"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="bhA-MI-ogV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6Hc-Kr-cK9"/>
+                <constraint firstAttribute="trailing" secondItem="YO4-fl-kCh" secondAttribute="trailing" constant="10" id="Dbb-WU-FkI"/>
+                <constraint firstItem="bhA-MI-ogV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="EIM-Ly-nNF"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bhA-MI-ogV" secondAttribute="trailing" constant="5" id="Ev1-Gk-tCz"/>
-                <constraint firstItem="YO4-fl-kCh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="hSf-p4-gWV"/>
-                <constraint firstAttribute="bottom" secondItem="YO4-fl-kCh" secondAttribute="bottom" constant="5" id="ppf-AF-eZA"/>
+                <constraint firstItem="YO4-fl-kCh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Plv-ii-gDb"/>
                 <constraint firstItem="bhA-MI-ogV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="vYU-DT-M4a"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="YO4-fl-kCh" secondAttribute="trailing" constant="10" id="yv8-l3-GbV"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="stackView" destination="bhA-MI-ogV" id="CnW-g3-whg"/>
-                <outlet property="viewsControl" destination="YO4-fl-kCh" id="12F-MN-cn9"/>
+                <outlet property="viewsControl" destination="YO4-fl-kCh" id="AeJ-GU-G9r"/>
             </connections>
-            <point key="canvasLocation" x="190.57971014492756" y="-241.40625"/>
+            <point key="canvasLocation" x="214.49275362318843" y="-147.99107142857142"/>
         </view>
     </objects>
 </document>

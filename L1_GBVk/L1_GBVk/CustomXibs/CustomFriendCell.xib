@@ -72,12 +72,13 @@
                 <constraint firstItem="FuJ-Ax-DB9" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="GIm-gc-Tll"/>
                 <constraint firstItem="FuJ-Ax-DB9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Ivd-5p-XGd"/>
                 <constraint firstItem="22B-rm-eUl" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="JPY-DT-gjd"/>
-                <constraint firstItem="5eu-2h-paz" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="P32-yW-TUD"/>
+                <constraint firstItem="5eu-2h-paz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Ycm-F8-LoU"/>
                 <constraint firstItem="22B-rm-eUl" firstAttribute="leading" secondItem="JQU-BH-CC8" secondAttribute="trailing" constant="10" id="eQd-Nf-wus"/>
                 <constraint firstItem="FuJ-Ax-DB9" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="hiL-0v-qaM"/>
                 <constraint firstItem="JQU-BH-CC8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="tIR-HI-FsB"/>
                 <constraint firstItem="JQU-BH-CC8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="wZ9-FF-cxk"/>
                 <constraint firstItem="5eu-2h-paz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="xBP-tc-4b4"/>
+                <constraint firstAttribute="bottom" secondItem="5eu-2h-paz" secondAttribute="bottom" constant="10" id="zBr-h2-YNP"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

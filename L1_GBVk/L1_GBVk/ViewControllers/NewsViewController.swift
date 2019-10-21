@@ -51,6 +51,8 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
             let news = self.news[indexPath.section]
             let cellHeight = tableWidth / news.ratio
             return cellHeight
+        case 3:
+            return 40
         default:
             return UITableView.automaticDimension
         }

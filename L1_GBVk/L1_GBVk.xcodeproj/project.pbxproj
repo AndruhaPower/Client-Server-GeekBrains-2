@@ -69,6 +69,7 @@
 		49BDE72422A14F3200E5256F /* likeButtonControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE72322A14F3200E5256F /* likeButtonControl.swift */; };
 		49C561FB22E08291002353EF /* RealmObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C561FA22E08291002353EF /* RealmObjects.swift */; };
 		49C75542230A861500AD0BAB /* Map Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C75541230A861400AD0BAB /* Map Feed.swift */; };
+		49F5E9DB235E49E800496294 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 49F5E9DA235E49E800496294 /* circle.png */; };
 		8E2B2E7E0EEF8355A6196BF1 /* Pods_L1_GBVkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B8F765F14E88DD2404ACE6 /* Pods_L1_GBVkTests.framework */; };
 		AE3D149039B9A04C16D34C04 /* Pods_L1_GBVk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306EC95C4EB30F759C8D3C4B /* Pods_L1_GBVk.framework */; };
 		BE99F1747FC07B42B64EE6AC /* Pods_L1_GBVkUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276C1F34EA29105CCD8E9939 /* Pods_L1_GBVkUITests.framework */; };
@@ -168,6 +169,7 @@
 		49BDE72322A14F3200E5256F /* likeButtonControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = likeButtonControl.swift; sourceTree = "<group>"; };
 		49C561FA22E08291002353EF /* RealmObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObjects.swift; sourceTree = "<group>"; };
 		49C75541230A861400AD0BAB /* Map Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Map Feed.swift"; sourceTree = "<group>"; };
+		49F5E9DA235E49E800496294 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = circle.png; path = Assets.xcassets/circle.imageset/circle.png; sourceTree = "<group>"; };
 		624D0F3930F50CAB1CFFF1F8 /* Pods-L1_GBVk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-L1_GBVk.debug.xcconfig"; path = "Target Support Files/Pods-L1_GBVk/Pods-L1_GBVk.debug.xcconfig"; sourceTree = "<group>"; };
 		7F4517F7789EEE53664D5D0C /* Pods-L1_GBVkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-L1_GBVkTests.release.xcconfig"; path = "Target Support Files/Pods-L1_GBVkTests/Pods-L1_GBVkTests.release.xcconfig"; sourceTree = "<group>"; };
 		81B8F765F14E88DD2404ACE6 /* Pods_L1_GBVkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_L1_GBVkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -373,6 +375,7 @@
 				49163F6822C0F3F400C23B72 /* Custom Navigation */,
 				49B02C98228DF2A600EA8ECD /* Assets.xcassets */,
 				49B02C9D228DF2A600EA8ECD /* Info.plist */,
+				49F5E9DA235E49E800496294 /* circle.png */,
 			);
 			path = L1_GBVk;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				490F5AF722B517AE0099FFC2 /* CustomFeedCell.xib in Resources */,
 				4965FD2C22AED15200333E41 /* CustomFriendCell.xib in Resources */,
 				49279FCF23572F120028427C /* TextCell.xib in Resources */,
+				49F5E9DB235E49E800496294 /* circle.png in Resources */,
 				49B02C9C228DF2A600EA8ECD /* LaunchScreen.storyboard in Resources */,
 				495A809122B1599000A77C46 /* CustomGroupCell.xib in Resources */,
 				49B02C99228DF2A600EA8ECD /* Assets.xcassets in Resources */,
@@ -876,6 +880,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8FZ2C7K9LV;
 				INFOPLIST_FILE = L1_GBVk/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -897,6 +902,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8FZ2C7K9LV;
 				INFOPLIST_FILE = L1_GBVk/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

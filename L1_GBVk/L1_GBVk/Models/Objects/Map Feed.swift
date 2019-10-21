@@ -43,7 +43,7 @@ class Feed: Mappable, CustomStringConvertible {
     var photoWidth: Int = 0
     var photoHeight: Int = 0
     var ratio: CGFloat {
-            guard self.photoWidth != 0 && self.photoHeight != 0 else { return 0 }
+            guard self.photoWidth != 0 && self.photoHeight != 0 else { return 100 }
         return CGFloat(self.photoWidth)/CGFloat(self.photoHeight)
     }
     
