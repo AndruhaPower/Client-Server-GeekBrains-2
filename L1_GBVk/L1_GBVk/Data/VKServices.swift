@@ -22,7 +22,7 @@ class VKServices {
         return manager
     }()
 
-    // ПОЛУЧАЕМ ДРУЗЕЙ
+    // Метод запроса по получению массива спарсенный моделей друзей для подстановки в контроллер
     
     public func getFriends( completion: @escaping (Bool)->()) {
         
@@ -51,7 +51,7 @@ class VKServices {
         })
     }
     
-    // ПОЛУЧАЕМ СВОИ ГРУППЫ
+    // Метод запроса по получению массива спарсенный моделей своих групп для подстановки в контроллер
     
     public func getGroups() {
         
@@ -77,7 +77,7 @@ class VKServices {
         })
     }
     
-    // ПОЛУЧАЕМ ГРУППЫ ДЛЯ ПОИСКА
+    // Метод запроса по получению массива спарсенный моделей групп поиска для подстановки в контроллер
     
     public func getSearchGroups() {
         
@@ -103,7 +103,7 @@ class VKServices {
         })
     }
     
-    // ПОЛУЧАЕМ НОВОСТИ
+    // Метод запроса по получению массива спарсенных моделей новостей для подстановки в контроллер
     
     public func getNews(count: Int, completion: @escaping ([Feed]?, [Groups]?)->()) {
         let url = VKConstants.newsFeed
@@ -134,7 +134,7 @@ class VKServices {
     }
     
     
-    // ПОЛУЧАЕМ ССЫЛКИ НА ФОТКИ
+    // Метод запроса по получению спарсенной модели фотографий для подстановки в контроллер
     
     public func getPhotos(id: Int, completion: @escaping (Bool)->()) {
         

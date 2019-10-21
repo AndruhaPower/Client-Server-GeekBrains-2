@@ -12,12 +12,6 @@ class MediaCell: UITableViewCell {
     
     var newsImage = UIImageView()
     var indexPath: IndexPath?
-//    var ratio: CGFloat = 0  {
-//        didSet {
-//            guard self.ratio != 0 else { return }
-//            self.updateContentSize()
-//        }
-//    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,23 +25,15 @@ class MediaCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.newsImage.image = nil
-//        self.imageWidthConstraint?.constant = 0
-//        self.imageHeightConstraint?.constant = 0
     }
     
     private func configureUI() {
         
         self.newsImage.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.newsImage)
-//
-//
-//        self.imageWidthConstraint = self.newsImage.widthAnchor.constraint(equalToConstant: self.frame.size.width)
-//        self.imageHeightConstraint = self.newsImage.heightAnchor.constraint(equalToConstant: 0)
-//
-//        self.imageHeightConstraint?.isActive = true
-//        self.imageWidthConstraint?.isActive = true
-//
+
         self.backgroundColor = .clear
+        self.frame.size.width = self.bounds.width
         
         NSLayoutConstraint.activate([
             self.newsImage.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
@@ -58,10 +44,4 @@ class MediaCell: UITableViewCell {
         )
         
     }
-    
-//    func updateContentSize() {
-//        let width = self.frame.size.width
-//        self.imageWidthConstraint?.constant = width
-//        self.imageHeightConstraint?.constant = width / self.ratio
-//    }
 }
