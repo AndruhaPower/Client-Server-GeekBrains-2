@@ -9,6 +9,32 @@
 import UIKit
 
 
+class NewsViewModel {
+    
+    var commentCount: Int
+    var likesCount: Int
+    var repostCount: Int
+    var viewsCount: Int
+    var photoUrl: String
+    var text: String
+    var ratio: CGFloat
+    var name: String
+    var avatarPhotoUrl: String
+    
+    init(news: Feed, name: String, avatarPhotoUrl: String) {
+        self.commentCount = news.commentCount
+        self.likesCount = news.likesCount
+        self.repostCount = news.repostCount
+        self.viewsCount = news.viewsCount
+        self.photoUrl = news.photoUrl
+        self.text = news.text
+        self.ratio = news.ratio
+        self.name = name
+        self.avatarPhotoUrl = avatarPhotoUrl
+    }
+}
+
+
 class NewsViewModelFabric {
     
     private var vkServices = VKServices()
@@ -31,31 +57,6 @@ class NewsViewModelFabric {
                 let groups = resultGroups
                 else { return }
             completion(NewsViewModelFabric.setupNewsData(news: feed, groups: groups))
-            }
         }
-    }
-
-struct NewsViewModel {
-    
-    var commentCount: Int
-    var likesCount: Int
-    var repostCount: Int
-    var viewsCount: Int
-    var photoUrl: String
-    var text: String
-    var ratio: CGFloat
-    var name: String
-    var avatarPhotoUrl: String
-    
-    init(news: Feed, name: String, avatarPhotoUrl: String) {
-        self.commentCount = news.commentCount
-        self.likesCount = news.likesCount
-        self.repostCount = news.repostCount
-        self.viewsCount = news.viewsCount
-        self.photoUrl = news.photoUrl
-        self.text = news.text
-        self.ratio = news.ratio
-        self.name = name
-        self.avatarPhotoUrl = avatarPhotoUrl
     }
 }

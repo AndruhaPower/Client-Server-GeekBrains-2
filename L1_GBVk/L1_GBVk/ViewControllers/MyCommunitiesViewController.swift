@@ -63,25 +63,6 @@ class MyCommunitiesViewController: UITableViewController {
             self.vkServices.getGroups()
             let realm = try Realm()
             let resultGroups = realm.objects(RGroup.self).filter("isMember != 0")
-//            self.token = resultGroups.observe { [weak self] (changes: RealmCollectionChange) in
-//                switch changes {
-//                case .initial:
-//                    self?.tableView.reloadData()
-//                case .update(_, let deletions, let insertions, let modifications):
-//                    self?.tableView.insertRows(at: insertions.map({ IndexPath(row:  $0, section: 0)}), with: .automatic)
-////                    if deletions.count != 0 {
-////                        for deletion in deletions {
-////                            self?.groups.remove(at: deletion)
-////                        }
-////                    }
-//                    self?.saveGroupsData()
-//                    self?.tableView.deleteRows(at: deletions.map({IndexPath(row:  $0, section: 0)}), with: .automatic)
-//                    // update data model
-//                    self?.tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0)}), with: .automatic)
-//                case .error(let error):
-//                    print(error)
-//                }
-//            }
             self.groups = Array(resultGroups)
         } catch {
             print(error)
@@ -96,16 +77,16 @@ class MyCommunitiesViewController: UITableViewController {
     /// Функция по добавлению группы в свой список (не работает)
     ///
     /// - Parameter segue: сега контроллера по поиску групп (не этого)
+    
     @IBAction func addGroup(segue: UIStoryboardSegue) {
-        if segue.identifier == "addGroup" {
-            let controller = segue.source as! SearchComViewController
-            if  let indexPath = controller.tableView.indexPathForSelectedRow {
-                let groupToAdd = controller.searchGroups[indexPath.row]
-                if !self.groups.contains(groupToAdd) {
-                    self.groups.append(groupToAdd)
-                }
-            }
+        guard let searchComVC = segue.source as? SearchComViewController,
+              let indexPath = searchComVC.tableView.indexPathForSelectedRow else { return }
+        
+        let newGroup = searchComVC.searchGroups[indexPath.row]
+        if !self.groups.contains(newGroup) {
+            self.groups.append(newGroup)
         }
+        tableView.reloadData()
     }
 }
 

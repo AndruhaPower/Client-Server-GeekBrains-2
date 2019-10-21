@@ -32,13 +32,11 @@ class PhotosViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return photosToDisplay.count
     }
 
@@ -58,27 +56,8 @@ class PhotosViewController: UICollectionViewController {
             return cell
     }
     
-//    func getImagesArray(_ URLArray :[String]) -> [UIImage] {
-//        var ImageViewsArray: [UIImage] = []
-//        for string in URLArray {
-//            let url = URL(string: string)
-//            let image = UIImageView()
-//            image.load(url: url!)
-//            guard let uiImage = image.image else { return [] }
-//            ImageViewsArray.append(uiImage)
-//        }
-//        return ImageViewsArray
-//    }
-    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let fullScreenGallery = storyboard!.instantiateViewController(withIdentifier: "FullScreenImagePresenter") as! FullScreenImagePresenterViewController
-//
-//        fullScreenGallery.transitioningDelegate = self
-//        fullScreenGallery.imagesToDisplay = photosToDisplay
-//        fullScreenGallery.indexPathToScrollTo = selectedIndexPath
-//        fullScreenGallery.indexPathToScrollTo = selectedIndexPath
-//
-//        present(fullScreenGallery, animated: true, completion: nil )
+
         self.fullScreenViewController?.imagesToDisplay = self.photosToDisplay
         self.fullScreenViewController?.indexPathToScrollTo = indexPath
     }
@@ -105,8 +84,6 @@ class PhotosViewController: UICollectionViewController {
         }
     }
 }
-
-
 
 extension PhotosViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

@@ -120,9 +120,7 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
                 } catch {
                     print(error)
                 }
-       
             }
-        
     }
     
     private func tableViewConfig() {

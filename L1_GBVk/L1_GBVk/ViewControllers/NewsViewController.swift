@@ -13,6 +13,7 @@ class NewsViewController: UIViewController {
     var news: [NewsViewModel] = []
     var vkServices = VKServices()
     var numberOfRowsInSection = 4
+    var expandedCells = [IndexPath: Bool]()
     let operationQueue = OperationQueue()
     @IBOutlet weak var tableView: UITableView!
     
@@ -31,6 +32,36 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.numberOfRowsInSection
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+//        case 1:
+//            let news = self.news[indexPath.section]
+//            guard let text = news.text else { return 0 }
+//            let textSize = getLabelSize(text: text, font: UIFont.systemFont(ofSize: 17), maxWidth: tableView.bounds.width)
+//            let expandedState = expandedCells[indexPath] ?? false
+//            if expandedState {
+//                return textSize.height
+//            } else {
+//                return min(textSize.height, 100)
+//            }
+        case 2:
+            let tableWidth = tableView.bounds.width
+            let news = self.news[indexPath.section]
+            let cellHeight = tableWidth / news.ratio
+            return cellHeight
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+    
+    private func getLabelSize(text: String, font: UIFont, maxWidth: CGFloat) -> CGSize {
+        let textblock = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+        let rect = text.boundingRect(with: textblock, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : font], context: nil)
+        let width = rect.width.rounded(.up)
+        let height = rect.height.rounded(.up)
+        return CGSize(width: width, height: height)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -60,7 +91,7 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "custom", for: indexPath) as? MediaCell,
-                  !self.news[indexPath.section].photoUrl.isEmpty else { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: 0, height: 0 )) }
+                  self.news[indexPath.section].ratio != 0 else { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: 0, height: 0 )) }
             
             cell.indexPath = indexPath
             let photo = news[indexPath.section].photoUrl
@@ -70,7 +101,7 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
                 self.operationQueue.addOperation(operation)
                 operation.completion = { image in
                     if cell.indexPath == indexPath {
-                        cell.ratio = self.news[indexPath.section].ratio
+ //                       cell.ratio = self.news[indexPath.section].ratio
                         cell.newsImage.image = image
                     } else {
                         print("indexPath for News Image is wrong")
@@ -96,10 +127,6 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return getRowHeight(indexPath: indexPath)
-    }
-    
     func configureViewDidLoad() {
         
         self.tableView.register(UINib(nibName: "CustomFriendCell", bundle: nil), forCellReuseIdentifier: CustomFriendsCell.reuseId)
@@ -117,26 +144,6 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-        }
-    }
-    
-    
-    func getRowHeight(indexPath: IndexPath)-> CGFloat {
-
-        switch indexPath.row {
-        case 0:
-            let ownerCellHeight: CGFloat = 70
-            return ownerCellHeight
-        case 1:
-            return UITableView.automaticDimension
-        case 2:
-            return UITableView.automaticDimension
-        case 3:
-            let controlCellHeight: CGFloat = 30
-            return controlCellHeight
-
-        default:
-            return UITableView.automaticDimension
         }
     }
 }

@@ -599,7 +599,7 @@
                                 <connections>
                                     <outlet property="SearchLabel" destination="SD2-8E-9A0" id="d1J-NF-hOi"/>
                                     <outlet property="searchGroupAvatar" destination="Vvi-Jz-htb" id="7lF-uG-d59"/>
-                                    <segue destination="ntY-lu-JM7" kind="unwind" unwindAction="addGroupWithSegue:" id="1TP-gh-54g"/>
+                                    <segue destination="ntY-lu-JM7" kind="unwind" unwindAction="addGroupWithSegue:" id="QKp-4S-XrF"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

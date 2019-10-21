@@ -43,14 +43,12 @@ class Feed: Mappable, CustomStringConvertible {
     var photoWidth: Int = 0
     var photoHeight: Int = 0
     var ratio: CGFloat {
-        get {
-            guard self.photoHeight != 0 && self.photoWidth != 0 else { return 0 }
-            return CGFloat(self.photoWidth / self.photoHeight)
-        }
+            guard self.photoWidth != 0 && self.photoHeight != 0 else { return 0 }
+        return CGFloat(self.photoWidth)/CGFloat(self.photoHeight)
     }
     
     var description: String {
-        return (String("ФОТО: "+self.photoUrl+" ТЕКСТ НОВОСТИ: \n\(self.text)"+" LIKES: \n"+String(self.likesCount)+"  COMMENTS: \n"+String(self.commentCount)+" REPOSTS: \n"+String(self.repostCount)+" VIEWS: "+String(self.viewsCount)))
+        return (String("ФОТО: "+self.photoUrl+" ТЕКСТ НОВОСТИ: \n\(self.text)"+" LIKES: \n"+String(self.likesCount)+"  COMMENTS: \n"+String(self.commentCount)+" REPOSTS: \n"+String(self.repostCount)+" VIEWS: "+String(self.viewsCount)+" \n Width Hight Ratio: "+String(self.photoWidth)+" & "+String(self.photoHeight)))
     }
     
     required init?(map: Map) { }
