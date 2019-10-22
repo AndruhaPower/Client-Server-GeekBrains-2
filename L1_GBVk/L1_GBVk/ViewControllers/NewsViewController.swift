@@ -103,7 +103,6 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
                 self.operationQueue.addOperation(operation)
                 operation.completion = { image in
                     if cell.indexPath == indexPath {
- //                       cell.ratio = self.news[indexPath.section].ratio
                         cell.newsImage.image = image
                     } else {
                         print("indexPath for News Image is wrong")

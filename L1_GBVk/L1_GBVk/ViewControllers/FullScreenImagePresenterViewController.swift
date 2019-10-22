@@ -12,7 +12,7 @@ class FullScreenImagePresenterViewController: UIViewController, UICollectionView
     
     @IBOutlet weak var fullScreenCollectionView: UICollectionView!
 private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
-    var imagesToDisplay: [RPhoto] = []
+    var imagesToDisplay: [Photo] = []
     var indexPathToScrollTo = IndexPath(row: 0, section: 0) {
         didSet {
             fullScreenCollectionView.scrollToItem(at: indexPathToScrollTo, at:UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
@@ -42,7 +42,7 @@ private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
         let photo = self.imagesToDisplay[indexPath.row] // индексы в говне
         let operationQueue = OperationQueue()
         let operation = LoadImageOperation()
-        operation.url = URL(string: photo.photoUrl)
+        operation.url = URL(string: photo.photoURL)
         operationQueue.addOperation(operation)
         operation.completion = { image in
             if cell.indexPath == indexPath {
@@ -78,10 +78,6 @@ private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
         UIView.animate(withDuration: 1) {
             cell.alpha = 1
             cell.transform = CGAffineTransform(scaleX: 1, y: 1)
-            
-            //debug - cell borders ON, uncomment below
-            //      cell.layer.borderColor = UIColor.white.cgColor
-            //      cell.layer.borderWidth = 5.0
         }
         
         switch scroll {

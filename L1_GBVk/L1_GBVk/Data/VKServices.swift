@@ -136,13 +136,15 @@ class VKServices {
     
     // Метод запроса по получению спарсенной модели фотографий для подстановки в контроллер
     
-    public func getPhotos(id: Int, completion: @escaping (Bool)->()) {
+    public func getPhotos(id: Int, completion: @escaping ([Photo]?) -> ()) {
         
         let url = VKConstants.photosURL
         
         let params: Parameters = [
             
             "owner_id" : String(id),
+            "album_id" : "profile",
+            "photo_sizes" : "1",
             "extended" : "0",
             "skip_hidden" : "1",
             "access_token" : KeychainWrapper.standard.string(forKey: "VKToken")!,
@@ -154,12 +156,11 @@ class VKServices {
             let result = vkphotoresponse.result
             switch result {
             case .success(let val):
-                guard let items = val.response?.items else { return }
-                RealmManager.photosManager(photos: items, id: id)
-                completion(true)
+                guard let items = val.response?.items  else
+                { return }
+                completion(items)
             case .failure(let error):
                 print(error)
-                completion(false)
             }
         })
     }

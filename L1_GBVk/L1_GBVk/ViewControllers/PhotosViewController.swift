@@ -15,7 +15,7 @@ class PhotosViewController: UICollectionViewController {
 
     var friendId: Int = 0
 
-    var photosToDisplay: [RPhoto] = []
+    var photosToDisplay: [Photo] = []
     let presentTransition = CustomPresentModalAnimator()
     let dismissTransition = CustomDismissModalAnimator()
     let vkServices = VKServices()
@@ -46,7 +46,7 @@ class PhotosViewController: UICollectionViewController {
         let photo = self.photosToDisplay[indexPath.row]
         let operationQueue = OperationQueue()
         let operation = LoadImageOperation()
-        operation.url = URL(string: photo.photoUrl)
+        operation.url = URL(string: photo.photoURL)
         operationQueue.addOperation(operation)
         operation.completion = { image in
             if cell.indexPath == indexPath {
@@ -63,11 +63,9 @@ class PhotosViewController: UICollectionViewController {
     }
     
     private func getPhotosData() {
-        self.vkServices.getPhotos(id: self.friendId) { (isCompleted) in
-            let realm = try? Realm()
-            let resultPhotos = realm?.objects(RPhoto.self).filter("id=\(self.friendId)")
-            guard let finalPhotos = resultPhotos else { return }
-            self.photosToDisplay = Array(finalPhotos)
+        self.vkServices.getPhotos(id: self.friendId) { resultPhotos in
+            guard let photos = resultPhotos else { return }
+            self.photosToDisplay = photos
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
@@ -76,6 +74,8 @@ class PhotosViewController: UICollectionViewController {
     
     private func configCollectionVIew() {
         self.collectionView.dataSource = self
+        self.collectionView.collectionViewLayout = PhotosCollectionViewLayout()
+        self.collectionView.backgroundColor = .darkGray
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

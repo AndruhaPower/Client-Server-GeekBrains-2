@@ -33,7 +33,6 @@ class MediaCell: UITableViewCell {
         self.contentView.addSubview(self.newsImage)
 
         self.backgroundColor = .clear
-        self.frame.size.width = self.bounds.width
         
         NSLayoutConstraint.activate([
             self.newsImage.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
