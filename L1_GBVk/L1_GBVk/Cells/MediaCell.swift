@@ -41,6 +41,6 @@ class MediaCell: UITableViewCell {
             self.newsImage.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
             ]
         )
-        
+    self.separatorInset
     }
 }

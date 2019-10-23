@@ -19,8 +19,6 @@ class PhotosViewController: UICollectionViewController {
     let presentTransition = CustomPresentModalAnimator()
     let dismissTransition = CustomDismissModalAnimator()
     let vkServices = VKServices()
-    
-    private var fullScreenViewController: FullScreenImagePresenterViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,9 +55,11 @@ class PhotosViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        self.fullScreenViewController?.imagesToDisplay = self.photosToDisplay
-        self.fullScreenViewController?.indexPathToScrollTo = indexPath
+        
+        let fullScreenViewController = FullScreenImagePresenterViewController()
+        fullScreenViewController.imagesToDisplay = self.photosToDisplay
+        fullScreenViewController.indexPathToScrollTo = indexPath
+        self.navigationController?.pushViewController(fullScreenViewController, animated: true)
     }
     
     private func getPhotosData() {
@@ -78,11 +78,11 @@ class PhotosViewController: UICollectionViewController {
         self.collectionView.backgroundColor = .darkGray
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? FullScreenImagePresenterViewController {
-            self.fullScreenViewController = destination
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let destination = segue.destination as? FullScreenImagePresenterViewController {
+//            self.fullScreenViewController = destination
+//        }
+//    }
 }
 
 extension PhotosViewController: UIViewControllerTransitioningDelegate {

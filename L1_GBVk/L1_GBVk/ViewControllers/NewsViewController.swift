@@ -146,5 +146,6 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
                 self.tableView.reloadData()
             }
         }
+       self.tableView.separatorStyle = .singleLine
     }
 }

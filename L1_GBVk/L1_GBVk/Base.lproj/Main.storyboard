@@ -198,7 +198,6 @@
                                 <connections>
                                     <outlet property="avatarImageView" destination="SIw-ey-uhL" id="hDL-HR-8CI"/>
                                     <outlet property="likeButton" destination="Tpb-rJ-kaB" id="2fb-gN-19R"/>
-                                    <segue destination="dbb-rh-6o4" kind="presentation" id="ywt-k6-hvr"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -265,7 +264,7 @@
                         <viewLayoutGuide key="safeArea" id="Hp1-1X-bUJ"/>
                     </view>
                     <connections>
-                        <outlet property="fullScreenCollectionView" destination="sql-eg-spc" id="PlF-bq-HPc"/>
+                        <outlet property="collectionView" destination="sql-eg-spc" id="PlF-bq-HPc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ovw-DL-nUc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -378,7 +377,7 @@
         <!--Мои Группы-->
         <scene sceneID="4fX-k2-yPR">
             <objects>
-                <navigationController id="4YC-tk-Y6Z" customClass="CustomNavigationController" customModule="L1_GBVk" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="4YC-tk-Y6Z" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Мои Группы" image="comicon" id="mJe-4f-UQZ">
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
@@ -397,7 +396,7 @@
         <!--Новости-->
         <scene sceneID="vYE-Ka-voq">
             <objects>
-                <navigationController id="i96-FH-wdk" customClass="CustomNavigationController" customModule="L1_GBVk" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="i96-FH-wdk" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Новости" image="feedicon" id="TMm-qf-6vC"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Zdr-up-fOm">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -639,7 +638,7 @@
         <!--Мои друзья-->
         <scene sceneID="Rku-O1-AfP">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XQx-j2-qVh" customClass="CustomNavigationController" customModule="L1_GBVk" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XQx-j2-qVh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Мои друзья" image="friendsicon" id="LOt-nK-Bei">
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
