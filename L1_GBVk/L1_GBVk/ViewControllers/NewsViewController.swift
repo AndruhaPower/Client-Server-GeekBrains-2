@@ -128,6 +128,21 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    @objc func refreshNews(_ sender: Any) {
+        let firstPostDate = self.news.first?.date ?? Date().timeIntervalSince1970
+        self.vkServices.getNews(startTime: firstPostDate) { newPosts in
+            guard let posts = newPosts,
+                    posts.count > 0,
+                    posts.first?.date != self.news.first?.date
+                else { self.tableView.refreshControl?.endRefreshing(); return }
+            self.news = posts + self.news
+            let indexSet = IndexSet(integersIn: 0..<posts.count)
+            self.tableView.insertSections(indexSet, with: .automatic)
+            self.tableView.reloadData()
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
     func configureViewDidLoad() {
         
         self.tableView.register(UINib(nibName: "CustomFriendCell", bundle: nil), forCellReuseIdentifier: CustomFriendsCell.reuseId)
@@ -137,11 +152,16 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.separatorColor = .clear
+        self.tableView.allowsSelection = false
         
-        let newsModelViewFabric = NewsViewModelFabric()
-        newsModelViewFabric.fetch { (NewsViewModels) in
-            self.news = NewsViewModels
+        self.tableView.refreshControl = UIRefreshControl()
+        self.tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Обновление...")
+        self.tableView.refreshControl?.tintColor = .red
+        self.tableView.refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
+        self.tableView.separatorColor = .clear
+        self.vkServices.getNews { news in
+            guard let news = news else { return }
+            self.news = news
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
