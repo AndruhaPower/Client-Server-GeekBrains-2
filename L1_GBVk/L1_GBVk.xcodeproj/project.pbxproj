@@ -64,8 +64,8 @@
 		49B02C9C228DF2A600EA8ECD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49B02C9A228DF2A600EA8ECD /* LaunchScreen.storyboard */; };
 		49B02CA7228DF2A700EA8ECD /* L1_GBVkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B02CA6228DF2A700EA8ECD /* L1_GBVkTests.swift */; };
 		49B02CB2228DF2A700EA8ECD /* L1_GBVkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B02CB1228DF2A700EA8ECD /* L1_GBVkUITests.swift */; };
-		49B09EA0235C7E7900C7744A /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B09E9F235C7E7900C7744A /* File.swift */; };
 		49B5B6272360C24000A013AC /* CustomFullScreenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B5B6262360C24000A013AC /* CustomFullScreenCollectionViewCell.swift */; };
+		49B5B62B2362014400A013AC /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B5B62A2362014400A013AC /* NewsViewModel.swift */; };
 		49BDB28222E495190028897B /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDB28122E495180028897B /* RealmManager.swift */; };
 		49BDE72422A14F3200E5256F /* likeButtonControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE72322A14F3200E5256F /* likeButtonControl.swift */; };
 		49C561FB22E08291002353EF /* RealmObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C561FA22E08291002353EF /* RealmObjects.swift */; };
@@ -165,8 +165,8 @@
 		49B02CAD228DF2A700EA8ECD /* L1_GBVkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = L1_GBVkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B02CB1228DF2A700EA8ECD /* L1_GBVkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L1_GBVkUITests.swift; sourceTree = "<group>"; };
 		49B02CB3228DF2A700EA8ECD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		49B09E9F235C7E7900C7744A /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		49B5B6262360C24000A013AC /* CustomFullScreenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFullScreenCollectionViewCell.swift; sourceTree = "<group>"; };
+		49B5B62A2362014400A013AC /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NewsViewModel.swift; path = ../Helpers/NewsViewModel.swift; sourceTree = "<group>"; };
 		49BDB28122E495180028897B /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		49BDE72322A14F3200E5256F /* likeButtonControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = likeButtonControl.swift; sourceTree = "<group>"; };
 		49C561FA22E08291002353EF /* RealmObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObjects.swift; sourceTree = "<group>"; };
@@ -253,7 +253,6 @@
 				495A808822B146B700A77C46 /* CustomViewExtensions.swift */,
 				49BDB28122E495180028897B /* RealmManager.swift */,
 				4965FD2D22AED3CD00333E41 /* GradientLayer.swift */,
-				49B09E9F235C7E7900C7744A /* File.swift */,
 			);
 			name = Helpers;
 			path = ../../Helpers;
@@ -407,6 +406,7 @@
 				4989720322AC6CAC005B1F75 /* AvatarImageView.swift */,
 				4989720422AC6CAC005B1F75 /* AvatarShadowView.swift */,
 				4994579222B52B8000ED7B2A /* LogoImageView.swift */,
+				49B5B62A2362014400A013AC /* NewsViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -676,13 +676,13 @@
 				4994579B22B53C3200ED7B2A /* CustomNewsCell.swift in Sources */,
 				49A2FA3122D1F54C00A33630 /* VKServices.swift in Sources */,
 				4994579322B52B8000ED7B2A /* LogoImageView.swift in Sources */,
+				49B5B62B2362014400A013AC /* NewsViewModel.swift in Sources */,
 				49163F5B22BEAEC500C23B72 /* LoadingCirclesImage.swift in Sources */,
 				495A808722B1448F00A77C46 /* SectionIndexAlgorythm.swift in Sources */,
 				49C561FB22E08291002353EF /* RealmObjects.swift in Sources */,
 				495A808F22B158A000A77C46 /* CustomSearchGroupCell.swift in Sources */,
 				4994579722B538F500ED7B2A /* ShareControl.swift in Sources */,
 				49C75542230A861500AD0BAB /* Map Feed.swift in Sources */,
-				49B09EA0235C7E7900C7744A /* File.swift in Sources */,
 				4973736022C9FA9600C6A3E0 /* VKSession.swift in Sources */,
 				49163F7022C0F4AF00C23B72 /* CustomInteractiveTransition.swift in Sources */,
 				495A808922B146B700A77C46 /* CustomViewExtensions.swift in Sources */,
