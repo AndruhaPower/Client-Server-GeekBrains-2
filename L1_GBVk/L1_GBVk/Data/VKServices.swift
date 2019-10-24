@@ -105,17 +105,19 @@ class VKServices {
     
     // Метод запроса по получению массива спарсенных моделей новостей для подстановки в контроллер
     
-    public func getNews(count: Int, completion: @escaping ([Feed]?, [Groups]?)->()) {
+    public func getNews(startTime: Double? = nil, completion: @escaping ([NewsViewModel]?)->()){
         let url = VKConstants.newsFeed
         
-        let params: Parameters = [
+        var params: Parameters = [
         
             "filters" : "post",
-            "count" : String(count),
             "access_token" : KeychainWrapper.standard.string(forKey: "VKToken")!,
             "v" : VKConstants.vAPI,
             "source_ids" : "groups"
         ]
+        if let startTime = startTime {
+            params["start_time"] = startTime
+        }
         
         VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfeedResponse: DataResponse<VKFeedResponse, AFError>) in
             
@@ -125,10 +127,11 @@ class VKServices {
                 guard let items = val.response?.items,
                       let groups = val.response?.groups else
                 { return }
-                completion(items,groups)
+                let news = NewsViewModelFabric.setupNewsData(news: items, groups: groups)
+                completion(news)
             case.failure(let error):
                 print(error)
-                completion(nil,nil)
+                completion(nil)
             }
         })
     }
