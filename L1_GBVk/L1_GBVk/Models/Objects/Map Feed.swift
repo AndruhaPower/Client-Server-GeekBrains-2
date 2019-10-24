@@ -23,6 +23,7 @@ class VKFeedResponseInternal: Mappable {
     
     var items: [Feed] = []
     var groups: [Groups] = []
+    var startFrom: String = ""
     required init?(map: Map) { }
     
     func mapping(map: Map) {
@@ -42,6 +43,7 @@ class Feed: Mappable, CustomStringConvertible {
     var text: String = ""
     var photoWidth: Int = 0
     var photoHeight: Int = 0
+    var date: Double = 0
     var ratio: CGFloat {
             guard self.photoWidth != 0 && self.photoHeight != 0 else { return 100 }
         return CGFloat(self.photoWidth)/CGFloat(self.photoHeight)
@@ -59,10 +61,12 @@ class Feed: Mappable, CustomStringConvertible {
         self.likesCount <- map["likes.count"]
         self.viewsCount <- map["views.count"]
         self.source_id <- map["source_id"]
+        self.date <- map["date"]
         self.photoUrl <- map["attachments.0.photo.sizes.3.url"]
         self.photoWidth <- map["attachments.0.photo.sizes.3.width"]
         self.photoHeight <- map["attachments.0.photo.sizes.3.height"]
         self.text <- map["text"]
+
     }
 }
 
