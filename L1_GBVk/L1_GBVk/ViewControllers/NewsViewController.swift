@@ -15,6 +15,8 @@ class NewsViewController: UIViewController {
     var numberOfRowsInSection = 4
     var expandedCells = [IndexPath: Bool]()
     let operationQueue = OperationQueue()
+    var isLoading: Bool = false
+    private var nextFrom : String = ""
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -130,7 +132,7 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     
     @objc func refreshNews(_ sender: Any) {
         let firstPostDate = self.news.first?.date ?? Date().timeIntervalSince1970
-        self.vkServices.getNews(startTime: firstPostDate) { newPosts in
+        self.vkServices.getNews(startTime: firstPostDate) { newPosts, nextFrom in
             guard let posts = newPosts,
                     posts.count > 0,
                     posts.first?.date != self.news.first?.date
@@ -138,7 +140,6 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
             self.news = posts + self.news
             let indexSet = IndexSet(integersIn: 0..<posts.count)
             self.tableView.insertSections(indexSet, with: .automatic)
-            self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
         }
     }
@@ -152,6 +153,7 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.prefetchDataSource = self
         self.tableView.allowsSelection = false
         
         self.tableView.refreshControl = UIRefreshControl()
@@ -159,13 +161,31 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
         self.tableView.refreshControl?.tintColor = .red
         self.tableView.refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
         self.tableView.separatorColor = .clear
-        self.vkServices.getNews { news in
-            guard let news = news else { return }
+        self.vkServices.getNews { news, nextFrom in
+            guard let news = news,
+                  let nextFrom = nextFrom else { return }
             self.news = news
+            self.nextFrom = nextFrom
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
        self.tableView.separatorStyle = .singleLine
+    }
+}
+
+extension NewsViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard let maxSection = indexPaths.map({ $0.section }).max() else { return }
+        if maxSection > self.news.count - 3,
+            !self.isLoading {
+            self.isLoading = true
+            self.vkServices.getNews(startFrom: self.nextFrom) { [weak self] newPosts, nextFrom in
+                guard let newPosts = newPosts else { return }
+                self?.news.append(contentsOf: newPosts)
+                self?.tableView.reloadData()
+                self?.isLoading = false
+            }
+        }
     }
 }

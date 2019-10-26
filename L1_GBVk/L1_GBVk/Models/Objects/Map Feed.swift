@@ -24,11 +24,13 @@ class VKFeedResponseInternal: Mappable {
     var items: [Feed] = []
     var groups: [Groups] = []
     var startFrom: String = ""
+    var nextFrom: String = ""
     required init?(map: Map) { }
     
     func mapping(map: Map) {
         self.items <- map["items"]
         self.groups <- map["groups"]
+        self.nextFrom <- map["next_from"]
     }
 }
 

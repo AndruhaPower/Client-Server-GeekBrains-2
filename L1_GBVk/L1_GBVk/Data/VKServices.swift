@@ -105,7 +105,7 @@ class VKServices {
     
     // Метод запроса по получению массива спарсенных моделей новостей для подстановки в контроллер
     
-    public func getNews(startTime: Double? = nil, completion: @escaping ([NewsViewModel]?)->()){
+    public func getNews(startTime: Double? = nil, startFrom: String? = "", completion: @escaping ([NewsViewModel]?, String?)->()){
         let url = VKConstants.newsFeed
         
         var params: Parameters = [
@@ -118,6 +118,9 @@ class VKServices {
         if let startTime = startTime {
             params["start_time"] = startTime
         }
+        if let startFrom = startFrom {
+            params["start_from"] = startFrom
+        }
         
         VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfeedResponse: DataResponse<VKFeedResponse, AFError>) in
             
@@ -125,13 +128,18 @@ class VKServices {
             switch result {
             case.success(let val):
                 guard let items = val.response?.items,
-                      let groups = val.response?.groups else
+                      let groups = val.response?.groups,
+                    let nextFrom = val.response?.nextFrom else
                 { return }
                 let news = NewsViewModelFabric.setupNewsData(news: items, groups: groups)
-                completion(news)
+                DispatchQueue.main.async {
+                    completion(news, nextFrom)
+                }
             case.failure(let error):
                 print(error)
-                completion(nil)
+                DispatchQueue.main.async {
+                    completion(nil, nil)
+                }
             }
         })
     }

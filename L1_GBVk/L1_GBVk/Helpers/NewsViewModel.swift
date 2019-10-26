@@ -34,8 +34,8 @@ class NewsViewModel: CustomStringConvertible {
         self.photoUrl = news.photoUrl
         self.text = news.text
         self.ratio = news.ratio
-        self.name = name
         self.date = news.date
+        self.name = name
         self.avatarPhotoUrl = avatarPhotoUrl
     }
 }
