@@ -37,6 +37,10 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
         return self.numberOfRowsInSection
     }
     
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 1:
