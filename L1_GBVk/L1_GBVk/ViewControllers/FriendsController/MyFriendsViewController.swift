@@ -128,6 +128,7 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
         self.tableView.register(UINib(nibName: "CustomFriendCell", bundle: nil), forCellReuseIdentifier: CustomFriendsCell.reuseId)
         self.tableView.keyboardDismissMode = .onDrag
         self.tableView.dataSource = self
+        self.modalPresentationStyle = UIModalPresentationStyle.fullScreen
     }
     
     

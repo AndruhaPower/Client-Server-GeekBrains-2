@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        vkServices.getUsers()
+        self.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         scrollView?.addGestureRecognizer(hideKeyboardGesture)
         logoImageView.image = UIImage(named: "logo")

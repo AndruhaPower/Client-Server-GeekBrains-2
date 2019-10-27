@@ -46,7 +46,7 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
         case 1:
             let news = self.news[indexPath.section]
             let text = news.text
-            let textSize = getLabelSize(text: text, font: UIFont.systemFont(ofSize: 17), maxWidth: tableView.bounds.width)
+            let textSize = getLabelSize(text: text, font: UIFont.systemFont(ofSize: 18), maxWidth: tableView.bounds.width)
             let expandedState = expandedCells[indexPath] ?? false
             if expandedState {
                 return textSize.height
