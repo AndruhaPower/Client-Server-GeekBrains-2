@@ -12,6 +12,7 @@ class NewsViewController: UIViewController {
     
     var news: [NewsViewModel] = []
     var vkServices = VKServices()
+    public weak var delegate: TextCellDelegate?
     var numberOfRowsInSection = 4
     var expandedCells = [IndexPath: Bool]()
     let operationQueue = OperationQueue()
@@ -38,16 +39,16 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
-//        case 1:
-//            let news = self.news[indexPath.section]
-//            guard let text = news.text else { return 0 }
-//            let textSize = getLabelSize(text: text, font: UIFont.systemFont(ofSize: 17), maxWidth: tableView.bounds.width)
-//            let expandedState = expandedCells[indexPath] ?? false
-//            if expandedState {
-//                return textSize.height
-//            } else {
-//                return min(textSize.height, 100)
-//            }
+        case 1:
+            let news = self.news[indexPath.section]
+            let text = news.text
+            let textSize = getLabelSize(text: text, font: UIFont.systemFont(ofSize: 17), maxWidth: tableView.bounds.width)
+            let expandedState = expandedCells[indexPath] ?? false
+            if expandedState {
+                return textSize.height
+            } else {
+                return min(textSize.height, 100)
+            }
         case 2:
             let tableWidth = tableView.bounds.width
             let news = self.news[indexPath.section]
@@ -187,5 +188,15 @@ extension NewsViewController: UITableViewDataSourcePrefetching {
                 self?.isLoading = false
             }
         }
+    }
+}
+
+extension NewsViewController: TextCellDelegate {
+    
+    func textCellaTapped(at indexPath: IndexPath) {
+        var expandedState = expandedCells[indexPath] ?? false
+        expandedState.toggle()
+        self.expandedCells[indexPath] = expandedState
+        self.tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
