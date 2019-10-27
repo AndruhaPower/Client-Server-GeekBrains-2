@@ -80,7 +80,6 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         updateFriendsIndex(friends: friends)
         updateFriendsNamesDictionary(friends: friends)
-        
         if (searchText.count == 0) {
             updateFriendsIndex(friends: friends)
             updateFriendsNamesDictionary(friends: friends)
@@ -94,6 +93,8 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
         searchActive = false
         searchBar.endEditing(true)
     }
+    
+    
     
     //MARK: Prepare datasource
     

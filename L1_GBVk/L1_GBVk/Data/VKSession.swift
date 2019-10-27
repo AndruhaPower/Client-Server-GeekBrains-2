@@ -18,4 +18,3 @@ class VKSession {
     
     private init () {}
 }
-

@@ -13,11 +13,11 @@ class FullScreenImagePresenterViewController: UIViewController, UICollectionView
     var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
     var imagesToDisplay: [Photo] = []
-    var indexPathToScrollTo = IndexPath(row: 0, section: 0) //{
-//        didSet {
-//            collectionView.scrollToItem(at: indexPathToScrollTo, at:UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
-//        }
-   // }
+    var indexPathToScrollTo = IndexPath(row: 0, section: 0) {
+        didSet {
+            collectionView.scrollToItem(at: indexPathToScrollTo, at:UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
+        }
+    }
     var newCellIndexPath = IndexPath(row: 0, section: 0)
     var oldCellIndexPath = IndexPath(row: 0, section: 0)
     var scrollChangedDirection: Bool = false
