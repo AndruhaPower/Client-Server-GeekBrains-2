@@ -19,16 +19,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FuJ-Ax-DB9" customClass="GradientView" customModule="L1_GBVk" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="421" height="80"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="421" id="RAm-LI-NzP"/>
-                        <constraint firstAttribute="height" constant="80" id="zeu-jw-Lsp"/>
-                    </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="color" keyPath="startColor">
-                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="endColor">
-                            <color key="value" red="0.32500812169999999" green="0.47538767599999998" blue="0.60196729270000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="point" keyPath="startPoint">
                             <point key="value" x="0.0" y="1"/>
@@ -36,10 +29,13 @@
                         <userDefinedRuntimeAttribute type="point" keyPath="endPoint">
                             <point key="value" x="1" y="1"/>
                         </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                            <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JQU-BH-CC8" customClass="AvatarShadowView" customModule="L1_GBVk" customModuleProvider="target">
-                    <rect key="frame" x="25" y="10" width="60" height="60"/>
+                    <rect key="frame" x="10" y="10" width="60" height="60"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="IIr-7z-h7L"/>
@@ -55,7 +51,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5eu-2h-paz" customClass="AvatarImageView" customModule="L1_GBVk" customModuleProvider="target">
-                    <rect key="frame" x="25" y="10" width="60" height="60"/>
+                    <rect key="frame" x="10" y="10" width="60" height="60"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="6nJ-aL-c0k"/>
@@ -63,7 +59,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="22B-rm-eUl">
-                    <rect key="frame" x="95" y="29.5" width="42" height="21"/>
+                    <rect key="frame" x="80" y="29.5" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -72,14 +68,17 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="22B-rm-eUl" secondAttribute="trailing" constant="25" id="4KA-8v-zAz"/>
+                <constraint firstItem="FuJ-Ax-DB9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="EBM-3E-kD5"/>
                 <constraint firstItem="FuJ-Ax-DB9" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="GIm-gc-Tll"/>
+                <constraint firstItem="FuJ-Ax-DB9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Ivd-5p-XGd"/>
                 <constraint firstItem="22B-rm-eUl" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="JPY-DT-gjd"/>
-                <constraint firstItem="5eu-2h-paz" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="P32-yW-TUD"/>
+                <constraint firstItem="5eu-2h-paz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Ycm-F8-LoU"/>
                 <constraint firstItem="22B-rm-eUl" firstAttribute="leading" secondItem="JQU-BH-CC8" secondAttribute="trailing" constant="10" id="eQd-Nf-wus"/>
                 <constraint firstItem="FuJ-Ax-DB9" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="hiL-0v-qaM"/>
                 <constraint firstItem="JQU-BH-CC8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="tIR-HI-FsB"/>
-                <constraint firstItem="JQU-BH-CC8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="wZ9-FF-cxk"/>
-                <constraint firstItem="5eu-2h-paz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="xBP-tc-4b4"/>
+                <constraint firstItem="JQU-BH-CC8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="wZ9-FF-cxk"/>
+                <constraint firstItem="5eu-2h-paz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="xBP-tc-4b4"/>
+                <constraint firstAttribute="bottom" secondItem="5eu-2h-paz" secondAttribute="bottom" constant="10" id="zBr-h2-YNP"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

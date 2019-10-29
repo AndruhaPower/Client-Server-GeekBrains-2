@@ -9,7 +9,9 @@
 import UIKit
 
 class FullScreenCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var friendsImageView: UIImageView!
+    var indexPath: IndexPath?
     
     override func awakeFromNib() {
         //addGestureRecognizer(tapGestureRecognizer)

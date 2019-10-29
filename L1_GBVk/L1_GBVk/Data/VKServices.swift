@@ -5,12 +5,12 @@
 //  Created by Andrew on 07/07/2019.
 //  Copyright © 2019 Andrew. All rights reserved.
 //
-
 import Foundation
 import Alamofire
 import AlamofireObjectMapper
 import SwiftKeychainWrapper
-import Realm
+import RealmSwift
+
 
 class VKServices {
     
@@ -18,21 +18,16 @@ class VKServices {
         let config = URLSessionConfiguration.default
         config.headers = .default
         config.timeoutIntervalForRequest = 20
-        
         let manager = Alamofire.Session(configuration: config)
         return manager
     }()
-    
-// АВТОРИЗАЦИЯ
-    
-    
-    
-// ПОЛУЧАЕМ ГРУППЫ
-    
-    public func getFriends(_ completionHandler:@escaping (_ friends:[Friend]?)->() ) {
-    
-        let url = VKConstants.friends
 
+    // Метод запроса по получению массива спарсенный моделей друзей для подстановки в контроллер
+    
+    public func getFriends( completion: @escaping (Bool)->()) {
+        
+        let url = VKConstants.friends
+        
         let params: Parameters = [
             "access_token": KeychainWrapper.standard.string(forKey: "VKToken")!,
             "order": "name",
@@ -40,21 +35,25 @@ class VKServices {
             "v": VKConstants.vAPI
         ]
 
-        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfriendsResponse: DataResponse<VKFriendResponse>) in
+        
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfriendsResponse: DataResponse<VKFriendResponse, AFError>) in
             
             let result = vkfriendsResponse.result
             switch result {
             case .success(let val):
-                completionHandler(val.response?.items)
+                let items = val.response?.items
+                RealmManager.friendsManager(friends: items!)
+                completion(true)
             case .failure(let error):
                 print(error)
+                completion(false)
             }
         })
     }
     
-// ПОЛУЧАЕМ СВОИ ГРУППЫ
+    // Метод запроса по получению массива спарсенный моделей своих групп для подстановки в контроллер
     
-    public func getGroups(_ completionHandler:@escaping (_ groups:[Group]?)->() ) {
+    public func getGroups() {
         
         let url = VKConstants.groups
         
@@ -65,21 +64,22 @@ class VKServices {
         ]
         
         VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: {
-            (vkgroupResponse: DataResponse<VKGroupResponse>) in
+            (vkgroupResponse: DataResponse<VKGroupResponse, AFError>) in
             
             let result = vkgroupResponse.result
             switch result {
             case .success(let val):
-                completionHandler(val.response?.items)
+                let items = val.response?.items
+                RealmManager.groupsManager(groups: items!)
             case .failure(let error):
                 print(error)
             }
         })
     }
     
-// ПОЛУЧАЕМ ГРУППЫ ДЛЯ ПОИСКА
+    // Метод запроса по получению массива спарсенный моделей групп поиска для подстановки в контроллер
     
-    public func getSearchGroups(_ completionHandler:@escaping (_ groups:[Group]?)->()) {
+    public func getSearchGroups() {
         
         let url = VKConstants.groupsSearch
         
@@ -90,26 +90,58 @@ class VKServices {
             "v" : VKConstants.vAPI
         ]
         
-        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkgroupResponse: DataResponse<VKGroupResponse>) in
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkgroupResponse: DataResponse<VKGroupResponse, AFError>) in
             
             let result = vkgroupResponse.result
             switch result {
             case .success(let val):
-                completionHandler(val.response?.items)
+                guard let items = val.response?.items else { return }
+                RealmManager.groupsManager(groups: items)
             case .failure(let error):
                 print(error)
             }
         })
     }
     
-// ПОЛУЧАЕМ ССЫЛКИ НА ФОТКИ
-
-    public func getPhotos(id: Int, _ completionHandler:@escaping (_ photos:[Photo]?)->()) {
+    // Метод запроса по получению массива спарсенных моделей новостей для подстановки в контроллер
+    
+    public func getNews(count: Int, completion: @escaping ([Feed]?, [Groups]?)->()) {
+        let url = VKConstants.newsFeed
+        
+        let params: Parameters = [
+        
+            "filters" : "post",
+            "count" : String(count),
+            "access_token" : KeychainWrapper.standard.string(forKey: "VKToken")!,
+            "v" : VKConstants.vAPI,
+            "source_ids" : "groups"
+        ]
+        
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfeedResponse: DataResponse<VKFeedResponse, AFError>) in
+            
+            let result = vkfeedResponse.result
+            switch result {
+            case.success(let val):
+                guard let items = val.response?.items,
+                      let groups = val.response?.groups else
+                { return }
+                completion(items,groups)
+            case.failure(let error):
+                print(error)
+                completion(nil,nil)
+            }
+        })
+    }
+    
+    
+    // Метод запроса по получению спарсенной модели фотографий для подстановки в контроллер
+    
+    public func getPhotos(id: Int, completion: @escaping (Bool)->()) {
         
         let url = VKConstants.photosURL
         
         let params: Parameters = [
-        
+            
             "owner_id" : String(id),
             "extended" : "0",
             "skip_hidden" : "1",
@@ -117,25 +149,18 @@ class VKServices {
             "v" : VKConstants.vAPI
         ]
         
-        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkphotoresponse: DataResponse<VKPhotoResponse>) in
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkphotoresponse: DataResponse<VKPhotoResponse, AFError>) in
             
             let result = vkphotoresponse.result
             switch result {
             case .success(let val):
-                var photos: [Photo] = []
                 guard let items = val.response?.items else { return }
-                for photo in items {
-                    if photo.photoURL != "" {
-                        photos.append(photo)
-                    }
-                }
-                completionHandler(photos)
+                RealmManager.photosManager(photos: items, id: id)
+                completion(true)
             case .failure(let error):
                 print(error)
+                completion(false)
             }
         })
     }
 }
-
-
-

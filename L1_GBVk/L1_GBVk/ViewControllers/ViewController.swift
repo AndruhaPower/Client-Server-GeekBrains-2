@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet private weak var passwordTextField: UITextField!
     @IBOutlet private weak var scrollView: UIScrollView!
     private var timerSeconds = 2
+    let vkServices = VKServices()
     @IBOutlet private weak var VKwebView: WKWebView! {
         didSet{
             VKwebView.navigationDelegate = self
@@ -36,6 +37,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        vkServices.getUsers()
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         scrollView?.addGestureRecognizer(hideKeyboardGesture)
         logoImageView.image = UIImage(named: "logo")
@@ -120,13 +122,14 @@ class ViewController: UIViewController {
         urlComponents.host = "oauth.vk.com"
         urlComponents.path = "/authorize"
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "7042441"),
+            URLQueryItem(name: "client_id", value: VKConstants.appId),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-            URLQueryItem(name: "scope", value: "262150"),
+            URLQueryItem(name: "scope", value: "270342"),
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "v", value: "5.68")
         ]
+        
         let request = URLRequest(url: urlComponents.url!)
         self.VKwebView.load(request)
     }
@@ -158,12 +161,9 @@ extension ViewController: WKNavigationDelegate {
         
         let token = params["access_token"]
         guard let unwrappedToken = token else { return }
-        
         KeychainWrapper.standard.set(unwrappedToken, forKey: "VKToken")
         print(KeychainWrapper.standard.string(forKey: "VKToken")!)
-        
         self.performSegue(withIdentifier: "goToMainTabbar", sender: self)
-        
         decisionHandler(.cancel)
     }
 }

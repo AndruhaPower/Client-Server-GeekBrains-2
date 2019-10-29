@@ -11,7 +11,7 @@ import UIKit
 
 @IBDesignable class ShareControl: UIControl {
     private var stackView: UIStackView!
-    private var shareIcon = UIImage(named: "shareicon")
+    private var shareIcon = UIImage(named: "share")
     private var shareIconView = UIImageView()
     private let sharesLabel = UILabel()
     var sharesCount: Int = 123

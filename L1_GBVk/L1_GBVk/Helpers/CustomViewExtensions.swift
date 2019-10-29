@@ -123,3 +123,10 @@ extension UIImageView {
         }
     }
 }
+
+extension UIImage {
+    func getRatio() -> CGFloat {
+        let heightRatio = CGFloat(self.size.height / self.size.width)
+        return heightRatio
+    }
+}

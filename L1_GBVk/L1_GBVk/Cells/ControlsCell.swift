@@ -1,24 +1,18 @@
 //
-//  CustomNewsCell.swift
+//  ControlsCell.swift
 //  L1_GBVk
 //
-//  Created by Andrew on 15/06/2019.
+//  Created by Andrew on 16/10/2019.
 //  Copyright © 2019 Andrew. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-
-class CustomNewsCell: UITableViewCell {
+class ControlsCell: UITableViewCell {
     
-    static var reuseId: String = "CustomNewsCell"
-    var indexPath: IndexPath?
-    @IBOutlet weak var newsText: UILabel!
-    @IBOutlet weak var newsImage: UIImageView!
-    @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var userphoto: AvatarImageView!
+    static var reuseIdentifier: String = "ControlsCellReuseId"
     @IBOutlet weak var stackView: ControlsStackView!
+    @IBOutlet weak var viewsControl: ViewsControl!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,10 +24,16 @@ class CustomNewsCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.viewsControl.viewsCount = 0
         self.stackView.likes.likesCount = 0
         self.stackView.comments.commentsCount = 0
         self.stackView.shares.sharesCount = 0
-        self.userphoto.image = UIImage(named: "noimage")
-        self.newsImage.image = nil
     }
+}
+
+class ControlsStackView: UIStackView {
+    
+    @IBOutlet weak var likes: LikeButtonControl!
+    @IBOutlet weak var comments: CommentControl!
+    @IBOutlet weak var shares: ShareControl!
 }

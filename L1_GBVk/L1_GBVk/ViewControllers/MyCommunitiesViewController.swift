@@ -7,35 +7,41 @@
 //
 
 import UIKit
+import RealmSwift
 
+
+/// Контроллер отвечающий за группы
 class MyCommunitiesViewController: UITableViewController {
 
-    var groups: [Group] = []
-    var vkServices = VKServices()
+    private var groups: [RGroup] = []
+    private var vkServices = VKServices()
+    private var token: NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        vkServices.getGroups { (gotGroups) in
-            guard let mygroups = gotGroups else { return }
-            self.groups = mygroups
-            DispatchQueue.main.async {
-                self.tableView?.reloadData()
-            }
-        }
-        tableView.register(UINib(nibName: "CustomGroupCell", bundle: nil), forCellReuseIdentifier: CustomGroupCell.reuseId)
-        tableView.dataSource = self
+        self.saveGroupsData()
+        self.tableViewConfig()
     }
-
+    //MARK: - TableView datasource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groups.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomGroupCell.reuseId, for: indexPath) as? CustomGroupCell else { return UITableViewCell() }
-        
-        let avatarName = URL(string: groups[indexPath.row].photo)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomGroupCell.reuseId, for: indexPath) as? CustomGroupCell
+            , let photo = groups[indexPath.row].photo else { return UITableViewCell() }
+    
+        cell.indexPath = indexPath
+        let operationQueue = OperationQueue()
+        let operation = LoadImageOperation()
+        operation.url = URL(string: photo)
+        operationQueue.addOperation(operation)
+        operation.completion = { image in
+            if cell.indexPath == indexPath {
+                cell.groupAvatarImage.image = image
+            }
+        }
         cell.groupNameLabel.text = groups[indexPath.row].name
-        cell.groupAvatarImage.load(url: avatarName!)
         return cell
     }
     
@@ -50,16 +56,37 @@ class MyCommunitiesViewController: UITableViewController {
         }    
     }
     
-    @IBAction func addGroup(segue: UIStoryboardSegue) {
-        if segue.identifier == "addGroup" {
-            let controller = segue.source as! SearchComViewController
-            if  let indexPath = controller.tableView.indexPathForSelectedRow {
-                let groupToAdd = controller.searchGroups[indexPath.row]
-                if !groups.contains(groupToAdd) {
-                    groups.append(groupToAdd)
-                }
-            }
+    /// Функция достает группы из БД и дает контроллеру
+
+    private func saveGroupsData() {
+        do {
+            self.vkServices.getGroups()
+            let realm = try Realm()
+            let resultGroups = realm.objects(RGroup.self).filter("isMember != 0")
+            self.groups = Array(resultGroups)
+        } catch {
+            print(error)
         }
+    }
+    
+    private func tableViewConfig() {
+        self.tableView.register(UINib(nibName: "CustomGroupCell", bundle: nil), forCellReuseIdentifier: CustomGroupCell.reuseId)
+        self.tableView.dataSource = self
+    }
+
+    /// Функция по добавлению группы в свой список (не работает)
+    ///
+    /// - Parameter segue: сега контроллера по поиску групп (не этого)
+    
+    @IBAction func addGroup(segue: UIStoryboardSegue) {
+        guard let searchComVC = segue.source as? SearchComViewController,
+              let indexPath = searchComVC.tableView.indexPathForSelectedRow else { return }
+        
+        let newGroup = searchComVC.searchGroups[indexPath.row]
+        if !self.groups.contains(newGroup) {
+            self.groups.append(newGroup)
+        }
+        tableView.reloadData()
     }
 }
 

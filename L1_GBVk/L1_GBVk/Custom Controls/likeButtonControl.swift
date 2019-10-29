@@ -12,8 +12,8 @@ import Foundation
 
 @IBDesignable class LikeButtonControl: UIControl {
     private var stackView: UIStackView!
-    private var likeButton = HeartButton()
-    private let likesLabel = UILabel()
+    var likeButton = HeartButton()
+    let likesLabel = UILabel()
     var likesCount: Int = 0
     private var liked: Bool = false
     
@@ -32,11 +32,7 @@ import Foundation
         likesLabel.text = "\(likesCount)"
         likesLabel.textColor = UIColor.darkGray
         setupConstraints()
-        
-        //MARK: to debug LikeControl position uncomment two lines below
-        //    likeButton.layer.borderWidth = 1.0
-        //    likesLabel.layer.borderWidth = 1.0
-        
+
         stackView = UIStackView(arrangedSubviews: [likeButton, likesLabel])
         self.addSubview(stackView)
         stackView.distribution = .fillEqually
