@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TextCellDelegate: class {
-    func textCellaTapped(at indexPath: IndexPath)
+    func textCellTapped(at cell: TextCell)
 }
 
 class TextCell: UITableViewCell {
@@ -18,7 +18,6 @@ class TextCell: UITableViewCell {
     @IBOutlet weak var newsText: UILabel!
     public weak var delegate: TextCellDelegate?
     public var isExpanded: Bool = false
-    var indexPath = IndexPath()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,6 +31,6 @@ class TextCell: UITableViewCell {
     }
     
     @objc func tapped() {
-        delegate?.textCellaTapped(at: indexPath)
+        delegate?.textCellTapped(at: self)
     }
 }

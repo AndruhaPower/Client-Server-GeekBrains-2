@@ -23,7 +23,6 @@ class NewsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureViewDidLoad()
-        
     }
 }
 
@@ -97,6 +96,7 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TextCell.reuseIdentifier, for: indexPath) as? TextCell else { return UITableViewCell() }
             cell.newsText.text = self.news[indexPath.section].text
+            cell.delegate = self
             return cell
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "custom", for: indexPath) as? MediaCell,
@@ -137,10 +137,9 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     
     @objc func refreshNews(_ sender: Any) {
         let firstPostDate = self.news.first?.date ?? Date().timeIntervalSince1970
-        self.vkServices.getNews(startTime: firstPostDate) { newPosts, nextFrom in
+        self.vkServices.getNews(startTime: firstPostDate + 1) { newPosts, nextFrom in
             guard let posts = newPosts,
-                    posts.count > 0,
-                    posts.first?.date != self.news.first?.date
+                    posts.count > 0
                 else { self.tableView.refreshControl?.endRefreshing(); return }
             self.news = posts + self.news
             let indexSet = IndexSet(integersIn: 0..<posts.count)
@@ -197,7 +196,8 @@ extension NewsViewController: UITableViewDataSourcePrefetching {
 
 extension NewsViewController: TextCellDelegate {
     
-    func textCellaTapped(at indexPath: IndexPath) {
+    func textCellTapped(at cell: TextCell) {
+        guard let indexPath = self.tableView.indexPath(for: cell) else { return }
         var expandedState = expandedCells[indexPath] ?? false
         expandedState.toggle()
         self.expandedCells[indexPath] = expandedState
