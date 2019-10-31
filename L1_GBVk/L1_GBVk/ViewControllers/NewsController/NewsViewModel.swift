@@ -9,18 +9,17 @@
 import UIKit
 
 
-class NewsViewModel: CustomStringConvertible {
+final class NewsViewModel: CustomStringConvertible {
     
     var commentCount: Int
     var date: Double
     var likesCount: Int
     var repostCount: Int
     var viewsCount: Int
-    var photoUrl: String
     var text: String
-    var ratio: CGFloat
     var name: String
     var avatarPhotoUrl: String
+    var attachments: [Attachments]
     
     var description: String {
         return String(self.date) + " - ДАТА \n" + String(self.text) + " \n - ТЕКСТ \n" + String(self.name) + " - ГРУППА"
@@ -31,17 +30,15 @@ class NewsViewModel: CustomStringConvertible {
         self.likesCount = news.likesCount
         self.repostCount = news.repostCount
         self.viewsCount = news.viewsCount
-        self.photoUrl = news.photoUrl
+        self.attachments = news.attachments
         self.text = news.text
-        self.ratio = news.ratio
         self.date = news.date
         self.name = name
         self.avatarPhotoUrl = avatarPhotoUrl
     }
 }
 
-
-class NewsViewModelFabric {
+final class NewsViewModelFabric {
     
     static func setupNewsData(news: [Feed], groups: [Groups]) -> ([NewsViewModel]) {
         var newsViewModel: [NewsViewModel] = []

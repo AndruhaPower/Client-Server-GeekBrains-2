@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@IBDesignable class HeartButton: UIButton {
+@IBDesignable final class HeartButton: UIButton {
     
     @IBInspectable var filled: Bool = true
     @IBInspectable var strokeWidth: CGFloat = 2.0
@@ -20,12 +20,12 @@ import UIKit
     override func draw(_ rect: CGRect) {
         let bezierPath = UIBezierPath(heartHeight: self.bounds.height)
         
-        if !liked {
-            strokeColor = UIColor.gray
+        if !self.liked {
+            self.strokeColor = UIColor.gray
             self.strokeColor.setStroke()
             self.filled = false
         } else {
-            strokeColor = UIColor.red
+            self.strokeColor = UIColor.red
             self.tintColor = UIColor.red
             self.strokeColor.setStroke()
             self.tintColor.setFill()

@@ -14,7 +14,7 @@ import UIKit
     private var shareIcon = UIImage(named: "share")
     private var shareIconView = UIImageView()
     private let sharesLabel = UILabel()
-    var sharesCount: Int = 123
+    var sharesCount: Int = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,45 +27,35 @@ import UIKit
     }
     
     private func setupView() {
-        shareIconView.image = shareIcon
-        shareIconView.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
-        sharesLabel.text = "\(sharesCount)"
-        sharesLabel.textColor = UIColor.darkGray
-        setupConstraints()
+        self.shareIconView.image = self.shareIcon
+        self.shareIconView.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
+        self.sharesLabel.text = "\(self.sharesCount)"
+        self.sharesLabel.textColor = UIColor.darkGray
+        self.stackView = UIStackView(arrangedSubviews: [self.shareIconView, self.sharesLabel])
         
-//        MARK: to debug sharesControl position uncomment two lines below
-//            shareIconView.layer.borderWidth = 1.0
-//            sharesLabel.layer.borderWidth = 1.0
-//        
-        stackView = UIStackView(arrangedSubviews: [shareIconView, sharesLabel])
-        
-        self.addSubview(stackView)
-        stackView.distribution = .fillEqually
-        addGestureRecognizer(tapGestureRecognizer)
+        self.addSubview(self.stackView)
+        self.stackView.distribution = .fillEqually
+        addGestureRecognizer(self.tapGestureRecognizer)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        stackView.frame = bounds
-    }
-    
-    func setupConstraints() {
-        sharesLabel.heightAnchor.constraint(equalTo: shareIconView.heightAnchor, multiplier: 1)
+        self.stackView.frame = bounds
     }
     
     func incrementSharesCount() {
-        sharesCount += 1
-        updateSharesCount(comments: sharesCount)
+        self.sharesCount += 1
+        self.updateSharesCount(comments: self.sharesCount)
     }
     
     func decrementSharesCount() {
-        sharesCount -= 1
-        updateSharesCount(comments: sharesCount)
+        self.sharesCount -= 1
+        self.updateSharesCount(comments: self.sharesCount)
     }
     
     func updateSharesCount(comments: Int) {
-        sharesCount = comments
-        sharesLabel.text = "\(sharesCount)"
+        self.sharesCount = comments
+        self.sharesLabel.text = "\(self.sharesCount)"
     }
     
     lazy var tapGestureRecognizer: UITapGestureRecognizer = {
@@ -77,6 +67,6 @@ import UIKit
     }()
     
     @objc func onTap(_ sender: UIStackView) {
-        incrementSharesCount()
+        self.incrementSharesCount()
     }
 }

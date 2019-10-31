@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AvatarCell: UICollectionViewCell {
+final class AvatarCell: UICollectionViewCell {
     
     var indexPath: IndexPath?
     static let reuseIdentifier = "AvatarCell"
@@ -20,4 +20,3 @@ class AvatarCell: UICollectionViewCell {
         self.avatarImageView.image = nil
     }
 }
-

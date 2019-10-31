@@ -9,7 +9,12 @@
 import RealmSwift
 import Realm
 
-class RFriend: Object {
+protocol RealmIndexable {
+    var name: String { get set }
+    var id: Int { get set }
+}
+
+class RFriend: Object, RealmIndexable {
     @objc dynamic var name: String = ""
     @objc dynamic var id: Int = 0
     @objc dynamic var photo: String? = nil
@@ -23,7 +28,7 @@ class RFriend: Object {
     }
 }
 
-class RGroup: Object {
+class RGroup: Object, RealmIndexable {
     @objc dynamic var name: String = ""
     @objc dynamic var id: Int = 0
     @objc dynamic var photo: String? = nil

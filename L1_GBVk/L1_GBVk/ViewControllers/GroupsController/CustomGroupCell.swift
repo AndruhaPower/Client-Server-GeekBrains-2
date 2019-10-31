@@ -11,19 +11,11 @@ import UIKit
 class CustomGroupCell: UITableViewCell {
     
     static var reuseId: String = "CustomGroupCell"
-    var indexPath: IndexPath?
+    open var indexPath: IndexPath?
     
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var groupAvatarImage: AvatarImageView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
+
     override func prepareForReuse() {
         self.groupAvatarImage.image = UIImage(named: "community_template")
     }

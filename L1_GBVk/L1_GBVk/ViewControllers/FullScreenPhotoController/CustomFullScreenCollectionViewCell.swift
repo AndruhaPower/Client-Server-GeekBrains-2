@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomFullScreenCollectionViewCell: UICollectionViewCell {
+final class CustomFullScreenCollectionViewCell: UICollectionViewCell {
     
     static var reuseIdentifier: String = "CustomFullScreenCollectionViewCell"
     var imageView = UIImageView()
@@ -31,6 +31,7 @@ class CustomFullScreenCollectionViewCell: UICollectionViewCell {
     func configureUI() {
         self.addSubview(self.imageView)
         self.imageView.translatesAutoresizingMaskIntoConstraints = false
+        self.backgroundColor = .darkGray
         
         NSLayoutConstraint.activate([
             self.imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
@@ -38,7 +39,6 @@ class CustomFullScreenCollectionViewCell: UICollectionViewCell {
             self.imageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             self.imageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
             ])
-        self.backgroundColor = .darkGray
     }
 }
 

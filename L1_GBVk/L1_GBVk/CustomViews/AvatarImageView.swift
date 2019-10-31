@@ -8,10 +8,9 @@
 
 import UIKit
 
-class AvatarImageView: UIView {
+final class AvatarImageView: UIView {
     
     private var imageView: UIImageView!
-    
     var image: UIImage? {
         didSet {
             imageView.image = image
@@ -32,7 +31,5 @@ class AvatarImageView: UIView {
         layer.cornerRadius = frame.height / 2
         imageView.layer.cornerRadius = frame.height / 2
         imageView.clipsToBounds = true
-        
     }
-
 }

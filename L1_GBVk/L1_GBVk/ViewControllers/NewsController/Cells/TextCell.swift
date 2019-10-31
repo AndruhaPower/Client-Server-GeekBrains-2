@@ -12,7 +12,7 @@ protocol TextCellDelegate: class {
     func textCellTapped(at cell: TextCell)
 }
 
-class TextCell: UITableViewCell {
+final class TextCell: UITableViewCell {
     
     static var reuseIdentifier: String = "TextCellReuseId"
     @IBOutlet weak var newsText: UILabel!
@@ -25,12 +25,8 @@ class TextCell: UITableViewCell {
         self.addGestureRecognizer(tapGR)
         
     }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-    
+
     @objc func tapped() {
-        delegate?.textCellTapped(at: self)
+        self.delegate?.textCellTapped(at: self)
     }
 }

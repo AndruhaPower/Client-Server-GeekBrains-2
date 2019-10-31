@@ -11,7 +11,8 @@ import RealmSwift
 
 
 /// Контроллер отвечающий за друзей
-class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
+final class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
+    
     @IBOutlet private weak var searchBar: UISearchBar!
     private var friendsSectionIndex: [Character] = []
     private var friendsIndexDictionary: [Character: [RFriend]] = [:]
@@ -28,6 +29,7 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
     }
     
     // MARK: - Table view data source
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return self.friendsSectionIndex.count
     }
@@ -39,7 +41,7 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return String(friendsSectionIndex[section])
+        return String(self.friendsSectionIndex[section])
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -78,20 +80,20 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        updateFriendsIndex(friends: friends)
-        updateFriendsNamesDictionary(friends: friends)
+        self.updateFriendsIndex(friends: friends)
+        self.updateFriendsNamesDictionary(friends: friends)
         if (searchText.count == 0) {
-            updateFriendsIndex(friends: friends)
-            updateFriendsNamesDictionary(friends: friends)
-            searchActive = false
-            hideKeyboard()
+            self.updateFriendsIndex(friends: friends)
+            self.updateFriendsNamesDictionary(friends: friends)
+            self.searchActive = false
+            self.hideKeyboard()
         }
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
     
     @objc private func hideKeyboard() {
-        searchActive = false
-        searchBar.endEditing(true)
+        self.searchActive = false
+        self.searchBar.endEditing(true)
     }
     
     
@@ -99,7 +101,7 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
     //MARK: Prepare datasource
     
     func updateFriendsNamesDictionary(friends: [RFriend]) {
-        self.friendsIndexDictionary = SectionIndexManager.getFriendIndexDictionary(array: friends)
+        self.friendsIndexDictionary = SectionIndexManager.getFriendIndexDictionary(array: friends) as! [Character : [RFriend]]
     }
     
     func updateFriendsIndex(friends: [RFriend]) {
@@ -128,7 +130,7 @@ class MyFriendsViewController: UITableViewController, UISearchBarDelegate {
         self.tableView.register(UINib(nibName: "CustomFriendCell", bundle: nil), forCellReuseIdentifier: CustomFriendsCell.reuseId)
         self.tableView.keyboardDismissMode = .onDrag
         self.tableView.dataSource = self
-        self.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        
     }
     
     

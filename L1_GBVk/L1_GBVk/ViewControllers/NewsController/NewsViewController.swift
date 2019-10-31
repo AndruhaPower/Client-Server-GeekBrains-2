@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewsViewController: UIViewController {
+final class NewsViewController: UIViewController {
     
     var news: [NewsViewModel] = []
     var vkServices = VKServices()
@@ -43,20 +43,9 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 1:
-            let news = self.news[indexPath.section]
-            let text = news.text
-            let textSize = getLabelSize(text: text, font: UIFont.systemFont(ofSize: 18), maxWidth: tableView.bounds.width)
-            let expandedState = expandedCells[indexPath] ?? false
-            if expandedState {
-                return textSize.height
-            } else {
-                return min(textSize.height, 100)
-            }
+            return self.getHeightForTextCell(indexPath: indexPath)
         case 2:
-            let tableWidth = tableView.bounds.width
-            let news = self.news[indexPath.section]
-            let cellHeight = tableWidth / news.ratio
-            return cellHeight
+            return self.getHeightForMediaCell(indexPath: indexPath)
         case 3:
             return 40
         default:
@@ -64,76 +53,23 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    private func getLabelSize(text: String, font: UIFont, maxWidth: CGFloat) -> CGSize {
-        let textblock = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
-        let rect = text.boundingRect(with: textblock, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : font], context: nil)
-        let width = rect.width.rounded(.up)
-        let height = rect.height.rounded(.up)
-        return CGSize(width: width, height: height)
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.row {
         case 0:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomFriendsCell.reuseId, for: indexPath) as? CustomFriendsCell,
-                  indexPath.section <= self.news.count - 1 else { return UITableViewCell() }
-            
-            cell.indexPath = indexPath
-            let photo = self.news[indexPath.section].avatarPhotoUrl
-            let operation = LoadImageOperation()
-            operation.url = URL(string: photo)
-            self.operationQueue.addOperation(operation)
-            operation.completion = { image in
-                if cell.indexPath == indexPath {
-                    cell.avatarImage.image = image
-                } else {
-                    print("indexPath for Avatar Image is wrong")
-                }
-            }
-            cell.nameLabel.text = news[indexPath.section].name
-            return cell
+            return self.setupHeaderCell(tableView: tableView, indexPath: indexPath)
         case 1:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: TextCell.reuseIdentifier, for: indexPath) as? TextCell else { return UITableViewCell() }
-            cell.newsText.text = self.news[indexPath.section].text
-            cell.delegate = self
-            return cell
+            return self.setupTextCell(tableView: tableView, indexPath: indexPath)
         case 2:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "custom", for: indexPath) as? MediaCell,
-                  self.news[indexPath.section].ratio != 0 else { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: 0, height: 0 )) }
-            
-            cell.indexPath = indexPath
-            let photo = news[indexPath.section].photoUrl
-            if photo.count != 0 {
-                let operation = LoadImageOperation()
-                operation.url = URL(string: photo)
-                self.operationQueue.addOperation(operation)
-                operation.completion = { image in
-                    if cell.indexPath == indexPath {
-                        cell.newsImage.image = image
-                    } else {
-                        print("indexPath for News Image is wrong")
-                    }
-                }
-            } else {
-                cell.frame = .zero
-            }
-            return cell
+            return self.setupMediaCell(tableView: tableView, indexPath: indexPath)
         case 3:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ControlsCell.reuseIdentifier, for: indexPath) as? ControlsCell else { return UITableViewCell() }
-            
-            let item = self.news[indexPath.section]
-            cell.stackView.likes.updateLikesCount(likes: item.likesCount)
-            cell.stackView.comments.updateCommentsCount(comments: item.commentCount)
-            cell.stackView.shares.updateSharesCount(comments: item.repostCount)
-            cell.viewsControl.updateViewsCount(comments: item.viewsCount)
-            
-            return cell
+            return self.setupControlsCell(tableView: tableView, indexPath: indexPath)
         default:
-            
             return UITableViewCell()
         }
     }
+    
+    // MARK: Methods for Setting tableViewData
     
     @objc func refreshNews(_ sender: Any) {
         let firstPostDate = self.news.first?.date ?? Date().timeIntervalSince1970
@@ -159,22 +95,119 @@ extension NewsViewController: UITableViewDataSource, UITableViewDelegate {
         self.tableView.dataSource = self
         self.tableView.prefetchDataSource = self
         self.tableView.allowsSelection = false
+        self.configRefreshControl()
         
-        self.tableView.refreshControl = UIRefreshControl()
-        self.tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Обновление...")
-        self.tableView.refreshControl?.tintColor = .red
-        self.tableView.refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
         self.tableView.separatorColor = .clear
         self.vkServices.getNews { news, nextFrom in
             guard let news = news,
                   let nextFrom = nextFrom else { return }
             self.news = news
             self.nextFrom = nextFrom
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
             }
         }
        self.tableView.separatorStyle = .singleLine
+    }
+    
+    private func configRefreshControl() {
+        self.tableView.refreshControl = UIRefreshControl()
+        self.tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Обновление...")
+        self.tableView.refreshControl?.tintColor = .darkGray
+        self.tableView.refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
+    }
+    
+    private func getHeightForMediaCell(indexPath: IndexPath) -> CGFloat {
+        let tableWidth = tableView.bounds.width
+        let news = self.news[indexPath.section]
+        var cellHeight: CGFloat = 0
+        if news.attachments.count < 1 {
+            return cellHeight
+        } else if news.attachments.count == 1 {
+            cellHeight = tableWidth / news.attachments[0].ratio
+        } else if news.attachments.count > 1 {
+            cellHeight = tableWidth / news.attachments[0].ratio
+        }
+        return cellHeight
+    }
+    
+    private func getHeightForTextCell(indexPath: IndexPath) -> CGFloat {
+        let news = self.news[indexPath.section]
+        let text = news.text
+        let textSize = self.getLabelSize(text: text, font: UIFont.systemFont(ofSize: 18), maxWidth: tableView.bounds.width)
+        let expandedState = self.expandedCells[indexPath] ?? false
+        if expandedState {
+            return textSize.height
+        } else {
+            return min(textSize.height, 100)
+        }
+    }
+    
+    private func getLabelSize(text: String, font: UIFont, maxWidth: CGFloat) -> CGSize {
+        let textblock = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+        let rect = text.boundingRect(with: textblock, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : font], context: nil)
+        let width = rect.width.rounded(.up)
+        let height = rect.height.rounded(.up)
+        return CGSize(width: width, height: height)
+    }
+    
+    private func setupHeaderCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomFriendsCell.reuseId, for: indexPath) as? CustomFriendsCell,
+              indexPath.section <= self.news.count - 1 else { return UITableViewCell() }
+        
+        cell.indexPath = indexPath
+        cell.nameLabel.text = news[indexPath.section].name
+        let photo = self.news[indexPath.section].avatarPhotoUrl
+        let operation = LoadImageOperation()
+        operation.url = URL(string: photo)
+        self.operationQueue.addOperation(operation)
+        operation.completion = { image in
+            if cell.indexPath == indexPath {
+                cell.avatarImage.image = image
+            }
+        }
+        return cell
+    }
+    
+    private func setupTextCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell{
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TextCell.reuseIdentifier, for: indexPath) as? TextCell else { return UITableViewCell() }
+        cell.delegate = self
+        cell.newsText.text = self.news[indexPath.section].text
+        return cell
+    }
+    
+    private func setupMediaCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "custom", for: indexPath) as? MediaCell,
+            self.news[indexPath.section].attachments.count > 0,
+            self.news[indexPath.section].attachments[0].ratio != 0 else { return UITableViewCell(frame: CGRect(x: 0, y: 0, width: 0, height: 0 )) }
+        
+        cell.indexPath = indexPath
+        let photo = news[indexPath.section].attachments[0].url
+        if photo.count != 0 {
+            let operation = LoadImageOperation()
+            operation.url = URL(string: photo)
+            self.operationQueue.addOperation(operation)
+            operation.completion = { image in
+                if cell.indexPath == indexPath {
+                    cell.newsImage.image = image
+                }
+            }
+        } else {
+            cell.frame = .zero
+        }
+        return cell
+    }
+    
+    private func setupControlsCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ControlsCell.reuseIdentifier, for: indexPath) as? ControlsCell else { return UITableViewCell() }
+        
+        let item = self.news[indexPath.section]
+        cell.stackView.likes.updateLikesCount(likes: item.likesCount)
+        cell.stackView.comments.updateCommentsCount(comments: item.commentCount)
+        cell.stackView.shares.updateSharesCount(comments: item.repostCount)
+        cell.viewsControl.updateViewsCount(comments: item.viewsCount)
+
+        return cell
     }
 }
 

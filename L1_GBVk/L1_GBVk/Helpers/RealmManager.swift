@@ -9,7 +9,7 @@
 import Realm
 import RealmSwift
 
-public class RealmManager {
+final public class RealmManager {
     
     static func friendsManager(friends: [Friend]) {
         for each in friends {

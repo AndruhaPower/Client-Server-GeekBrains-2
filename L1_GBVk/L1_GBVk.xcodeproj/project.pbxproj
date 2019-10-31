@@ -55,7 +55,6 @@
 		49A2FA3122D1F54C00A33630 /* VKServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2FA3022D1F54C00A33630 /* VKServices.swift */; };
 		49A2FA3A22D205C400A33630 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A2FA3922D205C300A33630 /* WebKit.framework */; };
 		49A75474229582A600E07D11 /* AvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A75473229582A600E07D11 /* AvatarCell.swift */; };
-		49A75477229588A300E07D11 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A75476229588A300E07D11 /* GroupCell.swift */; };
 		49B02C92228DF2A400EA8ECD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B02C91228DF2A400EA8ECD /* AppDelegate.swift */; };
 		49B02C94228DF2A400EA8ECD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B02C93228DF2A400EA8ECD /* ViewController.swift */; };
 		49B02C97228DF2A400EA8ECD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49B02C95228DF2A400EA8ECD /* Main.storyboard */; };
@@ -147,7 +146,6 @@
 		49A2FA3022D1F54C00A33630 /* VKServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKServices.swift; sourceTree = "<group>"; };
 		49A2FA3922D205C300A33630 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		49A75473229582A600E07D11 /* AvatarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCell.swift; sourceTree = "<group>"; };
-		49A75476229588A300E07D11 /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		49B02C8E228DF2A400EA8ECD /* L1_GBVk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = L1_GBVk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B02C91228DF2A400EA8ECD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49B02C93228DF2A400EA8ECD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -284,9 +282,8 @@
 			isa = PBXGroup;
 			children = (
 				498820D722905D4C0039E369 /* MyCommunitiesViewController.swift */,
-				495A809022B1599000A77C46 /* CustomGroupCell.xib */,
 				495A808C22B156E900A77C46 /* CustomGroupCell.swift */,
-				49A75476229588A300E07D11 /* GroupCell.swift */,
+				495A809022B1599000A77C46 /* CustomGroupCell.xib */,
 			);
 			path = GroupsController;
 			sourceTree = "<group>";
@@ -703,7 +700,6 @@
 				4944CB932366471800A7C2B4 /* MapFriend.swift in Sources */,
 				49279FC92357237D0028427C /* MediaCell.swift in Sources */,
 				4994579922B5394400ED7B2A /* ViewsControl.swift in Sources */,
-				49A75477229588A300E07D11 /* GroupCell.swift in Sources */,
 				4994579522B538C800ED7B2A /* CommentControl.swift in Sources */,
 				49B02C94228DF2A400EA8ECD /* ViewController.swift in Sources */,
 				49B02C92228DF2A400EA8ECD /* AppDelegate.swift in Sources */,

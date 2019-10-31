@@ -9,12 +9,10 @@
 import UIKit
 import RealmSwift
 
-
-/// Контроллер отвечающий за группы
-class MyCommunitiesViewController: UITableViewController {
+final class MyCommunitiesViewController: UITableViewController {
 
     private var groups: [RGroup] = []
-    private var vkServices = VKServices()
+    private let vkServices = VKServices()
     private var token: NotificationToken?
     
     override func viewDidLoad() {
@@ -24,13 +22,14 @@ class MyCommunitiesViewController: UITableViewController {
     }
     //MARK: - TableView datasource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.count
+        return self.groups.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomGroupCell.reuseId, for: indexPath) as? CustomGroupCell
-            , let photo = groups[indexPath.row].photo else { return UITableViewCell() }
-    
+            , let photo = self.groups[indexPath.row].photo else { return UITableViewCell() }
+        
+        cell.groupNameLabel.text = self.groups[indexPath.row].name
         cell.indexPath = indexPath
         let operationQueue = OperationQueue()
         let operation = LoadImageOperation()
@@ -41,7 +40,6 @@ class MyCommunitiesViewController: UITableViewController {
                 cell.groupAvatarImage.image = image
             }
         }
-        cell.groupNameLabel.text = groups[indexPath.row].name
         return cell
     }
     
@@ -51,12 +49,10 @@ class MyCommunitiesViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            groups.remove(at: indexPath.row)
+            self.groups.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }    
     }
-    
-    /// Функция достает группы из БД и дает контроллеру
 
     private func saveGroupsData() {
         do {
@@ -86,7 +82,7 @@ class MyCommunitiesViewController: UITableViewController {
         if !self.groups.contains(newGroup) {
             self.groups.append(newGroup)
         }
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
 }
 

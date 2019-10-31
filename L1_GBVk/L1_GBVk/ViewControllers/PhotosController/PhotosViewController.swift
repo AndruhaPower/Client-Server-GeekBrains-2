@@ -11,35 +11,35 @@ import Foundation
 import Realm
 import RealmSwift
 
-class PhotosViewController: UICollectionViewController {
+final class PhotosViewController: UICollectionViewController {
 
     var friendId: Int = 0
-
     var photosToDisplay: [Photo] = []
-    let presentTransition = CustomPresentModalAnimator()
-    let dismissTransition = CustomDismissModalAnimator()
-    let vkServices = VKServices()
+    private let numberOfSections: Int = 1
+    private let presentTransition = CustomPresentModalAnimator()
+    private let dismissTransition = CustomDismissModalAnimator()
+    private let vkServices = VKServices()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configCollectionVIew()
         self.getPhotosData()
-
     }
 
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return self.numberOfSections
     }
 
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photosToDisplay.count
+        return self.photosToDisplay.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AvatarCell.reuseIdentifier, for: indexPath) as? AvatarCell else { return UICollectionViewCell() }
+        
         cell.indexPath = indexPath
         let photo = self.photosToDisplay[indexPath.row]
         let operationQueue = OperationQueue()
@@ -51,7 +51,7 @@ class PhotosViewController: UICollectionViewController {
                 cell.avatarImageView.image = image
             }
         }
-            return cell
+        return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -66,8 +66,8 @@ class PhotosViewController: UICollectionViewController {
         self.vkServices.getPhotos(id: self.friendId) { resultPhotos in
             guard let photos = resultPhotos else { return }
             self.photosToDisplay = photos
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
+            DispatchQueue.main.async {  [weak self] in
+                self?.collectionView.reloadData()
             }
         }
     }
@@ -77,12 +77,6 @@ class PhotosViewController: UICollectionViewController {
         self.collectionView.collectionViewLayout = PhotosCollectionViewLayout()
         self.collectionView.backgroundColor = .darkGray
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if let destination = segue.destination as? FullScreenImagePresenterViewController {
-//            self.fullScreenViewController = destination
-//        }
-//    }
 }
 
 extension PhotosViewController: UIViewControllerTransitioningDelegate {

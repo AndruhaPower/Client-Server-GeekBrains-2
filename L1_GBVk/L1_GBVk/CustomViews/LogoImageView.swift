@@ -8,10 +8,9 @@
 
 import UIKit
 
-class LogoImageView: UIView {
+final class LogoImageView: UIView {
     
     private var imageView: UIImageView!
-    
     var image: UIImage? {
         didSet {
             imageView.image = image
@@ -21,19 +20,17 @@ class LogoImageView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        imageView = UIImageView(frame: bounds)
-        imageView.clipsToBounds = true
-        addSubview(imageView)
+        self.imageView = UIImageView(frame: bounds)
+        self.imageView.clipsToBounds = true
+        self.addSubview(imageView)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        layer.cornerRadius = frame.height / 3
-        imageView.layer.cornerRadius = frame.height / 3
-        imageView.clipsToBounds = true
-        
+        self.layer.cornerRadius = frame.height / 3
+        self.imageView.layer.cornerRadius = frame.height / 3
+        self.imageView.clipsToBounds = true
     }
-    
 }
 

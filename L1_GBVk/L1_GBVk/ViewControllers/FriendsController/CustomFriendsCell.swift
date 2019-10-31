@@ -8,21 +8,13 @@
 
 import UIKit
 
-class CustomFriendsCell: UITableViewCell {
+final class CustomFriendsCell: UITableViewCell {
     
     static var reuseId: String = "CustomFriendCell"
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var avatarImage: AvatarImageView!
     var indexPath: IndexPath?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         self.avatarImage.image = UIImage(named: "noimage")

@@ -8,14 +8,14 @@
 
 import UIKit
 
-class MediaCell: UITableViewCell {
+final class MediaCell: UITableViewCell {
     
     var newsImage = UIImageView()
     var indexPath: IndexPath?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureUI()
+        self.configureUI()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,7 +31,6 @@ class MediaCell: UITableViewCell {
         
         self.newsImage.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.newsImage)
-
         self.backgroundColor = .clear
         
         NSLayoutConstraint.activate([

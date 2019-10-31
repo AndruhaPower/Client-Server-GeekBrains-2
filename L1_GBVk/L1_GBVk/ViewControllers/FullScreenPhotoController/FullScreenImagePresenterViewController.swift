@@ -6,21 +6,23 @@
 //  Copyright © 2019 Andrew. All rights reserved.
 //
 
+
 import UIKit
 
-class FullScreenImagePresenterViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+final class FullScreenImagePresenterViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
+    private var newCellIndexPath = IndexPath(row: 0, section: 0)
+    private var oldCellIndexPath = IndexPath(row: 0, section: 0)
+    private var scrollChangedDirection: Bool = false
+    private let numberOfSections = 1
     var imagesToDisplay: [Photo] = []
+    var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     var indexPathToScrollTo = IndexPath(row: 0, section: 0) {
-        didSet {
-            collectionView.scrollToItem(at: indexPathToScrollTo, at:UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
-        }
-    }
-    var newCellIndexPath = IndexPath(row: 0, section: 0)
-    var oldCellIndexPath = IndexPath(row: 0, section: 0)
-    var scrollChangedDirection: Bool = false
+         didSet {
+             self.collectionView.scrollToItem(at: indexPathToScrollTo, at:UICollectionView.ScrollPosition.centeredHorizontally, animated: true)
+         }
+     }
     
     //MARK: Lifecycle
     
@@ -28,19 +30,20 @@ class FullScreenImagePresenterViewController: UIViewController, UICollectionView
         super.viewDidLoad()
         self.configureCollectionView()
     }
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return self.numberOfSections
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imagesToDisplay.count
+        return self.imagesToDisplay.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomFullScreenCollectionViewCell.reuseIdentifier, for: indexPath) as? CustomFullScreenCollectionViewCell else { return UICollectionViewCell() }
+        
         cell.indexPath = indexPath
-        let photo = self.imagesToDisplay[indexPath.row] // индексы в говне
+        let photo = self.imagesToDisplay[indexPath.row]
         let operationQueue = OperationQueue()
         let operation = LoadImageOperation()
         operation.url = URL(string: photo.photoURL)
@@ -48,32 +51,26 @@ class FullScreenImagePresenterViewController: UIViewController, UICollectionView
         operation.completion = { image in
             if cell.indexPath == indexPath {
                 cell.imageView.image = image
-            } else {
-                print("IndexPath неверный")
             }
         }
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        //update new cell index for scroll direction detection
-        newCellIndexPath = indexPath
-        //print("from cell: \(oldCellIndexPath) to cell: \(newCellIndexPath)")
         
-        //detect scroll direction by indexPath change
+        self.newCellIndexPath = indexPath
+        
         var scroll = ScrollDirection.right
-        
-        if (newCellIndexPath.row - oldCellIndexPath.row > 0) {
+        if (self.newCellIndexPath.row - self.oldCellIndexPath.row > 0) {
             scroll = ScrollDirection.right
-        } else if (newCellIndexPath.row - oldCellIndexPath.row < 0) {
+        } else if (self.newCellIndexPath.row - self.oldCellIndexPath.row < 0) {
             scroll = ScrollDirection.left
         }
         
-        if (oldCellIndexPath.row == imagesToDisplay.count - 1) {
+        if (self.oldCellIndexPath.row == self.imagesToDisplay.count - 1) {
             scroll = ScrollDirection.left
         }
         
-        //fade-in new cell
         cell.alpha = 0
         cell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         UIView.animate(withDuration: 1) {
@@ -84,9 +81,6 @@ class FullScreenImagePresenterViewController: UIViewController, UICollectionView
         switch scroll {
             
         case .right:
-            //print("scroll right")
-            
-            //fade-out old cell
             if (indexPath.row > 0) {
                 let oldIndexPath = IndexPath(row: indexPath.row - 1, section: 0)
                 if let oldCell = collectionView.cellForItem(at: oldIndexPath) {
@@ -98,12 +92,9 @@ class FullScreenImagePresenterViewController: UIViewController, UICollectionView
             }
             
         case .left:
-            //print("scroll left")
-            
-            //fade-out old cell
             if (indexPath.row < imagesToDisplay.count - 1) {
                 let oldIndexPath = IndexPath(row: indexPath.row + 1, section: 0)
-                if let oldCell = collectionView.cellForItem(at: oldIndexPath) {
+                if let oldCell = self.collectionView.cellForItem(at: oldIndexPath) {
                     UIView.animate(withDuration: 0.8) {
                         oldCell.alpha = 0.5
                         oldCell.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
@@ -111,13 +102,12 @@ class FullScreenImagePresenterViewController: UIViewController, UICollectionView
                 }
             }
         }
-        oldCellIndexPath = indexPath
+        self.oldCellIndexPath = indexPath
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if let cell = collectionView.cellForItem(at: indexPath) {
-            
             UIView.animate(withDuration: 0.5,
                            animations: {
                             cell.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
@@ -138,7 +128,6 @@ class FullScreenImagePresenterViewController: UIViewController, UICollectionView
 
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipedToDismiss))
         swipeDown.direction = .down
-        
         swipeDown.delegate = self
         view.addGestureRecognizer(swipeDown)
         
@@ -195,8 +184,6 @@ class FullScreenImagePresenterViewController: UIViewController, UICollectionView
         }
     }
 }
-
-//MARK: Extensions
 
 extension FullScreenImagePresenterViewController {
     enum ScrollDirection {

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@IBDesignable class CommentControl: UIControl {
+@IBDesignable final class CommentControl: UIControl {
     private var stackView: UIStackView!
     private var commentIcon = UIImage(named: "comment")
     private var commentIconView = UIImageView()
@@ -27,45 +27,36 @@ import UIKit
     }
     
     private func setupView() {
-        commentIconView.image = commentIcon
-        commentIconView.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
-        commentsLabel.text = "\(commentsCount)"
-        commentsLabel.textColor = UIColor.darkGray
-        setupConstraints()
+        self.commentIconView.image = self.commentIcon
+        self.commentIconView.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
+        self.commentsLabel.text = "\(self.commentsCount)"
+        self.commentsLabel.textColor = UIColor.darkGray
+
+        self.stackView = UIStackView(arrangedSubviews: [self.commentIconView, self.commentsLabel])
         
-        //MARK: to debug CommentControl position uncomment two lines below
-        //    commentIconView.layer.borderWidth = 1.0
-        //    commentsLabel.layer.borderWidth = 1.0
-        
-        stackView = UIStackView(arrangedSubviews: [commentIconView, commentsLabel])
-        
-        self.addSubview(stackView)
-        stackView.distribution = .fillEqually
-        addGestureRecognizer(tapGestureRecognizer)
+        self.addSubview(self.stackView)
+        self.stackView.distribution = .fillEqually
+        addGestureRecognizer(self.tapGestureRecognizer)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        stackView.frame = bounds
-    }
-    
-    func setupConstraints() {
-        commentsLabel.heightAnchor.constraint(equalTo: commentIconView.heightAnchor, multiplier: 1)
+        self.stackView.frame = bounds
     }
     
     func incrementCommentsCount() {
-        commentsCount += 1
-        updateCommentsCount(comments: commentsCount)
+        self.commentsCount += 1
+        self.updateCommentsCount(comments: self.commentsCount)
     }
     
     func decrementCommentsCount() {
-        commentsCount -= 1
-        updateCommentsCount(comments: commentsCount)
+        self.commentsCount -= 1
+        self.updateCommentsCount(comments: self.commentsCount)
     }
     
     func updateCommentsCount(comments: Int) {
-        commentsCount = comments
-        commentsLabel.text = "\(commentsCount)"
+        self.commentsCount = comments
+        self.commentsLabel.text = "\(self.commentsCount)"
     }
     
     lazy var tapGestureRecognizer: UITapGestureRecognizer = {
@@ -77,6 +68,6 @@ import UIKit
     }()
     
     @objc func onTap(_ sender: UIStackView) {
-        incrementCommentsCount()
+        self.incrementCommentsCount()
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import SwiftKeychainWrapper
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
     // MARK: - Outlets
     
@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     @IBOutlet private weak var usernameTextField: UITextField!
     @IBOutlet private weak var passwordTextField: UITextField!
     @IBOutlet private weak var scrollView: UIScrollView!
-    private var timerSeconds = 2
+    private var timerSeconds = 1
     let vkServices = VKServices()
     @IBOutlet private weak var VKwebView: WKWebView! {
         didSet{
@@ -36,11 +36,7 @@ class ViewController: UIViewController {
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        self.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        scrollView?.addGestureRecognizer(hideKeyboardGesture)
-        logoImageView.image = UIImage(named: "logo")
+        self.viewDidLoadConfig()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,30 +51,25 @@ class ViewController: UIViewController {
     
     // MARK: - Вспомогательные функции
     
-    // Функции клавиатуры
-    
     @objc private func keyboardWasShown(notification: Notification) {
         let info = notification.userInfo! as NSDictionary
         let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
-        
         let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: kbSize.height, right: 0)
         
         self.scrollView?.contentInset = contentInsets
-        scrollView?.scrollIndicatorInsets = contentInsets
+        self.scrollView?.scrollIndicatorInsets = contentInsets
     }
     
     @objc private func keyboardWillBeHidden(notification: Notification) {
         let contentInsets = UIEdgeInsets.zero
-        scrollView?.contentInset = contentInsets
-        scrollView?.scrollIndicatorInsets = contentInsets
+        self.scrollView?.contentInset = contentInsets
+        self.scrollView?.scrollIndicatorInsets = contentInsets
     }
     
     @objc private func hideKeyboard() {
         self.scrollView.endEditing(true)
     }
-    
-    // Функции вспомогательные собственно
-    
+
     private func logoutVK() {
         let dataSource = WKWebsiteDataStore.default()
         dataSource.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
@@ -91,9 +82,9 @@ class ViewController: UIViewController {
     }
     
     private func checkLogin() {
-        if usernameTextField.text == "" && passwordTextField.text == "" {
+        if self.usernameTextField.text == "" && passwordTextField.text == "" {
             performSegue(withIdentifier: "goToMainTabbar", sender: nil)
-        }else{
+        } else {
             let alert = UIAlertController(title: "ERROR!", message: "Incorrect Password or Login", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default) { _ in
                 self.passwordTextField.text = ""
@@ -103,12 +94,18 @@ class ViewController: UIViewController {
         }
     }
     
+    private func viewDidLoadConfig() {
+        let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        self.scrollView?.addGestureRecognizer(hideKeyboardGesture)
+        self.logoImageView.image = UIImage(named: "logo")
+    }
+    
     private func viewDidAppearConfig() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         view.alpha = 0.5
-        let loadingCirclesImage = LoadingCirclesImage(frame: CGRect(x: 0, y:0, width: view.bounds.width, height: view.bounds.height))
-        view.addSubview(loadingCirclesImage)
+        let loadingCirclesImage = LoadingCirclesImage(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
+        self.view.addSubview(loadingCirclesImage)
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             self.timerSeconds -= 1
             if self.timerSeconds == 0 {
@@ -117,6 +114,7 @@ class ViewController: UIViewController {
                 self.view.alpha = 1
             }
         }
+        
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "oauth.vk.com"
@@ -141,9 +139,10 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: WKNavigationDelegate {
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         
-        guard let url = navigationResponse.response.url, url.path == "/blank.html", let fragment = url.fragment  else {
+        guard let url = navigationResponse.response.url, url.path == "/blank.html", let fragment = url.fragment else {
             decisionHandler(.allow)
             return
         }
@@ -162,7 +161,6 @@ extension ViewController: WKNavigationDelegate {
         let token = params["access_token"]
         guard let unwrappedToken = token else { return }
         KeychainWrapper.standard.set(unwrappedToken, forKey: "VKToken")
-        print(KeychainWrapper.standard.string(forKey: "VKToken")!)
         self.performSegue(withIdentifier: "goToMainTabbar", sender: self)
         decisionHandler(.cancel)
     }

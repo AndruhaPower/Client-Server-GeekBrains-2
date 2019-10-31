@@ -41,18 +41,12 @@ class Feed: Mappable, CustomStringConvertible {
     var repostCount: Int = 0
     var viewsCount: Int = 0
     var source_id: Int = 0
-    var photoUrl: String = ""
+    var attachments: [Attachments] = []
     var text: String = ""
-    var photoWidth: Int = 0
-    var photoHeight: Int = 0
     var date: Double = 0
-    var ratio: CGFloat {
-            guard self.photoWidth != 0 && self.photoHeight != 0 else { return 100 }
-        return CGFloat(self.photoWidth)/CGFloat(self.photoHeight)
-    }
     
     var description: String {
-        return (String("ФОТО: "+self.photoUrl+" ТЕКСТ НОВОСТИ: \n\(self.text)"+" LIKES: \n"+String(self.likesCount)+"  COMMENTS: \n"+String(self.commentCount)+" REPOSTS: \n"+String(self.repostCount)+" VIEWS: "+String(self.viewsCount)+" \n Width Hight Ratio: "+String(self.photoWidth)+" & "+String(self.photoHeight)))
+        return "ТЕКСТ НОВОСТИ: \n\(self.text)"+"LIKES: \n"+String(self.likesCount)+"  COMMENTS: \n"+String(self.commentCount)+" REPOSTS: \n"+String(self.repostCount)+" VIEWS: "+String(self.viewsCount)+" \n Width Hight Ratio: "
     }
     
     required init?(map: Map) { }
@@ -63,12 +57,43 @@ class Feed: Mappable, CustomStringConvertible {
         self.likesCount <- map["likes.count"]
         self.viewsCount <- map["views.count"]
         self.source_id <- map["source_id"]
+        self.attachments <- map["attachments"]
         self.date <- map["date"]
-        self.photoUrl <- map["attachments.0.photo.sizes.3.url"]
-        self.photoWidth <- map["attachments.0.photo.sizes.3.width"]
-        self.photoHeight <- map["attachments.0.photo.sizes.3.height"]
         self.text <- map["text"]
 
+    }
+}
+
+class Attachments: Mappable, CustomStringConvertible {
+    
+    var type: String = ""
+    var url: String = ""
+    var width: Int = 0
+    var height: Int = 0
+    var ratio: CGFloat {
+        guard self.width != 0 && self.height != 0 else { return 100 }
+        return CGFloat(self.width)/CGFloat(self.height)
+    }
+    
+    var description: String {
+        return self.type + self.url
+    }
+    
+    required init?(map: Map) { }
+    func mapping(map: Map) {
+        self.type <- map["type"]
+        switch self.type {
+        case "photo":
+            self.url <- map["photo.sizes.3.url"]
+            self.width <- map["photo.sizes.3.width"]
+            self.height <- map["photo.sizes.3.height"]
+        case "video":
+            break
+        case "doc":
+            break
+        default:
+            break
+        }
     }
 }
 

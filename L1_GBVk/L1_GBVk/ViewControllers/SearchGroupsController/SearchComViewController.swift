@@ -9,12 +9,11 @@
 import UIKit
 import RealmSwift
 
-/// Контроллер отвечающий за поиск групп
-class SearchComViewController: UITableViewController {
+final class SearchComViewController: UITableViewController {
 
     var searchGroups: [RGroup] = []
-    var vkServices = VKServices()
-    var token: NotificationToken?
+    private let vkServices = VKServices()
+    private var token: NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,14 +24,18 @@ class SearchComViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchGroups.count
+        return self.searchGroups.count
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomGroupCell.reuseId, for: indexPath) as? CustomGroupCell
-            , let photo = searchGroups[indexPath.row].photo else { return UITableViewCell() }
+            , let photo = self.searchGroups[indexPath.row].photo else { return UITableViewCell() }
         
+        cell.groupNameLabel.text = self.searchGroups[indexPath.row].name
         cell.indexPath = indexPath
         let operationQueue = OperationQueue()
         let operation = LoadImageOperation()
@@ -43,12 +46,7 @@ class SearchComViewController: UITableViewController {
                 cell.groupAvatarImage.image = image
             }
         }
-        cell.groupNameLabel.text = searchGroups[indexPath.row].name
         return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
     }
     
     private func saveGroupsData() {

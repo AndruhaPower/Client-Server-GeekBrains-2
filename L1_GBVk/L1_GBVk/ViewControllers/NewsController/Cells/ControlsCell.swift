@@ -8,19 +8,11 @@
 
 import UIKit
 
-class ControlsCell: UITableViewCell {
+final class ControlsCell: UITableViewCell {
     
     static var reuseIdentifier: String = "ControlsCellReuseId"
     @IBOutlet weak var stackView: ControlsStackView!
     @IBOutlet weak var viewsControl: ViewsControl!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     override func prepareForReuse() {
         super.prepareForReuse()

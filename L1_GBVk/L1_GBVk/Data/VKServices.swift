@@ -12,7 +12,7 @@ import SwiftKeychainWrapper
 import RealmSwift
 
 
-class VKServices {
+final class VKServices {
     
     static let custom: Session = {
         let config = URLSessionConfiguration.default
@@ -22,8 +22,6 @@ class VKServices {
         return manager
     }()
 
-    // Метод запроса по получению массива спарсенный моделей друзей для подстановки в контроллер
-    
     public func getFriends( completion: @escaping (Bool)->()) {
         
         let url = VKConstants.friends
@@ -50,9 +48,7 @@ class VKServices {
             }
         })
     }
-    
-    // Метод запроса по получению массива спарсенный моделей своих групп для подстановки в контроллер
-    
+
     public func getGroups() {
         
         let url = VKConstants.groups
@@ -76,8 +72,6 @@ class VKServices {
             }
         })
     }
-    
-    // Метод запроса по получению массива спарсенный моделей групп поиска для подстановки в контроллер
     
     public func getSearchGroups() {
         
@@ -103,8 +97,6 @@ class VKServices {
         })
     }
     
-    // Метод запроса по получению массива спарсенных моделей новостей для подстановки в контроллер
-    
     public func getNews(startTime: Double? = nil, startFrom: String? = "", completion: @escaping ([NewsViewModel]?, String?)->()){
         let url = VKConstants.newsFeed
         
@@ -129,7 +121,7 @@ class VKServices {
             case.success(let val):
                 guard let items = val.response?.items,
                       let groups = val.response?.groups,
-                    let nextFrom = val.response?.nextFrom else
+                      let nextFrom = val.response?.nextFrom else
                 { return }
                 let news = NewsViewModelFabric.setupNewsData(news: items, groups: groups)
                 DispatchQueue.main.async {
@@ -143,10 +135,7 @@ class VKServices {
             }
         })
     }
-    
-    
-    // Метод запроса по получению спарсенной модели фотографий для подстановки в контроллер
-    
+
     public func getPhotos(id: Int, completion: @escaping ([Photo]?) -> ()) {
         
         let url = VKConstants.photosURL
