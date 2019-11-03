@@ -22,7 +22,7 @@ final class VKServices {
         return manager
     }()
 
-    public func getFriends( completion: @escaping (Bool)->()) {
+    public func getFriends(completion: @escaping (Bool)->()) {
         
         let url = VKConstants.friends
         
@@ -39,8 +39,8 @@ final class VKServices {
             let result = vkfriendsResponse.result
             switch result {
             case .success(let val):
-                let items = val.response?.items
-                RealmManager.friendsManager(friends: items!)
+                guard let items = val.response?.items else { return }
+                RealmManager.friendsManager(friends: items)
                 completion(true)
             case .failure(let error):
                 print(error)
@@ -49,7 +49,7 @@ final class VKServices {
         })
     }
 
-    public func getGroups() {
+    public func getGroups(completion: @escaping (Bool)->()) {
         
         let url = VKConstants.groups
         
@@ -65,15 +65,17 @@ final class VKServices {
             let result = vkgroupResponse.result
             switch result {
             case .success(let val):
-                let items = val.response?.items
-                RealmManager.groupsManager(groups: items!)
+                guard let items = val.response?.items else { return }
+                RealmManager.groupsManager(groups: items)
+                completion(true)
             case .failure(let error):
                 print(error)
+                completion(false)
             }
         })
     }
     
-    public func getSearchGroups() {
+    public func getSearchGroups(completion: @escaping (Bool)->()) {
         
         let url = VKConstants.groupsSearch
         
@@ -91,8 +93,10 @@ final class VKServices {
             case .success(let val):
                 guard let items = val.response?.items else { return }
                 RealmManager.groupsManager(groups: items)
+                completion(true)
             case .failure(let error):
                 print(error)
+                completion(false)
             }
         })
     }

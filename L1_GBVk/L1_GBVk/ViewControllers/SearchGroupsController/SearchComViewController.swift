@@ -50,13 +50,18 @@ final class SearchComViewController: UITableViewController {
     }
     
     private func saveGroupsData() {
-        do {
-            self.vkServices.getSearchGroups()
-            let realm = try Realm()
-            let resultGroups = realm.objects(RGroup.self).filter("isMember != 1")
-            self.searchGroups = Array(resultGroups)
-        } catch {
-            print(error)
+        self.vkServices.getSearchGroups { [weak self] (isFinished) in
+            do {
+                guard let self = self else { return }
+                let realm = try Realm()
+                let resultGroups = realm.objects(RGroup.self).filter("isMember == 0")
+                self.searchGroups = Array(resultGroups)
+                DispatchQueue.main.async {
+                    self.tableView?.reloadData()
+                }
+            } catch {
+                print(error)
+            }
         }
     }
     

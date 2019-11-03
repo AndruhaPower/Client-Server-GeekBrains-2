@@ -55,13 +55,18 @@ final class MyCommunitiesViewController: UITableViewController {
     }
 
     private func saveGroupsData() {
-        do {
-            self.vkServices.getGroups()
-            let realm = try Realm()
-            let resultGroups = realm.objects(RGroup.self).filter("isMember != 0")
-            self.groups = Array(resultGroups)
-        } catch {
-            print(error)
+        self.vkServices.getGroups { [weak self] (isFinished) in
+            do {
+                guard let self = self else { return }
+                let realm = try Realm()
+                let resultGroups = realm.objects(RGroup.self).filter("isMember != 0")
+                self.groups = Array(resultGroups)
+                DispatchQueue.main.async {
+                    self.tableView?.reloadData()
+                }
+            } catch {
+                print(error)
+            }
         }
     }
     
