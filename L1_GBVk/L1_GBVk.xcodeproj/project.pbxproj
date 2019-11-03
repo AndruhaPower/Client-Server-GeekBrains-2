@@ -357,12 +357,12 @@
 			isa = PBXGroup;
 			children = (
 				491852D823663FB700474A94 /* LoginViewController */,
+				491852D323663F6F00474A94 /* FriendsController */,
+				491852D423663F7A00474A94 /* GroupsController */,
+				491852D223663F6100474A94 /* NewsController */,
 				491852D723663FA100474A94 /* PhotosController */,
 				491852D623663F9500474A94 /* FullScreenPhotoController */,
 				491852D523663F8A00474A94 /* SearchGroupsController */,
-				491852D423663F7A00474A94 /* GroupsController */,
-				491852D323663F6F00474A94 /* FriendsController */,
-				491852D223663F6100474A94 /* NewsController */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
