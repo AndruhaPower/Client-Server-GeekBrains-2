@@ -8,9 +8,9 @@
 
 import Foundation
 
-class SectionIndexManager {
+final class SectionIndexManager {
     
-    static func getOrderedIndexArray(array: [RFriend]) -> [Character] {
+    static func getOrderedIndexArray(array: [RealmIndexable]) -> [Character] {
         var indexArray: [Character] = []
         var indexSet = Set<Character>()
         for item in array {
@@ -24,8 +24,8 @@ class SectionIndexManager {
         return indexArray
     }
     
-    static func getFriendIndexDictionary(array: [RFriend]) -> [Character: [RFriend]] {
-        var friendIndexDictionary: [Character: [RFriend]] = [:]
+    static func getFriendIndexDictionary(array: [RealmIndexable]) -> [Character: [RealmIndexable]] {
+        var friendIndexDictionary: [Character: [RealmIndexable]] = [:]
         
         for item in array {
             let firstLetter = item.name[0]
@@ -36,36 +36,6 @@ class SectionIndexManager {
             }
         }
         return friendIndexDictionary
-    }
-    
-    //MARK: - For Groups
-    
-    static func getOrderedIndexArray(array: [Group]) -> [Character] {
-        var indexArray: [Character] = []
-        var indexSet = Set<Character>()
-        for item in array {
-            let firstLetter = item.name[0]
-            indexSet.insert(firstLetter)
-        }
-        for char in indexSet{
-            indexArray.append(char)
-        }
-        indexArray.sort()
-        return indexArray
-    }
-    
-    static func getGroupIndexDictionary(array: [Group]) -> [Character: [Group]] {
-        var groupIndexDictionary: [Character: [Group]] = [:]
-        
-        for item in array {
-            let firstLetter = item.name[0]
-            if (groupIndexDictionary.keys.contains(firstLetter)) {
-                groupIndexDictionary[firstLetter]?.append(item)
-            } else {
-                groupIndexDictionary[firstLetter] = [item]
-            }
-        }
-        return groupIndexDictionary
     }
 }
 

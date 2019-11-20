@@ -10,12 +10,12 @@ import UIKit
 import Foundation
 
 
-@IBDesignable class LikeButtonControl: UIControl {
+@IBDesignable final class LikeButtonControl: UIControl {
     private var stackView: UIStackView!
-    private var likeButton = HeartButton()
-    private let likesLabel = UILabel()
+    var likeButton = HeartButton()
+    let likesLabel = UILabel()
     var likesCount: Int = 0
-    private var liked: Bool = false
+    var liked: Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,56 +28,47 @@ import Foundation
     }
     
     private func setupView() {
-        likeButton.isUserInteractionEnabled = false
-        likesLabel.text = "\(likesCount)"
-        likesLabel.textColor = UIColor.darkGray
-        setupConstraints()
-        
-        //MARK: to debug LikeControl position uncomment two lines below
-        //    likeButton.layer.borderWidth = 1.0
-        //    likesLabel.layer.borderWidth = 1.0
-        
-        stackView = UIStackView(arrangedSubviews: [likeButton, likesLabel])
+        self.likeButton.isUserInteractionEnabled = false
+        self.likesLabel.text = "\(likesCount)"
+        self.likesLabel.textColor = UIColor.darkGray
+
+        self.stackView = UIStackView(arrangedSubviews: [likeButton, likesLabel])
         self.addSubview(stackView)
-        stackView.distribution = .fillEqually
+        self.stackView.distribution = .fillEqually
         addGestureRecognizer(tapGestureRecognizer)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        stackView.frame = bounds
-    }
-    
-    func setupConstraints() {
-        likesLabel.heightAnchor.constraint(equalTo: likeButton.heightAnchor, multiplier: 1)
+        self.stackView.frame = bounds
     }
     
     func incrementLikesCount() {
-        likesCount += 1
-        updateLikesCount(likes: likesCount)
+        self.likesCount += 1
+        self.updateLikesCount(likes: likesCount)
     }
     
     func decrementLikesCount() {
-        likesCount -= 1
-        updateLikesCount(likes: likesCount)
+        self.likesCount -= 1
+        self.updateLikesCount(likes: likesCount)
     }
     
     func updateLikesCount(likes: Int) {
-        likesCount = likes
-        likesLabel.text = "\(likesCount)"
+        self.likesCount = likes
+        self.likesLabel.text = "\(likesCount)"
     }
     
     func like() {
-        if !liked {
-            likeButton.liked = true
-            likeButton.setNeedsDisplay()
-            incrementLikesCount()
-            liked = true
+        if !self.liked {
+            self.likeButton.liked = true
+            self.likeButton.setNeedsDisplay()
+            self.incrementLikesCount()
+            self.liked = true
         } else {
-            likeButton.liked = false
-            likeButton.setNeedsDisplay()
-            decrementLikesCount()
-            liked = false
+            self.likeButton.liked = false
+            self.likeButton.setNeedsDisplay()
+            self.decrementLikesCount()
+            self.liked = false
         }
     }
     
@@ -90,8 +81,8 @@ import Foundation
     }()
     
     @objc func onTap(_ sender: HeartButton) {
-        like()
-        animateLikeButton()
+        self.like()
+        self.animateLikeButton()
     }
     
     

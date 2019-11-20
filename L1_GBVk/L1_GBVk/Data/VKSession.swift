@@ -12,10 +12,8 @@ import SwiftKeychainWrapper
 class VKSession {
     
     static let shared = VKSession()
-    
     var token: String?
-    var userid: Int = 0
+    var userid: Int = 16265678
     
     private init () {}
 }
-

@@ -5,34 +5,27 @@
 //  Created by Andrew on 07/07/2019.
 //  Copyright © 2019 Andrew. All rights reserved.
 //
-
 import Foundation
 import Alamofire
 import AlamofireObjectMapper
 import SwiftKeychainWrapper
-import Realm
+import RealmSwift
 
-class VKServices {
+
+final class VKServices {
     
     static let custom: Session = {
         let config = URLSessionConfiguration.default
         config.headers = .default
         config.timeoutIntervalForRequest = 20
-        
         let manager = Alamofire.Session(configuration: config)
         return manager
     }()
-    
-// АВТОРИЗАЦИЯ
-    
-    
-    
-// ПОЛУЧАЕМ ГРУППЫ
-    
-    public func getFriends(_ completionHandler:@escaping (_ friends:[Friend]?)->() ) {
-    
-        let url = VKConstants.friends
 
+    public func getFriends(completion: @escaping (Bool)->()) {
+        
+        let url = VKConstants.friends
+        
         let params: Parameters = [
             "access_token": KeychainWrapper.standard.string(forKey: "VKToken")!,
             "order": "name",
@@ -40,21 +33,23 @@ class VKServices {
             "v": VKConstants.vAPI
         ]
 
-        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfriendsResponse: DataResponse<VKFriendResponse>) in
+        
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfriendsResponse: DataResponse<VKFriendResponse, AFError>) in
             
             let result = vkfriendsResponse.result
             switch result {
             case .success(let val):
-                completionHandler(val.response?.items)
+                guard let items = val.response?.items else { return }
+                RealmManager.friendsManager(friends: items)
+                completion(true)
             case .failure(let error):
                 print(error)
+                completion(false)
             }
         })
     }
-    
-// ПОЛУЧАЕМ СВОИ ГРУППЫ
-    
-    public func getGroups(_ completionHandler:@escaping (_ groups:[Group]?)->() ) {
+
+    public func getGroups(completion: @escaping (Bool)->()) {
         
         let url = VKConstants.groups
         
@@ -65,21 +60,22 @@ class VKServices {
         ]
         
         VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: {
-            (vkgroupResponse: DataResponse<VKGroupResponse>) in
+            (vkgroupResponse: DataResponse<VKGroupResponse, AFError>) in
             
             let result = vkgroupResponse.result
             switch result {
             case .success(let val):
-                completionHandler(val.response?.items)
+                guard let items = val.response?.items else { return }
+                RealmManager.groupsManager(groups: items)
+                completion(true)
             case .failure(let error):
                 print(error)
+                completion(false)
             }
         })
     }
     
-// ПОЛУЧАЕМ ГРУППЫ ДЛЯ ПОИСКА
-    
-    public func getSearchGroups(_ completionHandler:@escaping (_ groups:[Group]?)->()) {
+    public func getSearchGroups(completion: @escaping (Bool)->()) {
         
         let url = VKConstants.groupsSearch
         
@@ -90,52 +86,86 @@ class VKServices {
             "v" : VKConstants.vAPI
         ]
         
-        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkgroupResponse: DataResponse<VKGroupResponse>) in
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkgroupResponse: DataResponse<VKGroupResponse, AFError>) in
             
             let result = vkgroupResponse.result
             switch result {
             case .success(let val):
-                completionHandler(val.response?.items)
+                guard let items = val.response?.items else { return }
+                RealmManager.groupsManager(groups: items)
+                completion(true)
             case .failure(let error):
                 print(error)
+                completion(false)
             }
         })
     }
     
-// ПОЛУЧАЕМ ССЫЛКИ НА ФОТКИ
+    public func getNews(startTime: Double? = nil, startFrom: String? = "", completion: @escaping ([NewsViewModel]?, String?)->()){
+        let url = VKConstants.newsFeed
+        
+        var params: Parameters = [
+        
+            "filters" : "post",
+            "access_token" : KeychainWrapper.standard.string(forKey: "VKToken")!,
+            "v" : VKConstants.vAPI,
+            "source_ids" : "groups"
+        ]
+        if let startTime = startTime {
+            params["start_time"] = startTime
+        }
+        if let startFrom = startFrom {
+            params["start_from"] = startFrom
+        }
+        
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkfeedResponse: DataResponse<VKFeedResponse, AFError>) in
+            
+            let result = vkfeedResponse.result
+            switch result {
+            case.success(let val):
+                guard let items = val.response?.items,
+                      let groups = val.response?.groups,
+                      let nextFrom = val.response?.nextFrom else
+                { return }
+                let news = NewsViewModelFabric.setupNewsData(news: items, groups: groups)
+                DispatchQueue.main.async {
+                    completion(news, nextFrom)
+                }
+            case.failure(let error):
+                print(error)
+                DispatchQueue.main.async {
+                    completion(nil, nil)
+                }
+            }
+        })
+    }
 
-    public func getPhotos(id: Int, _ completionHandler:@escaping (_ photos:[Photo]?)->()) {
+    public func getPhotos(id: Int, completion: @escaping ([Photo]?) -> ()) {
         
         let url = VKConstants.photosURL
         
         let params: Parameters = [
-        
+            
             "owner_id" : String(id),
+            "album_id" : "profile",
+            "photo_sizes" : "1",
             "extended" : "0",
             "skip_hidden" : "1",
             "access_token" : KeychainWrapper.standard.string(forKey: "VKToken")!,
             "v" : VKConstants.vAPI
         ]
         
-        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkphotoresponse: DataResponse<VKPhotoResponse>) in
+        VKServices.custom.request(url, method: .get, parameters: params).responseObject(completionHandler: { (vkphotoresponse: DataResponse<VKPhotoResponse, AFError>) in
             
             let result = vkphotoresponse.result
             switch result {
             case .success(let val):
-                var photos: [Photo] = []
-                guard let items = val.response?.items else { return }
-                for photo in items {
-                    if photo.photoURL != "" {
-                        photos.append(photo)
-                    }
-                }
-                completionHandler(photos)
+                guard let items = val.response?.items  else
+                { return }
+                completion(items)
             case .failure(let error):
                 print(error)
             }
         })
     }
 }
-
-
-

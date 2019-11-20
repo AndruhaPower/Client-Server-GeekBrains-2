@@ -7,7 +7,8 @@
 //
 
 import UIKit
-class ImageTapAnimations {
+
+final class ImageTapAnimations {
     
     static func animateImageTap(imageView: AvatarImageView) {
         let animationDuration: TimeInterval = 0.5

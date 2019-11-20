@@ -16,8 +16,7 @@ class FirstLetterSearch {
         var wordsArray: [String] = []
         let searchBaseLowercased = searchBase.lowercased()
         let searchStringLowercased = searchString.lowercased()
-        
-        //create an array of words to compare the search to
+
         if searchBaseLowercased.contains(" ") {
             var word: [Character] = []
             for char in searchBaseLowercased {
@@ -34,7 +33,6 @@ class FirstLetterSearch {
             print(wordsArray)
         }
         else {
-            //only one word in a string
             wordsArray.append(searchBaseLowercased)
         }
         for word in wordsArray {

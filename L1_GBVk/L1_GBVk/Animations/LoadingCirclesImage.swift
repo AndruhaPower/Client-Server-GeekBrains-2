@@ -7,10 +7,9 @@
 //
 
 import Foundation
-
 import UIKit
 
-class LoadingCirclesImage: UIImageView {
+final class LoadingCirclesImage: UIImageView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,10 +18,10 @@ class LoadingCirclesImage: UIImageView {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        sharedInit()
+        self.sharedInit()
     }
     override func prepareForInterfaceBuilder() {
-        sharedInit()
+        self.sharedInit()
     }
 
     func sharedInit() {
@@ -49,7 +48,6 @@ class LoadingCirclesImage: UIImageView {
                 }]
             
             let image = UIImage.animatedImage(with: imageArray, duration: 1)
-            //testImageView.image = image
             myImageView.image = image
             myImageView.contentMode = .center
             super.addSubview(myImageView)
