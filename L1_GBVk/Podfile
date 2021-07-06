@@ -10,6 +10,7 @@ target 'L1_GBVk' do
   pod 'AlamofireObjectMapper'
   pod 'SwiftKeychainWrapper'
   pod 'RealmSwift'
+  pod 'Firebase/Analytics'
 
   # Pods for L1_GBVk
 

@@ -35,6 +35,7 @@ class Group: Mappable, Equatable {
     var id: Int = 0
     var photo: String = ""
     var name: String = ""
+    var isMember: Int = 0
     
     required init?(map: Map) { }
     
@@ -42,9 +43,12 @@ class Group: Mappable, Equatable {
         self.id <- map["id"]
         self.photo <- map["photo_50"]
         self.name <- map["name"]
+        self.isMember <- map["is_member"]
     }
     
     static func == (lhs: Group, rhs: Group) -> Bool {
-        return lhs.name == rhs.name || lhs.photo == rhs.photo
+        return lhs.name == rhs.name
+            || lhs.photo == rhs.photo
+            || lhs.isMember == rhs.isMember
     }
 }

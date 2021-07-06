@@ -12,7 +12,7 @@ class FullScreenImagePresenterViewController: UIViewController, UICollectionView
     
     @IBOutlet weak var fullScreenCollectionView: UICollectionView!
 private let reuseIdentifier = "fullScreenCollectionViewCellIdentifier"
-    var friendToDisplay: FriendModel?
+    var friendToDisplay: RFriend?
     var imagesToDisplay: [UIImage] = []
     var indexPathToScrollTo = IndexPath(row:0, section:0)
     var newCellIndexPath = IndexPath(row: 0, section: 0)
